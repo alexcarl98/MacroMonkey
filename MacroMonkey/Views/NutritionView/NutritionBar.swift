@@ -14,7 +14,6 @@ struct NutritionBar: View {
     var color: Color
     var barHeight: CGFloat = 20
     
-
     @State private var drawingWidth = false
     @State private var noBar:CGFloat = 0
 
