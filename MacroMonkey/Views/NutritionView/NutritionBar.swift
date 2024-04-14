@@ -35,8 +35,6 @@ struct NutritionBar: View {
                     .frame(width: drawingWidth ? CGFloat(targetWidth):noBar, height: barHeight)  // Actual bar width
                     .animation(.spring(duration:1, bounce: (targetWidth <= 190.0) ? 0.4:0.1), value:drawingWidth)
                     .foregroundColor(.clear)
-//                    .onChange(of: amtConsumedSoFar, perform:{drawingWidth.toggle()})
-            
             }
             .onAppear{
                 drawingWidth.toggle()

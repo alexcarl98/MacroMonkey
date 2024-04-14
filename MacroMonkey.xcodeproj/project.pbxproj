@@ -19,6 +19,9 @@
 		5C1E620B2BCB2D2B00E4A070 /* FirebaseDatabaseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5C1E620A2BCB2D2B00E4A070 /* FirebaseDatabaseUI */; };
 		5C1E620D2BCB2D2B00E4A070 /* FirebaseEmailAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5C1E620C2BCB2D2B00E4A070 /* FirebaseEmailAuthUI */; };
 		5C1E620F2BCB2D2B00E4A070 /* FirebaseStorageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5C1E620E2BCB2D2B00E4A070 /* FirebaseStorageUI */; };
+		5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */; };
+		5C1E62172BCB4F7700E4A070 /* MacroMonkeyDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */; };
+		5C1E621A2BCC3F1C00E4A070 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62192BCC3F1C00E4A070 /* AppUser.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -52,6 +55,11 @@
 		5C1E61F72BCB24B100E4A070 /* NutritionGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionGraph.swift; sourceTree = "<group>"; };
 		5C1E61F92BCB258A00E4A070 /* NutritionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionBar.swift; sourceTree = "<group>"; };
 		5C1E61FC2BCB2BFE00E4A070 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5C1E62102BCB3F2500E4A070 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		5C1E62112BCB3F7300E4A070 /* ABOUT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ABOUT.md; sourceTree = "<group>"; };
+		5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyAuth.swift; sourceTree = "<group>"; };
+		5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyDatabase.swift; sourceTree = "<group>"; };
+		5C1E62192BCC3F1C00E4A070 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -117,9 +125,27 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5C1E62122BCB4EFD00E4A070 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
+				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		5C1E62182BCC3EF200E4A070 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5C1E62192BCC3F1C00E4A070 /* AppUser.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5C91F54E2BC5DE4600AEDC89 = {
 			isa = PBXGroup;
 			children = (
+				5C1E62112BCB3F7300E4A070 /* ABOUT.md */,
 				5C91F5592BC5DE4600AEDC89 /* MacroMonkey */,
 				5C91F56A2BC5DE4800AEDC89 /* MacroMonkeyTests */,
 				5C91F5742BC5DE4800AEDC89 /* MacroMonkeyUITests */,
@@ -140,12 +166,15 @@
 		5C91F5592BC5DE4600AEDC89 /* MacroMonkey */ = {
 			isa = PBXGroup;
 			children = (
+				5C1E62182BCC3EF200E4A070 /* Models */,
 				5C1E61FC2BCB2BFE00E4A070 /* GoogleService-Info.plist */,
+				5C1E62122BCB4EFD00E4A070 /* Service */,
 				5C1E61FB2BCB29D200E4A070 /* Views */,
 				5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */,
 				5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */,
 				5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */,
 				5C91F5602BC5DE4800AEDC89 /* Preview Content */,
+				5C1E62102BCB3F2500E4A070 /* TODO.md */,
 			);
 			path = MacroMonkey;
 			sourceTree = "<group>";
@@ -336,7 +365,10 @@
 				5C91F6142BCB222700AEDC89 /* FavoriteButton.swift in Sources */,
 				5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */,
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
+				5C1E621A2BCC3F1C00E4A070 /* AppUser.swift in Sources */,
 				5C1E61F82BCB24B100E4A070 /* NutritionGraph.swift in Sources */,
+				5C1E62172BCB4F7700E4A070 /* MacroMonkeyDatabase.swift in Sources */,
+				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
