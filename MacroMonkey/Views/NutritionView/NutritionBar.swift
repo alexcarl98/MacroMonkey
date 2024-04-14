@@ -22,7 +22,6 @@ struct NutritionBar: View {
         let proportion = amtConsumedSoFar / goalConsumption
         // Adjusted width of the bar based on the proportion
         let targetWidth = min(200, proportion * 200)
-        
         HStack {
             Text(macroNutrient)
                 .frame(width: 80, alignment: .trailing)  // Label for the nutrient
