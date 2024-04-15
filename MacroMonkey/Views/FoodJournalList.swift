@@ -42,7 +42,7 @@ struct FoodJournalList: View {
                     }
                 }
             }
-            .navigationTitle("Bare Bones Blog 🦴")
+            .navigationTitle("Macro Monkey 🙈")
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     if auth.user != nil {
