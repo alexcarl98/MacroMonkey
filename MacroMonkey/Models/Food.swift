@@ -9,6 +9,15 @@ import Foundation
 import SwiftUI
 import CoreLocation
 
+struct Nutrient: Hashable, Codable{
+    var cals: Float
+    var protein: Float
+    var carbs: Float
+    var fats: Float
+    static let `pasta` = Nutrient(cals: 543.36, protein: 16.84, carbs: 83.7, fats: 16.2)
+}
+
+
 struct Food: Hashable, Codable, Identifiable {
     var id: Int
     var name: String
@@ -17,15 +26,7 @@ struct Food: Hashable, Codable, Identifiable {
     var isFavorite: Bool
     var nutrients: Nutrient
     var img: String
-    
-    struct Nutrient: Hashable, Codable{
-        var cals: Float
-        var protein: Float
-        var carbs: Float
-        var fats: Float
-        static let `pasta` = Nutrient(cals: 543.36, protein: 16.84, carbs: 83.7, fats: 16.2)
-    }
-    
+
     static let `pasta` = Food(
         id: 716429,
         name: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",

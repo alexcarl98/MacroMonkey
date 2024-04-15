@@ -32,13 +32,13 @@ struct FoodJournalList: View {
                         Spacer()
                     }
                 } else {
-                    List(foods) { food in
-                        NavigationLink {
-                            ArticleDetail(article: article)
-                        } label: {
-                            ArticleMetadata(article: article)
-                        }
-                    }
+//                    List(foods) { food in
+//                        NavigationLink {
+//                            ArticleDetail(article: article)
+//                        } label: {
+//                            ArticleMetadata(article: article)
+//                        }
+//                    }
                 }
             }
             .navigationTitle("Bare Bones Blog 🦴")
@@ -69,9 +69,9 @@ struct FoodJournalList: View {
                 }
             }
         }
-        .sheet(isPresented: $writing) {
-            ArticleEntry(articles: $articles, writing: $writing)
-        }
+//        .sheet(isPresented: $writing) {
+//            ArticleEntry(articles: $articles, writing: $writing)
+//        }
         .task {
             fetching = true
 
@@ -87,5 +87,8 @@ struct FoodJournalList: View {
 }
 
 #Preview {
-    FoodJournalList()
+    @State var relo: Bool = false
+    FoodJournalList(requestLogin: $relo, foods:[Food.pasta])
+        .environmentObject(MacroMonkeyAuth())
+        .environmentObject(MacroMonkeyDatabase())
 }
