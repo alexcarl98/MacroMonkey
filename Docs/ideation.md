@@ -2,12 +2,10 @@
 
 ### 1. Which audiences did you consider, and which one did you settle on for your app?
 
-**Response**:
 I considered several audiences including fitness enthusiasts, long-term dieters, and health beginners. Ultimately, I settled on targeting individuals who are new to health and wellness tracking and often struggle with consistency in maintaining health goals. This choice was driven by the understanding that the prospect of a long health journey can be daunting. My application focuses on simplicity and immediate engagement, designed to help users stay present and motivated without feeling overwhelmed by the complexity of health management.
 
 ### 2. List the ten needs that you identified for your chosen audience
 
-**Response**:
 - Simplified user interface that minimizes cognitive load
 - Gamification elements to encourage regular use
 - Tools for mindfulness and mental well-being

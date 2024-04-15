@@ -25,6 +25,8 @@
 		5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621B2BCC44EC00E4A070 /* AuthenticationViewController.swift */; };
 		5C1E621E2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621D2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift */; };
 		5C1E62202BCC472600E4A070 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621F2BCC472600E4A070 /* Food.swift */; };
+		5C1E62252BCCA49300E4A070 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62242BCCA49300E4A070 /* Home.swift */; };
+		5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -68,6 +70,8 @@
 		5C1E621F2BCC472600E4A070 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		5C1E62222BCC49BA00E4A070 /* ideation.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ideation.md; sourceTree = "<group>"; };
 		5C1E62232BCC4BF400E4A070 /* pitch.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = pitch.md; sourceTree = "<group>"; };
+		5C1E62242BCCA49300E4A070 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodJournalList.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 				5C91F6102BCB219400AEDC89 /* Helper */,
 				5C1E61F42BCB246300E4A070 /* NutritionView */,
 				5C1E621B2BCC44EC00E4A070 /* AuthenticationViewController.swift */,
+				5C1E62242BCCA49300E4A070 /* Home.swift */,
+				5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -386,7 +392,9 @@
 				5C91F6142BCB222700AEDC89 /* FavoriteButton.swift in Sources */,
 				5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */,
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
+				5C1E62252BCCA49300E4A070 /* Home.swift in Sources */,
 				5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */,
+				5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */,
 				5C1E621A2BCC3F1C00E4A070 /* AppUser.swift in Sources */,
 				5C1E621E2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift in Sources */,
 				5C1E62202BCC472600E4A070 /* Food.swift in Sources */,
