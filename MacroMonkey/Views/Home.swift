@@ -29,6 +29,8 @@ struct Home: View {
     }
 }
 
-#Preview {
-    Home()
+struct Blog_Previews: PreviewProvider {
+    static var previews: some View {
+        Home().environmentObject(MacroMonkeyAuth())
+    }
 }

@@ -14,6 +14,8 @@ struct MacroMonkeyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(MacroMonkeyAuth())
+                .environmentObject(MacroMonkeyDatabase())
         }
     }
 }

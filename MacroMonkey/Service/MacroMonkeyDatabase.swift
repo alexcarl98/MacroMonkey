@@ -18,6 +18,10 @@ enum ArticleServiceError: Error {
     case unexpectedError
 }
 
+enum FoodServiceError: Error {
+    case mismatchedDocumentError
+}
+
 class MacroMonkeyDatabase: ObservableObject {
     private let db = Firestore.firestore()
 /**
@@ -85,7 +89,7 @@ class MacroMonkeyDatabase: ObservableObject {
         let sex = documentSnapshot.get("sex") as? String ?? ""
         let sexForCalculation = documentSnapshot.get("sexForCalculation") as? String ?? ""
         let imgID = documentSnapshot.get("imgID") as? String ?? ""
-        let
+        
         print("Successfully retrieved user:")
         return AppUser(
                 id: documentId,
@@ -109,39 +113,36 @@ class MacroMonkeyDatabase: ObservableObject {
     // In a real app, you implement pagination.
     // TODO: Finish writing the fetchArticles Function (truly a fetch foods function)
     func fetchFoods() async throws -> [Food] {
-        let articleQuery = db.collection(COLLECTION_NAME)
-            .order(by: "id", descending: true)
-            .limit(to: PAGE_LIMIT)
+            let foodQuery = db.collection(COLLECTION_NAME)
+                .order(by: "id", descending: true)
+                .limit(to: PAGE_LIMIT)
 
-        // Fortunately, getDocuments does have an async version.
-        //
-        // Firestore calls query results “snapshots” because they represent a…wait for it…
-        // _snapshot_ of the data at the time that the query was made. (i.e., the content
-        // of the database may change after the query but you won’t see those changes here)
-        let querySnapshot = try await articleQuery.getDocuments()
+            let querySnapshot = try await foodQuery.getDocuments()
 
-        return try querySnapshot.documents.map {
-            // This is likely new Swift for you: type conversion is conditional, so they
-            // must be guarded in case they fail.
-            guard let name = $0.get("name") as? String,
+            return try querySnapshot.documents.compactMap { document in
+                guard let id = document.get("id") as? Int,
+                      let name = document.get("name") as? String,
+                      let servSize = document.get("servSize") as? Float,
+                      let servUnit = document.get("servUnit") as? String,
+                      let isFavorite = document.get("isFavorite") as? Bool,
+                      let cals = document.get("cals") as? Float,
+                      let protein = document.get("protein") as? Float,
+                      let carbs = document.get("carbs") as? Float,
+                      let fats = document.get("fats") as? Float,
+                      let img = document.get("img") as? String else {
+                    throw FoodServiceError.mismatchedDocumentError
+                }
 
-                // Firestore returns Swift Dates as its own Timestamp data type.
-                let dateAsTimestamp = $0.get("date") as? Timestamp,
-                let body = $0.get("body") as? String else {
-                let servSize =
-                throw ArticleServiceError.mismatchedDocumentError
+                return Food(
+                    id: id,
+                    name: name,
+                    servSize: servSize,
+                    servUnit: servUnit,
+                    isFavorite: isFavorite,
+                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
+                    img: img
+                )
             }
-
-            return Food(
-                id: 716429,
-                name: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-                servSize: 259.0,
-                servUnit: "g",
-                isFavorite: false,
-                nutrients: Nutrient.pasta,
-                img: "https://img.spoonacular.com/recipes/716429-556x370.jpg"
-            )
         }
-    }
     
 }

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct FoodDetail: View {
-    var food: Food
+//    var food: Food
     
     var body: some View {
         ScrollView{
-            
+            Text("Hello")
         }
     }
 }

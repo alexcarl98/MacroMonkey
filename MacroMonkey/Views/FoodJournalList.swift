@@ -32,13 +32,14 @@ struct FoodJournalList: View {
                         Spacer()
                     }
                 } else {
-//                    List(foods) { food in
+                    List(foods) { food in
+                        Text(food.name)
 //                        NavigationLink {
 //                            ArticleDetail(article: article)
 //                        } label: {
 //                            ArticleMetadata(article: article)
 //                        }
-//                    }
+                    }
                 }
             }
             .navigationTitle("Bare Bones Blog 🦴")
@@ -76,7 +77,7 @@ struct FoodJournalList: View {
             fetching = true
 
             do {
-                articles = try await articleService.fetchArticles()
+                foods = try await databaseService.fetchFoods()
                 fetching = false
             } catch {
                 self.error = error
@@ -86,9 +87,14 @@ struct FoodJournalList: View {
     }
 }
 
-#Preview {
-    @State var relo: Bool = false
-    FoodJournalList(requestLogin: $relo, foods:[Food.pasta])
+
+struct FoodJournalList_Previews: PreviewProvider {
+    @State static var requestLogin = false
+
+    static var previews: some View {
+    
+        FoodJournalList(requestLogin: $requestLogin, foods: [])
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
+    }
 }
