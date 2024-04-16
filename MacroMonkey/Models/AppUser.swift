@@ -63,4 +63,21 @@ struct AppUser: Hashable, Codable, Identifiable {
         sexForCalculation: "Male",
         imgID: ""
     )
+    
+    static let `empty` = AppUser(
+        id: "",
+        uid: "",
+        name: "",
+        email: "",
+        level: 0,
+        weight: 0,
+        height: 0,
+        dietStartDate: Date.now,
+        dob: Date.now,
+        completedCycles: 0,
+        goalWeightChange: 0,
+        sex: "",
+        sexForCalculation: "",
+        imgID: ""
+    )
 }

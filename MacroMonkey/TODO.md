@@ -30,6 +30,12 @@ struct YourApp: App {
 }
 ```
 
+## Database Design: 
+    - hone in on the design of your database, will you:
+        - cache food data to the firestore database OR
+        - Store only  
 
 
-- Need to redo and add to MacroMonkeyDatabase
+## API Calls:
+    - I ran into issues during the API app where I had to make the models follow the json data exactly. this kind of bloated my code, since I realistically only needed data that could fit into a single model struct. 
+    - How do I get the json data to fall into place in my app? 

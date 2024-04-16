@@ -19,72 +19,76 @@ struct FoodJournalList: View {
     @State var writing = false
     
     var body: some View {
-        NavigationView {
-            VStack {
-                if fetching {
-                    ProgressView()
-                } else if error != nil {
-                    Text("Something went wrong…we wish we can say more 🤷🏽")
-                } else if foods.count == 0 {
-                    VStack {
-                        Spacer()
-                        Text("There are no foods entered for today.")
-                        Spacer()
-                    }
-                } else {
-                    List(foods) { food in
-                        Text(food.name)
-//                        NavigationLink {
-//                            ArticleDetail(article: article)
-//                        } label: {
-//                            ArticleMetadata(article: article)
-//                        }
-                    }
-                }
-            }
-            .navigationTitle("Macro Monkey 🙈")
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    if auth.user != nil {
-                        Button("New Article") {
-                            writing = true
-                        }
-                    }
-                }
-
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if auth.user != nil {
-                        Button("Sign Out") {
-                            do {
-                                try auth.signOut()
-                            } catch {
-                                // No error handling in the sample, but of course there should be
-                                // in a production app.
-                            }
+            //TODO : This is hardcoded, make it work with normal ass values
+            NavigationView {
+                VStack {
+                    NutritionGraph(current: [1159.0, 65, 103.0, 61.0], goals: [2500.0, 141.0, 344.0, 76.0])
+                    Divider()
+                    if fetching {
+                        ProgressView()
+                    } else if error != nil {
+                        Text("Something went wrong…we wish we can say more 🤷🏽")
+                    } else if foods.count == 0 {
+                        VStack {
+                            Spacer()
+                            Text("There are no foods entered for today.")
+                            Spacer()
                         }
                     } else {
-                        Button("Sign In") {
-                            requestLogin = true
+                        List(foods) { food in
+                            Text(food.name)
+    //                        NavigationLink {
+    //                            ArticleDetail(article: article)
+    //                        } label: {
+    //                            ArticleMetadata(article: article)
+    //                        }
+                        }
+                    }
+                }
+                .navigationTitle("Macro Monkey 🙈")
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        if auth.user != nil {
+                            Button("New Article") {
+                                writing = true
+                            }
+                        }
+                    }
+
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        if auth.user != nil {
+                            Button("Sign Out") {
+                                do {
+                                    try auth.signOut()
+                                } catch {
+                                    // No error handling in the sample, but of course there should be
+                                    // in a production app.
+                                }
+                            }
+                        } else {
+                            Button("Sign In") {
+                                requestLogin = true
+                            }
                         }
                     }
                 }
             }
-        }
-//        .sheet(isPresented: $writing) {
-//            ArticleEntry(articles: $articles, writing: $writing)
-//        }
-        .task {
-            fetching = true
+    //        .sheet(isPresented: $writing) {
+    //            ArticleEntry(articles: $articles, writing: $writing)
+    //        }
+            .task {
+                fetching = true
 
-            do {
-                foods = try await databaseService.fetchFoods()
-                fetching = false
-            } catch {
-                self.error = error
-                fetching = false
+                do {
+                    foods = try await databaseService.fetchFoods()
+                    fetching = false
+                } catch {
+                    self.error = error
+                    fetching = false
+                }
             }
+        
         }
-    }
 }
 
 
