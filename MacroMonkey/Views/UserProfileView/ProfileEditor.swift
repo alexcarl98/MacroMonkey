@@ -11,6 +11,7 @@ struct ProfileEditor: View {
     @Binding var newUser: AppUser
     
     let activityLevelDesc = ["", "Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Extremely Active"]
+    let sexes = ["Male", "Female", "Other"]
     
     var dateRange: ClosedRange<Date> {
         let min = Calendar.current.date(byAdding: .year, value: -100, to: Date())!
@@ -48,7 +49,6 @@ struct ProfileEditor: View {
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
             }
-
             DatePicker("Date of Birth", selection: $newUser.dob, in: dateRange, displayedComponents: .date)
             
             Picker("Activity Level", selection: $newUser.level) {
@@ -57,6 +57,19 @@ struct ProfileEditor: View {
                 }
             }
             
+            Picker("Sex", selection: $newUser.sex) {
+                // TODO: Need to fix this
+                ForEach(sexes, id: \.self) { sex in
+                    Text(sex)
+                }
+            }
+
+            Picker("Sex (calculations)", selection: $newUser.sexForCalculation) {
+                // TODO: Need to fix this
+                ForEach(sexes, id: \.self) { sex in
+                    Text(sex)
+                }
+            }
             HStack {
                 Text("Calculated Calorie Goal")
                 Spacer()

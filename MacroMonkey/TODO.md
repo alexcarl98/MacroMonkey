@@ -29,6 +29,8 @@ struct YourApp: App {
   }
 }
 ```
+## User Data Recording:
+- In the `ProfileEditor.swift`, the values for `$newUser.sex` and `$newUser.sexForCollections` is not being changed. They insted keep passing the empty string.  
 
 ## Database Design: 
     - hone in on the design of your database, will you:
@@ -39,3 +41,6 @@ struct YourApp: App {
 ## API Calls:
     - I ran into issues during the API app where I had to make the models follow the json data exactly. this kind of bloated my code, since I realistically only needed data that could fit into a single model struct. 
     - How do I get the json data to fall into place in my app? 
+
+
+
