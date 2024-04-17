@@ -27,7 +27,7 @@ struct Food: Hashable, Codable, Identifiable {
     var nutrients: Nutrient
     var img: String
 
-    static let `pasta` = Food(
+    static let `pasta` = Food (
         id: 716429,
         name: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
         servSize: 259.0,

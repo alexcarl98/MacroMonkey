@@ -64,6 +64,35 @@ class MacroMonkeyDatabase: ObservableObject {
         return ref?.documentID ?? ""
     }
     
+    func createUser(user: AppUser) -> String {
+        var ref: DocumentReference? = nil
+
+        // Add user document to the "users" collection
+        ref = db.collection("users").addDocument(data: [
+            "uid": user.uid,
+            "name": user.name,
+            "email": user.email,
+            "level": user.level,
+            "weight": user.weight,
+            "height": user.height,
+            "dietStartDate": Timestamp(date: user.dietStartDate),
+            "dob": Timestamp(date: user.dob),
+            "completedCycles": user.completedCycles,
+            "goalWeightChange": user.goalWeightChange,
+            "sex": user.sex,
+            "sexForCalculation": user.sexForCalculation,
+            "imgID": user.imgID
+        ]) { possibleError in
+            if let actualError = possibleError {
+                print("Error adding user: \(actualError.localizedDescription)")
+            }
+        }
+
+        // Return the document ID of the new user entry, or an empty string if no ID is available
+        return ref?.documentID ?? ""
+    }
+
+    
     func fetchUserProfile(userID: String) async throws -> AppUser {
         let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
         
@@ -107,6 +136,18 @@ class MacroMonkeyDatabase: ObservableObject {
                 sexForCalculation: sexForCalculation,
                 imgID: imgID
             )
+    }
+    
+    func userExists(userID: String) async throws -> Bool {
+        let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
+        
+        guard let documentSnapshot = querySnapshot.documents.first else {
+            // If no document is found, you could decide to throw an error.
+            // For the purpose of this fix, returning an AppUser with empty strings.
+            print("No document found with the specified UID")
+            return false
+        }
+        return true
     }
 
     // Note: This is quite unsophisticated! It only gets the first PAGE_LIMIT articles.

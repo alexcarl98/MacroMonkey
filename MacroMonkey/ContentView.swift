@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var currentUser: AppUser = AppUser.empty
     var body: some View {
         Home()
     }
@@ -16,4 +17,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(MacroMonkeyAuth())
+        .environmentObject(MacroMonkeyDatabase())
 }

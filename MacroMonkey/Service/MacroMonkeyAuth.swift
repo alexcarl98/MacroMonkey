@@ -7,6 +7,7 @@
 
 import Foundation
 
+import FirebaseAuth
 import FirebaseAuthUI
 import FirebaseEmailAuthUI
 
@@ -19,9 +20,12 @@ class MacroMonkeyAuth: NSObject, ObservableObject, FUIAuthDelegate {
     ]
 
     @Published var user: User?
+    @Published var userID: String = ""
+    @Published var userName: String = ""
+    @Published var userEmail: String = ""
 
-    /**
-     * You might not have overriden a constructor in Swift before...well, here it is.
+    /*
+     *  You might not have overriden a constructor in Swift before...well, here it is.
      */
     override init() {
         super.init()
@@ -41,9 +45,13 @@ class MacroMonkeyAuth: NSObject, ObservableObject, FUIAuthDelegate {
      *
      * …has been deprecated in favor of the one below.
      */
+    
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let actualResult = authDataResult {
             user = actualResult.user
+            userID = user?.uid ?? ""
+            userName = user?.displayName ?? ""
+            userEmail = user?.email ?? ""
         }
     }
 
@@ -52,5 +60,8 @@ class MacroMonkeyAuth: NSObject, ObservableObject, FUIAuthDelegate {
 
         // If we get past the logout attempt, we can safely clear the user.
         user = nil
+        userID = ""
+        userName = ""
+        userEmail = ""
     }
 }
