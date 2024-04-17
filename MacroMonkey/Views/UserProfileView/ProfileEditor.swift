@@ -60,14 +60,7 @@ struct ProfileEditor: View {
             Picker("Sex", selection: $newUser.sex) {
                 // TODO: Need to fix this
                 ForEach(sexes, id: \.self) { sex in
-                    Text(sex)
-                }
-            }
-
-            Picker("Sex (calculations)", selection: $newUser.sexForCalculation) {
-                // TODO: Need to fix this
-                ForEach(sexes, id: \.self) { sex in
-                    Text(sex)
+                    Text(sex).tag(sex)
                 }
             }
             HStack {
@@ -81,5 +74,5 @@ struct ProfileEditor: View {
 }
 
 #Preview {
-    ProfileEditor(newUser: .constant(AppUser.default))
+    ProfileEditor(newUser: .constant(AppUser.empty))
 }

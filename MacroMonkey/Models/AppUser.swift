@@ -20,7 +20,6 @@ struct AppUser: Hashable, Codable, Identifiable {
     var completedCycles: Int
     var goalWeightChange: Int
     var sex: String
-    var sexForCalculation: String
     var imgID: String
     
     var initials: String {
@@ -72,7 +71,7 @@ struct AppUser: Hashable, Codable, Identifiable {
         return [goalCal, goalCal*0.0404, goalCal*0.1374, goalCal*0.027667]
     }
     
-    static let `default` = AppUser(
+    static let `default` = AppUser (
         id: "12345",
         uid: "91JqW2pm3DZioPnC1dW9Bv8JYf02",
         name: "John Hanz",
@@ -85,7 +84,6 @@ struct AppUser: Hashable, Codable, Identifiable {
         completedCycles: 1,
         goalWeightChange: -2,
         sex: "Male",
-        sexForCalculation: "Male",
         imgID: ""
     )
     
@@ -101,8 +99,7 @@ struct AppUser: Hashable, Codable, Identifiable {
         dob: Date.now,
         completedCycles: 0,
         goalWeightChange: 0,
-        sex: "",
-        sexForCalculation: "",
+        sex: "Female",
         imgID: ""
     )
 }

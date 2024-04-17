@@ -80,7 +80,6 @@ class MacroMonkeyDatabase: ObservableObject {
             "completedCycles": user.completedCycles,
             "goalWeightChange": user.goalWeightChange,
             "sex": user.sex,
-            "sexForCalculation": user.sexForCalculation,
             "imgID": user.imgID
         ]) { possibleError in
             if let actualError = possibleError {
@@ -116,7 +115,6 @@ class MacroMonkeyDatabase: ObservableObject {
         let height = documentSnapshot.get("height") as? Float ?? 0.0
         let weight = documentSnapshot.get("weight") as? Float ?? 0.0
         let sex = documentSnapshot.get("sex") as? String ?? ""
-        let sexForCalculation = documentSnapshot.get("sexForCalculation") as? String ?? ""
         let imgID = documentSnapshot.get("imgID") as? String ?? ""
         
         print("Successfully retrieved user:")
@@ -133,7 +131,6 @@ class MacroMonkeyDatabase: ObservableObject {
                 completedCycles: completedCycles,
                 goalWeightChange: goalWeightChange,
                 sex: sex,
-                sexForCalculation: sexForCalculation,
                 imgID: imgID
             )
     }

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */; };
+		5C15B5B52BCFAF7F00C2C39B /* journal.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C15B5B42BCFAF7F00C2C39B /* journal.json */; };
+		5C15B5B72BD0560700C2C39B /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B62BD0560700C2C39B /* APIService.swift */; };
+		5C15B5BA2BD0597500C2C39B /* tenDayBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B92BD0597500C2C39B /* tenDayBlock.swift */; };
+		5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5BB2BD05E0600C2C39B /* Calend.swift */; };
 		5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F52BCB247500E4A070 /* ColorExtension.swift */; };
 		5C1E61F82BCB24B100E4A070 /* NutritionGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F72BCB24B100E4A070 /* NutritionGraph.swift */; };
 		5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F92BCB258A00E4A070 /* NutritionBar.swift */; };
@@ -62,6 +66,10 @@
 
 /* Begin PBXFileReference section */
 		5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditor.swift; sourceTree = "<group>"; };
+		5C15B5B42BCFAF7F00C2C39B /* journal.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = journal.json; sourceTree = "<group>"; };
+		5C15B5B62BD0560700C2C39B /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		5C15B5B92BD0597500C2C39B /* tenDayBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tenDayBlock.swift; sourceTree = "<group>"; };
+		5C15B5BB2BD05E0600C2C39B /* Calend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calend.swift; sourceTree = "<group>"; };
 		5C1E61F52BCB247500E4A070 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		5C1E61F72BCB24B100E4A070 /* NutritionGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionGraph.swift; sourceTree = "<group>"; };
 		5C1E61F92BCB258A00E4A070 /* NutritionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionBar.swift; sourceTree = "<group>"; };
@@ -129,6 +137,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C15B5B22BCFAEBE00C2C39B /* FoodSearchView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FoodSearchView;
+			sourceTree = "<group>";
+		};
+		5C15B5B32BCFAF5B00C2C39B /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				5C15B5B42BCFAF7F00C2C39B /* journal.json */,
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
+		5C15B5B82BD0595200C2C39B /* CalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				5C15B5B92BD0597500C2C39B /* tenDayBlock.swift */,
+				5C15B5BB2BD05E0600C2C39B /* Calend.swift */,
+			);
+			path = CalendarView;
+			sourceTree = "<group>";
+		};
 		5C1E61F42BCB246300E4A070 /* NutritionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +173,8 @@
 		5C1E61FB2BCB29D200E4A070 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C15B5B82BD0595200C2C39B /* CalendarView */,
+				5C15B5B22BCFAEBE00C2C39B /* FoodSearchView */,
 				5C1E622B2BCDB04100E4A070 /* UserProfileView */,
 				5C91F6102BCB219400AEDC89 /* Helper */,
 				5C1E61F42BCB246300E4A070 /* NutritionView */,
@@ -157,6 +191,7 @@
 			children = (
 				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
+				5C15B5B62BD0560700C2C39B /* APIService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -222,6 +257,7 @@
 		5C91F5592BC5DE4600AEDC89 /* MacroMonkey */ = {
 			isa = PBXGroup;
 			children = (
+				5C15B5B32BCFAF5B00C2C39B /* TestData */,
 				5C1E62282BCCBD5200E4A070 /* API */,
 				5C1E62182BCC3EF200E4A070 /* Models */,
 				5C1E61FC2BCB2BFE00E4A070 /* GoogleService-Info.plist */,
@@ -393,6 +429,7 @@
 				5C91F5622BC5DE4800AEDC89 /* Preview Assets.xcassets in Resources */,
 				5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */,
 				5C1E61FD2BCB2BFE00E4A070 /* GoogleService-Info.plist in Resources */,
+				5C15B5B52BCFAF7F00C2C39B /* journal.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +455,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */,
+				5C15B5B72BD0560700C2C39B /* APIService.swift in Sources */,
+				5C15B5BA2BD0597500C2C39B /* tenDayBlock.swift in Sources */,
 				5C91F6122BCB21A500AEDC89 /* AsyncCircleImage.swift in Sources */,
 				5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */,
 				5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */,
@@ -427,6 +466,7 @@
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
 				5C1E622A2BCCBDC700E4A070 /* FoodDetail.swift in Sources */,
 				5C1E62252BCCA49300E4A070 /* Home.swift in Sources */,
+				5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */,
 				5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */,
 				5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */,
 				5C1E622F2BCE4D4500E4A070 /* Journal.swift in Sources */,
