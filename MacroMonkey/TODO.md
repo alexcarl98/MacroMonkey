@@ -29,9 +29,6 @@ struct YourApp: App {
   }
 }
 ```
-## User Data Recording:
-- In the `ProfileEditor.swift`, the values for `$newUser.sex` and `$newUser.sexForCollections` is not being changed. They insted keep passing the empty string.  
-
 ## Database Design: 
     - hone in on the design of your database, will you:
         - cache food data to the firestore database OR
@@ -43,4 +40,11 @@ struct YourApp: App {
     - How do I get the json data to fall into place in my app? 
 
 
+---
 
+# Notes
+
+## API calls to query by nutrition ID: 
+https://spoonacular.com/food-api/docs#Nutrition-by-ID 
+
+GET `https://api.spoonacular.com/recipes/`{id}`/nutritionWidget.json`

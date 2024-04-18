@@ -22,6 +22,8 @@ struct ProfileSetup: View {
                 editing = false
             } label:{
                 Text("Submit")
+//                    .padding()
+//                    .background(Color.gray, in: RoundedRectangle(cornerRadius: 8))
             }
         }
     }

@@ -20,7 +20,7 @@ struct Journal: Hashable, Codable, Identifiable {
             totals[1] += food.nutrients.protein
             totals[2] += food.nutrients.carbs
             totals[3] += food.nutrients.fats
-        }
+        } 
         return totals
     }
     

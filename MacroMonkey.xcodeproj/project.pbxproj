@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */; };
 		5C15B5B52BCFAF7F00C2C39B /* journal.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C15B5B42BCFAF7F00C2C39B /* journal.json */; };
-		5C15B5B72BD0560700C2C39B /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B62BD0560700C2C39B /* APIService.swift */; };
+		5C15B5B72BD0560700C2C39B /* SpoonacularService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B62BD0560700C2C39B /* SpoonacularService.swift */; };
 		5C15B5BA2BD0597500C2C39B /* tenDayBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B92BD0597500C2C39B /* tenDayBlock.swift */; };
 		5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5BB2BD05E0600C2C39B /* Calend.swift */; };
+		5C1CFCE82BD0DF3100163838 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C1CFCE72BD0DF3100163838 /* Config.plist */; };
 		5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F52BCB247500E4A070 /* ColorExtension.swift */; };
 		5C1E61F82BCB24B100E4A070 /* NutritionGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F72BCB24B100E4A070 /* NutritionGraph.swift */; };
 		5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F92BCB258A00E4A070 /* NutritionBar.swift */; };
@@ -67,9 +68,10 @@
 /* Begin PBXFileReference section */
 		5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditor.swift; sourceTree = "<group>"; };
 		5C15B5B42BCFAF7F00C2C39B /* journal.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = journal.json; sourceTree = "<group>"; };
-		5C15B5B62BD0560700C2C39B /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		5C15B5B62BD0560700C2C39B /* SpoonacularService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoonacularService.swift; sourceTree = "<group>"; };
 		5C15B5B92BD0597500C2C39B /* tenDayBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tenDayBlock.swift; sourceTree = "<group>"; };
 		5C15B5BB2BD05E0600C2C39B /* Calend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calend.swift; sourceTree = "<group>"; };
+		5C1CFCE72BD0DF3100163838 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		5C1E61F52BCB247500E4A070 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		5C1E61F72BCB24B100E4A070 /* NutritionGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionGraph.swift; sourceTree = "<group>"; };
 		5C1E61F92BCB258A00E4A070 /* NutritionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionBar.swift; sourceTree = "<group>"; };
@@ -161,6 +163,14 @@
 			path = CalendarView;
 			sourceTree = "<group>";
 		};
+		5C1CFCE02BD0967800163838 /* APICallService */ = {
+			isa = PBXGroup;
+			children = (
+				5C15B5B62BD0560700C2C39B /* SpoonacularService.swift */,
+			);
+			path = APICallService;
+			sourceTree = "<group>";
+		};
 		5C1E61F42BCB246300E4A070 /* NutritionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,14 +196,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5C1E62122BCB4EFD00E4A070 /* Service */ = {
+		5C1E62122BCB4EFD00E4A070 /* DBService */ = {
 			isa = PBXGroup;
 			children = (
 				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
-				5C15B5B62BD0560700C2C39B /* APIService.swift */,
 			);
-			path = Service;
+			path = DBService;
 			sourceTree = "<group>";
 		};
 		5C1E62182BCC3EF200E4A070 /* Models */ = {
@@ -236,6 +245,7 @@
 		5C91F54E2BC5DE4600AEDC89 = {
 			isa = PBXGroup;
 			children = (
+				5C1CFCE72BD0DF3100163838 /* Config.plist */,
 				5C1E62212BCC498800E4A070 /* Docs */,
 				5C91F5592BC5DE4600AEDC89 /* MacroMonkey */,
 				5C91F56A2BC5DE4800AEDC89 /* MacroMonkeyTests */,
@@ -257,11 +267,12 @@
 		5C91F5592BC5DE4600AEDC89 /* MacroMonkey */ = {
 			isa = PBXGroup;
 			children = (
+				5C1CFCE02BD0967800163838 /* APICallService */,
 				5C15B5B32BCFAF5B00C2C39B /* TestData */,
 				5C1E62282BCCBD5200E4A070 /* API */,
 				5C1E62182BCC3EF200E4A070 /* Models */,
 				5C1E61FC2BCB2BFE00E4A070 /* GoogleService-Info.plist */,
-				5C1E62122BCB4EFD00E4A070 /* Service */,
+				5C1E62122BCB4EFD00E4A070 /* DBService */,
 				5C1E61FB2BCB29D200E4A070 /* Views */,
 				5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */,
 				5C1E621D2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift */,
@@ -429,6 +440,7 @@
 				5C91F5622BC5DE4800AEDC89 /* Preview Assets.xcassets in Resources */,
 				5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */,
 				5C1E61FD2BCB2BFE00E4A070 /* GoogleService-Info.plist in Resources */,
+				5C1CFCE82BD0DF3100163838 /* Config.plist in Resources */,
 				5C15B5B52BCFAF7F00C2C39B /* journal.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,7 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */,
-				5C15B5B72BD0560700C2C39B /* APIService.swift in Sources */,
+				5C15B5B72BD0560700C2C39B /* SpoonacularService.swift in Sources */,
 				5C15B5BA2BD0597500C2C39B /* tenDayBlock.swift in Sources */,
 				5C91F6122BCB21A500AEDC89 /* AsyncCircleImage.swift in Sources */,
 				5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */,
