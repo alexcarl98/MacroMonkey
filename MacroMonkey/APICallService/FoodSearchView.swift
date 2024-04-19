@@ -8,37 +8,30 @@
 import SwiftUI
 
 struct ApiResponse: Codable {
-    var products: [Fd]
+    var results: [Fd]
 }
 
-struct apiHelper: View {
+struct FoodSearchView: View {
     @EnvironmentObject var Spoonacular: SpoonacularService
     @State private var apiKey: String = ""
     @State private var searchText = ""
     @State private var errorMessage: String?
     @State private var searchResults = [Fd]()
-    
+    @State private var isLoading: Bool = false
     
     var body: some View {
         VStack {
-            if let errorMessage = errorMessage {
-                Text("Error: \(errorMessage)")
-                    .foregroundColor(.red)
-            } else {
-                Text("API Key: \(apiKey)")
-                    .padding()
-                    .border(Color.blue, width: 1)
-                    .foregroundColor(.blue)
-            }
-            Button("Load API Key") {
-                loadApiKey()
-            }
             NavigationStack {
-                List(searchResults){ result in
-                    NavigationLink{
-                        FoodDetail()
-                    } label: {
-                        Text(result.title)
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                } else {
+                    List(searchResults){ result in
+                        NavigationLink{
+                            FoodDetail()
+                        } label: {
+                            Text(result.title)
+                        }
                     }
                 }
             }
@@ -51,24 +44,9 @@ struct apiHelper: View {
         .padding()
     }
     
-    private func loadApiKey() {
-        do {
-            let key = try Config.apiKey()
-            self.apiKey = key
-            self.errorMessage = nil
-        } catch ConfigError.missingFile {
-            self.errorMessage = "The configuration file is missing."
-        } catch ConfigError.dataReadingFailed {
-            self.errorMessage = "Failed to read data from the configuration file."
-        } catch ConfigError.invalidFormat {
-            self.errorMessage = "The format of the configuration file is invalid."
-        } catch {
-            self.errorMessage = "An unknown error occurred."
-        }
-    }
-    
     func performSearch(for query: String) {
         // Invokes API Call depending on user search
+        print("Beginning Search")
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             searchResults = [Fd]()
             return
@@ -77,25 +55,31 @@ struct apiHelper: View {
         let urlString = Spoonacular.queryByFoodNameString(query)
         guard let url = URL(string: urlString) else { return }
         
+        isLoading = true  // Start loading
+        
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 let decodedResponse = try JSONDecoder().decode(ApiResponse.self, from: data)
                 // This filter function is not working, re-write it :
                 // Filter products depending on whether they have the keys 'serving_quantity' and 'nutriments'
-                let validProducts = decodedResponse.products
+                let validProducts = decodedResponse.results
                 DispatchQueue.main.async {
                     // Update to use validProducts and limit to first 5 results
                     searchResults = Array(validProducts.prefix(10))
+                    isLoading = false  // Stop loading
                 }
             } catch {
                 print("Failed to fetch data: \(error)")
+                DispatchQueue.main.async{
+                    isLoading = false  // Stop loading even on failure
+                }
             }
         }
     }
 }
 
 #Preview {
-    apiHelper()
+    FoodSearchView()
         .environmentObject(SpoonacularService())
 }

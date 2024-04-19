@@ -37,8 +37,11 @@
 		5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E622C2BCDB05300E4A070 /* Profile.swift */; };
 		5C1E622F2BCE4D4500E4A070 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E622E2BCE4D4500E4A070 /* Journal.swift */; };
 		5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62302BCF159000E4A070 /* ProfileSetup.swift */; };
+		5C1E72102BD319D500883CDC /* foodExample.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C1E720F2BD319D500883CDC /* foodExample.json */; };
+		5C1E72122BD31A1E00883CDC /* FoodAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72112BD31A1E00883CDC /* FoodAPI.swift */; };
+		5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */; };
 		5C5A343E2BCF1C1E005DE7E8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5A343D2BCF1C1E005DE7E8 /* FirebaseAuth */; };
-		5C7B735A2BD1B0BC00BBF190 /* apiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* apiHelper.swift */; };
+		5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -95,7 +98,10 @@
 		5C1E622C2BCDB05300E4A070 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		5C1E622E2BCE4D4500E4A070 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		5C1E62302BCF159000E4A070 /* ProfileSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetup.swift; sourceTree = "<group>"; };
-		5C7B73592BD1B0BC00BBF190 /* apiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiHelper.swift; sourceTree = "<group>"; };
+		5C1E720F2BD319D500883CDC /* foodExample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = foodExample.json; sourceTree = "<group>"; };
+		5C1E72112BD31A1E00883CDC /* FoodAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAPI.swift; sourceTree = "<group>"; };
+		5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyViewHelper.swift; sourceTree = "<group>"; };
+		5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -154,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				5C15B5B42BCFAF7F00C2C39B /* journal.json */,
+				5C1E720F2BD319D500883CDC /* foodExample.json */,
 			);
 			path = TestData;
 			sourceTree = "<group>";
@@ -172,7 +179,8 @@
 			children = (
 				5C15B5B62BD0560700C2C39B /* SpoonacularService.swift */,
 				5C1CFCE92BD0E12B00163838 /* APIConfigAccess.swift */,
-				5C7B73592BD1B0BC00BBF190 /* apiHelper.swift */,
+				5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */,
+				5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */,
 			);
 			path = APICallService;
 			sourceTree = "<group>";
@@ -217,6 +225,7 @@
 				5C1E62192BCC3F1C00E4A070 /* AppUser.swift */,
 				5C1E621F2BCC472600E4A070 /* Food.swift */,
 				5C1E622E2BCE4D4500E4A070 /* Journal.swift */,
+				5C1E72112BD31A1E00883CDC /* FoodAPI.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -437,6 +446,7 @@
 			files = (
 				5C91F5622BC5DE4800AEDC89 /* Preview Assets.xcassets in Resources */,
 				5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */,
+				5C1E72102BD319D500883CDC /* foodExample.json in Resources */,
 				5C1E61FD2BCB2BFE00E4A070 /* GoogleService-Info.plist in Resources */,
 				5C1CFCE82BD0DF3100163838 /* Config.plist in Resources */,
 				5C15B5B52BCFAF7F00C2C39B /* journal.json in Resources */,
@@ -482,11 +492,13 @@
 				5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */,
 				5C1E622F2BCE4D4500E4A070 /* Journal.swift in Sources */,
 				5C1E621A2BCC3F1C00E4A070 /* AppUser.swift in Sources */,
-				5C7B735A2BD1B0BC00BBF190 /* apiHelper.swift in Sources */,
+				5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */,
 				5C1E621E2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift in Sources */,
 				5C1E62202BCC472600E4A070 /* Food.swift in Sources */,
 				5C1E61F82BCB24B100E4A070 /* NutritionGraph.swift in Sources */,
 				5C1E62172BCB4F7700E4A070 /* MacroMonkeyDatabase.swift in Sources */,
+				5C1E72122BD31A1E00883CDC /* FoodAPI.swift in Sources */,
+				5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
 				5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */,
 			);

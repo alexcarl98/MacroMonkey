@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FoodDetail: View {
+    @EnvironmentObject var Spoonacular: SpoonacularService
+    
+    
     var body: some View {
         ScrollView{
             Text("Hello")

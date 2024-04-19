@@ -16,7 +16,7 @@ import Combine
  *      - ApiResponse:
  *      - existingValidFoods:
  */
-
+let FOOD_PAGE_LIMIT = 20
 
 class SpoonacularService: ObservableObject {
     private var apiKey: String
@@ -55,7 +55,7 @@ class SpoonacularService: ObservableObject {
     
     func queryByFoodNameString(_ foodsName: String) -> String {
         let query = foodsName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodsName
-        return "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=\(query)&number=12"
+        return "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=\(query)&number=\(FOOD_PAGE_LIMIT)"
     }
     
     func queryByFoodIDString(_ foodID: Int) -> String {
