@@ -49,7 +49,6 @@ class MacroMonkeyDatabase: ObservableObject {
             "name": food.name,
             "servSize": food.servSize,
             "servUnit": food.servUnit,
-            "ratio": food.ratio,
             "calories": food.nutrients.cals,
             "protein": food.nutrients.protein,
             "carbohydrates": food.nutrients.carbs,
@@ -60,14 +59,12 @@ class MacroMonkeyDatabase: ObservableObject {
                 self.error = actualError
             }
         }
-
         // If we don’t get a ref back, return an empty string to indicate “no ID.”
         return ref?.documentID ?? ""
     }
     
     func createUser(user: AppUser) -> String {
         var ref: DocumentReference? = nil
-
         // Add user document to the "users" collection
         ref = db.collection("users").addDocument(data: [
             "uid": user.uid,
@@ -163,7 +160,6 @@ class MacroMonkeyDatabase: ObservableObject {
                       let name = document.get("name") as? String,
                       let servSize = document.get("servSize") as? Float,
                       let servUnit = document.get("servUnit") as? String,
-                      let ratio = document.get("ratio") as? Float,
                       let cals = document.get("cals") as? Float,
                       let protein = document.get("protein") as? Float,
                       let carbs = document.get("carbs") as? Float,

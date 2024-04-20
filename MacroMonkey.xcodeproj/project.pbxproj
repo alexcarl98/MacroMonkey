@@ -41,7 +41,9 @@
 		5C1E72122BD31A1E00883CDC /* FoodAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72112BD31A1E00883CDC /* FoodAPI.swift */; };
 		5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */; };
 		5C1E72162BD3416A00883CDC /* MacroFoodRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */; };
+		5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72172BD345C100883CDC /* MacroValueCell.swift */; };
 		5C5A343E2BCF1C1E005DE7E8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5A343D2BCF1C1E005DE7E8 /* FirebaseAuth */; };
+		5C60D2382BD3556C0025AAF8 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C60D2372BD3556C0025AAF8 /* Entry.swift */; };
 		5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
@@ -103,6 +105,8 @@
 		5C1E72112BD31A1E00883CDC /* FoodAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAPI.swift; sourceTree = "<group>"; };
 		5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyViewHelper.swift; sourceTree = "<group>"; };
 		5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodRow.swift; sourceTree = "<group>"; };
+		5C1E72172BD345C100883CDC /* MacroValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroValueCell.swift; sourceTree = "<group>"; };
+		5C60D2372BD3556C0025AAF8 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 				5C1E61F72BCB24B100E4A070 /* NutritionGraph.swift */,
 				5C1E61F92BCB258A00E4A070 /* NutritionBar.swift */,
 				5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */,
+				5C1E72172BD345C100883CDC /* MacroValueCell.swift */,
 			);
 			path = NutritionView;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				5C1E621F2BCC472600E4A070 /* Food.swift */,
 				5C1E622E2BCE4D4500E4A070 /* Journal.swift */,
 				5C1E72112BD31A1E00883CDC /* FoodAPI.swift */,
+				5C60D2372BD3556C0025AAF8 /* Entry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -477,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C60D2382BD3556C0025AAF8 /* Entry.swift in Sources */,
 				5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */,
 				5C15B5B72BD0560700C2C39B /* SpoonacularService.swift in Sources */,
 				5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */,
@@ -504,6 +511,7 @@
 				5C1E72122BD31A1E00883CDC /* FoodAPI.swift in Sources */,
 				5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
+				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,
 				5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,7 +26,6 @@ struct Food: Hashable, Codable, Identifiable {
     var nutrients: Nutrient
     var img: String
     var isFavorite = false
-    var ratio = 1.0
 
     static let `pasta` = Food (
         id: 716429,

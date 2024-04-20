@@ -21,8 +21,6 @@ struct NutritionGraph: View {
     }
 }
 
-
-
 #Preview {
     NutritionGraph(current: [1159.0, 65, 103.0, 61.0], goals: [2500.0, 141.0, 344.0, 76.0])
 }

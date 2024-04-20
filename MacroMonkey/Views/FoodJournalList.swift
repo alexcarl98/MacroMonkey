@@ -13,7 +13,7 @@ struct FoodJournalList: View {
 
     @Binding var requestLogin: Bool
     
-    @State var foods: [Food]
+    @State var journal: Journal
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
@@ -28,15 +28,15 @@ struct FoodJournalList: View {
                         ProgressView()
                     } else if error != nil {
                         Text("Something went wrong…we wish we can say more 🤷🏽")
-                    } else if foods.count == 0 {
+                    } else if journal.entryLog.count == 0 {
                         VStack {
                             Spacer()
                             Text("There are no foods entered for today.")
                             Spacer()
                         }
                     } else {
-                        List(foods) { food in
-                            Text(food.name)
+                        List(journal.entryLog) { entry in
+                            Text(entry.food.name)
     //                        NavigationLink {
     //                            ArticleDetail(article: article)
     //                        } label: {
@@ -80,14 +80,14 @@ struct FoodJournalList: View {
                 fetching = true
 
                 do {
-                    foods = try await databaseService.fetchFoods()
+                    // SEE TODO.md
+//                    foods = try await databaseService.fetchFoods()
                     fetching = false
                 } catch {
                     self.error = error
                     fetching = false
                 }
             }
-        
         }
 }
 
@@ -96,8 +96,7 @@ struct FoodJournalList_Previews: PreviewProvider {
     @State static var requestLogin = false
 
     static var previews: some View {
-    
-        FoodJournalList(requestLogin: $requestLogin, foods: [])
+        FoodJournalList(requestLogin: $requestLogin, journal: Journal.default )
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
     }
