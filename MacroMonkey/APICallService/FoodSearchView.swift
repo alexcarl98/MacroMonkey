@@ -13,7 +13,7 @@ struct ApiResponse: Codable {
 
 struct FoodSearchView: View {
     @EnvironmentObject var Spoonacular: SpoonacularService
-    @State private var apiKey: String = ""
+//    @State private var apiKey: String = ""
     @State private var searchText = ""
     @State private var errorMessage: String?
     @State private var searchResults = [Fd]()
@@ -28,7 +28,7 @@ struct FoodSearchView: View {
                 } else {
                     List(searchResults){ result in
                         NavigationLink{
-                            FoodDetail()
+                            FoodDetail(foodID: result.id)
                         } label: {
                             Text(result.title)
                         }
@@ -46,7 +46,6 @@ struct FoodSearchView: View {
     
     func performSearch(for query: String) {
         // Invokes API Call depending on user search
-        print("Beginning Search")
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             searchResults = [Fd]()
             return
@@ -70,7 +69,6 @@ struct FoodSearchView: View {
                     isLoading = false  // Stop loading
                 }
             } catch {
-                print("Failed to fetch data: \(error)")
                 DispatchQueue.main.async{
                     isLoading = false  // Stop loading even on failure
                 }

@@ -49,6 +49,7 @@ class MacroMonkeyDatabase: ObservableObject {
             "name": food.name,
             "servSize": food.servSize,
             "servUnit": food.servUnit,
+            "ratio": food.ratio,
             "calories": food.nutrients.cals,
             "protein": food.nutrients.protein,
             "carbohydrates": food.nutrients.carbs,
@@ -162,7 +163,7 @@ class MacroMonkeyDatabase: ObservableObject {
                       let name = document.get("name") as? String,
                       let servSize = document.get("servSize") as? Float,
                       let servUnit = document.get("servUnit") as? String,
-                      let isFavorite = document.get("isFavorite") as? Bool,
+                      let ratio = document.get("ratio") as? Float,
                       let cals = document.get("cals") as? Float,
                       let protein = document.get("protein") as? Float,
                       let carbs = document.get("carbs") as? Float,
@@ -171,15 +172,16 @@ class MacroMonkeyDatabase: ObservableObject {
                     throw FoodServiceError.mismatchedDocumentError
                 }
 
-                return Food(
-                    id: id,
-                    name: name,
-                    servSize: servSize,
-                    servUnit: servUnit,
-                    isFavorite: isFavorite,
-                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
-                    img: img
-                )
+//                return Food (
+//                    id: id,
+//                    name: name,
+//                    servSize: servSize,
+//                    servUnit: servUnit,
+//                    ratio: ratio,
+//                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
+//                    img: img
+//                )
+                return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats), img: img)
             }
         }
     

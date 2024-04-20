@@ -24,8 +24,11 @@ struct Journal: Hashable, Codable, Identifiable {
         return totals
     }
     
-    func removeFoodByIndex(_ index:Int) {
-        // So to get around this, I'll be removing by the index in the foodlog
-        
+    mutating func removeFoodByIndex(_ index: Int) {
+        guard index >= 0 && index < foodLog.count else {
+            print("Index out of bounds")
+            return
+        }
+        foodLog.remove(at: index)
     }
 }

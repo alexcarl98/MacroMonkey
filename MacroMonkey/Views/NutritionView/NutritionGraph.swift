@@ -12,11 +12,11 @@ struct NutritionGraph: View {
     var goals: [Float]
     
     var body: some View {
-        VStack{
-            NutritionBar(macroNutrient: "Calories", amtConsumedSoFar: current[0], goalConsumption: goals[0], color: Color(hex:"#702963"))
-            NutritionBar(macroNutrient: "Protein", amtConsumedSoFar: current[1], goalConsumption: goals[1], color: Color(hex:"#009688"))
-            NutritionBar(macroNutrient: "Carbs", amtConsumedSoFar: current[2], goalConsumption: goals[2], color: Color(hex:"#4169E1"))
-            NutritionBar(macroNutrient: "Fats", amtConsumedSoFar: current[3], goalConsumption: goals[3], color: Color(hex:"#E97120"))
+        VStack {
+            NutritionBar(macroNutrient: "Calories", amtConsumedSoFar: current[0], goalConsumption: goals[0], color: CALORIES_COLOR)
+            NutritionBar(macroNutrient: "Protein", amtConsumedSoFar: current[1], goalConsumption: goals[1], color: PROTEIN_COLOR)
+            NutritionBar(macroNutrient: "Carbs", amtConsumedSoFar: current[2], goalConsumption: goals[2], color: CARBS_COLOR)
+            NutritionBar(macroNutrient: "Fats", amtConsumedSoFar: current[3], goalConsumption: goals[3], color: FATS_COLOR)
         }
     }
 }

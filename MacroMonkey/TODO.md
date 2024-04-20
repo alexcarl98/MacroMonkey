@@ -38,6 +38,11 @@ struct YourApp: App {
 ## API Calls:
 - We now have the API Working, but now we need to implement the added details
 
+## UI:
+- After the user signs in for the first time, a pop-up reveals itself and the user needs to put in the rest of their information in these fields.
+    - The problem is that this sheet is dismissible by swiping down.
+    - This makes a user with incomplete data. 
+
 ---
 
 # Notes
