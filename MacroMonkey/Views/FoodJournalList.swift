@@ -12,7 +12,6 @@ struct FoodJournalList: View {
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
 
     @Binding var requestLogin: Bool
-    
     @State var journal: Journal
     @State var error: Error?
     @State var fetching = false
@@ -28,20 +27,32 @@ struct FoodJournalList: View {
                         ProgressView()
                     } else if error != nil {
                         Text("Something went wrong…we wish we can say more 🤷🏽")
-                    } else if journal.entryLog.count == 0 {
-                        VStack {
-                            Spacer()
-                            Text("There are no foods entered for today.")
-                            Spacer()
-                        }
                     } else {
-                        List(journal.entryLog) { entry in
-                            Text(entry.food.name)
-    //                        NavigationLink {
-    //                            ArticleDetail(article: article)
-    //                        } label: {
-    //                            ArticleMetadata(article: article)
-    //                        }
+                        VStack {
+                            NavigationLink{
+                                FoodSearchView()
+                            } label:{
+                                Label("Add", systemImage: "plus")
+                            }
+                            if journal.entryLog.count == 0 {
+                                VStack {
+                                    Spacer()
+                                    Text("There are no foods entered for today.")
+                                    Spacer()
+                                }
+                            } else {
+                                List(journal.entryLog.indices, id: \.self) { index in
+    //                            Text(journal.entryLog[index].food.name)
+//                                    print(journal.entryLog[index].ratio)
+                                    let _ = print(journal.entryLog[index].ratio)
+                                    MacroFoodRow(food: journal.entryLog[index].food, ratio: $journal.entryLog[index].ratio)
+            //                        NavigationLink {
+            //                            ArticleDetail(article: article)
+            //                        } label: {
+            //                            ArticleMetadata(article: article)
+            //                        }
+                                }
+                            }
                         }
                     }
                 }
@@ -49,9 +60,7 @@ struct FoodJournalList: View {
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         if auth.user != nil {
-                            Button("New Article") {
-                                writing = true
-                            }
+                            Button("New Article") { writing = true }
                         }
                     }
 
@@ -73,12 +82,8 @@ struct FoodJournalList: View {
                     }
                 }
             }
-    //        .sheet(isPresented: $writing) {
-    //            ArticleEntry(articles: $articles, writing: $writing)
-    //        }
             .task {
                 fetching = true
-
                 do {
                     // SEE TODO.md
 //                    foods = try await databaseService.fetchFoods()

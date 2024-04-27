@@ -17,7 +17,7 @@ struct Home: View {
     var body: some View {
         if let authUI = auth.authUI {
             
-            FoodJournalList(requestLogin: $requestLogin, foods: [])
+            FoodJournalList(requestLogin: $requestLogin, journal: Journal.default)
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }

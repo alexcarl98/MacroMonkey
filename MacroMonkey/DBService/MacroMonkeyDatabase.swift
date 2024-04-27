@@ -42,7 +42,7 @@ class MacroMonkeyDatabase: ObservableObject {
 
     func createFood(food: Food) -> String {
         var ref: DocumentReference? = nil
-
+        
         // addDocument is one of those “odd” methods.
         ref = db.collection("food").addDocument(data: [
             "id": food.id,
