@@ -12,7 +12,6 @@ struct Journal: Hashable, Codable, Identifiable {
     var id: Int
     var journalDate: Date
     var entryLog = [Entry]()
-    
     func getTotalMacros() -> [Float] {
         var totals: [Float] = [0.0, 0.0, 0.0, 0.0]
         for entry in entryLog {
@@ -23,7 +22,6 @@ struct Journal: Hashable, Codable, Identifiable {
         }
         return totals
     }
-    
     mutating func removeFoodByIndex(_ index: Int) {
         guard index >= 0 && index < entryLog.count else {
             print("Index out of bounds")
@@ -31,15 +29,9 @@ struct Journal: Hashable, Codable, Identifiable {
         }
         entryLog.remove(at: index)
     }
-    
     static let `default` = Journal(
         id: 1001,
         journalDate: Date.now,
-        entryLog: [
-            Entry(
-                food: Food.pasta,
-                ratio: 1.2
-            )
-        ]
+        entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
     )
 }

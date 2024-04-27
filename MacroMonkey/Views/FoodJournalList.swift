@@ -21,7 +21,7 @@ struct FoodJournalList: View {
             //TODO : This is hardcoded, make it work with normal ass values
             NavigationView {
                 VStack {
-                    NutritionGraph(current: [1159.0, 65, 103.0, 61.0], goals: [2500.0, 141.0, 344.0, 76.0])
+                    NutritionGraph(current: journal.getTotalMacros(), goals: [2500.0, 141.0, 344.0, 76.0])
                     Divider()
                     if fetching {
                         ProgressView()
@@ -44,7 +44,7 @@ struct FoodJournalList: View {
                                 List(journal.entryLog.indices, id: \.self) { index in
     //                            Text(journal.entryLog[index].food.name)
 //                                    print(journal.entryLog[index].ratio)
-                                    let _ = print(journal.entryLog[index].ratio)
+//                                    let _ = print(journal.entryLog[index].ratio)
                                     MacroFoodRow(food: journal.entryLog[index].food, ratio: $journal.entryLog[index].ratio)
             //                        NavigationLink {
             //                            ArticleDetail(article: article)

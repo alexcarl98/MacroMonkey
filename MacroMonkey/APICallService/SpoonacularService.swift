@@ -52,7 +52,6 @@ class SpoonacularService: ObservableObject {
             }
         }.resume()
     }
-    
     func queryByFoodNameString(_ foodsName: String) -> String {
         let query = foodsName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodsName
         return "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=\(query)&number=\(FOOD_PAGE_LIMIT)"

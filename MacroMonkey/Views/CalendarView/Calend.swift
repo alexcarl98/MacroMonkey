@@ -12,11 +12,16 @@ struct Calend: View {
         VStack(spacing:0){
             ForEach(0..<3, id:\.self){ rowIndex in
                 HStack(spacing: 0) { // Adjust spacing as needed
-                    ForEach(0..<2, id:\.self){ rowIndex in
-                        tenDayBlock()
-                        Rectangle()
-                            .frame(width: 3, height: 50) // Adjust width and height as needed
-                            .foregroundColor(Color.white)
+                    if rowIndex == 1{
+                        otherDayView()
+                        anotherCalenderView()
+                    } else {
+                        ForEach(0..<2, id:\.self){ rowIndex in
+                            tenDayBlock()
+                            Rectangle()
+                                .frame(width: 3, height: 50) // Adjust width and height as needed
+                                .foregroundColor(Color.white)
+                        }
                     }
                     // around halfway, I want to make some different
                 }

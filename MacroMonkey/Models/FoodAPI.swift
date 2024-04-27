@@ -28,7 +28,6 @@ struct FoodAPI: Hashable, Codable, Identifiable {
     var title: String
     var image: String
     var nutrition: NutritionAPI
-    
     static let `pasta` = FoodAPI (
         id: 716429,
         title: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
@@ -39,12 +38,10 @@ struct FoodAPI: Hashable, Codable, Identifiable {
                 NutrientAPI(name: "Fat", amount: 16.2, unit: "g"),
                 NutrientAPI(name: "Carbohydrates", amount: 83.7, unit: "g"),
                 NutrientAPI(name: "Protein", amount: 16.84, unit: "g")
-                
             ],
             weightPerServing: WeightAPI(amount:259, unit: "g")
         )
     )
-    
     func convertToFood() -> Food{
         let cals = nutrition.nutrients.first { $0.name == "Calories" }?.amount ?? 0.0
         let protein = nutrition.nutrients.first { $0.name == "Protein" }?.amount ?? 0.0
@@ -66,4 +63,3 @@ struct FoodAPI: Hashable, Codable, Identifiable {
         )
     }
 }
-
