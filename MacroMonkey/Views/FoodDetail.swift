@@ -34,16 +34,17 @@ struct FoodDetail: View {
                         .foregroundColor(.secondary)
                     Divider()
                     Text("\(filteredNutrients[0].name): \(String(format: "%.0f", filteredNutrients[0].amount)) \(filteredNutrients[0].unit)")
-                        .frame(alignment: .leading)
+                        .frame(maxWidth: .infinity,alignment: .leading)
+                        .padding(3)
                     Text("\(filteredNutrients[1].name): \(String(format: "%.0f", filteredNutrients[1].amount)) \(filteredNutrients[1].unit)")
-                        .frame(alignment: .leading)
+                        .frame(maxWidth: .infinity,alignment: .leading)
+                        .padding(3)
                     Text("\(filteredNutrients[2].name): \(String(format: "%.0f", filteredNutrients[2].amount)) \(filteredNutrients[2].unit)")
-                        .frame(alignment: .leading)
+                        .frame(maxWidth: .infinity,alignment: .leading)
+                        .padding(3)
                     Text("\(filteredNutrients[3].name): \(String(format: "%.0f", filteredNutrients[3].amount)) \(filteredNutrients[3].unit)")
-                        .frame(alignment: .leading)
-//                    List(filteredNutrients, id: \.name) { macro in
-//                        Text("\(macro.name): \(macro.amount) \(macro.unit)")
-//                    }
+                        .frame(maxWidth: .infinity,alignment: .leading)
+                        .padding(3)
                 }
             } else if isLoading {
                 // Display a loading indicator while fetching data

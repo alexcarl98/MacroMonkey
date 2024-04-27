@@ -16,7 +16,7 @@ struct MacroFoodRow: View {
     init(food: Food, ratio: Binding<Float>) {
         self._food = State(initialValue: food)
         self._ratio = ratio
-        self._quantity = State(initialValue: food.servSize)  // Set initial quantity to food's servSize
+        self._quantity = State(initialValue: food.servSize * ratio.wrappedValue)  // Set initial quantity to food's servSize
     }
 
     private var macros: [Float] {

@@ -63,7 +63,6 @@ struct FoodJournalList: View {
                             Button("New Article") { writing = true }
                         }
                     }
-
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         if auth.user != nil {
                             Button("Sign Out") {

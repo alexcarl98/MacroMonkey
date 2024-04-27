@@ -23,4 +23,5 @@ struct ContentView: View {
     ContentView()
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
+        .environmentObject(SpoonacularService())
 }

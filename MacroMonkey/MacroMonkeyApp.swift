@@ -16,6 +16,7 @@ struct MacroMonkeyApp: App {
             ContentView()
                 .environmentObject(MacroMonkeyAuth())
                 .environmentObject(MacroMonkeyDatabase())
+                .environmentObject(SpoonacularService())
         }
     }
 }
