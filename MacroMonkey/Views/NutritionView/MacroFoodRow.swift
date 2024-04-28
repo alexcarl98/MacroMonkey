@@ -23,10 +23,10 @@ struct MacroFoodRow: View {
         // Calculate the ratio based on quantity and servSize
         ratio = quantity / food.servSize
         return [
-            food.nutrients.cals * ratio,
-            food.nutrients.protein * ratio,
-            food.nutrients.carbs * ratio,
-            food.nutrients.fats * ratio
+            food.cals * ratio,
+            food.protein * ratio,
+            food.carbs * ratio,
+            food.fats * ratio
         ]
     }
 

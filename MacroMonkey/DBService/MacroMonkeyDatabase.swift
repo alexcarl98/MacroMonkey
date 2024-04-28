@@ -49,10 +49,10 @@ class MacroMonkeyDatabase: ObservableObject {
             "name": food.name,
             "servSize": food.servSize,
             "servUnit": food.servUnit,
-            "calories": food.nutrients.cals,
-            "protein": food.nutrients.protein,
-            "carbohydrates": food.nutrients.carbs,
-            "fats": food.nutrients.fats,
+            "calories": food.cals,
+            "protein": food.protein,
+            "carbohydrates": food.carbs,
+            "fats": food.fats,
             "imgURL": food.img
         ]) { possibleError in
             if let actualError = possibleError {
@@ -177,7 +177,7 @@ class MacroMonkeyDatabase: ObservableObject {
 //                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
 //                    img: img
 //                )
-                return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats), img: img)
+                return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, cals: cals, protein: protein, carbs: carbs, fats: fats, img: img)
             }
         }
     

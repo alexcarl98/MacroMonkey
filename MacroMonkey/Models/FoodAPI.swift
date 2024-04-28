@@ -53,11 +53,10 @@ struct FoodAPI: Hashable, Codable, Identifiable {
             name: self.title,
             servSize: self.nutrition.weightPerServing.amount,
             servUnit: self.nutrition.weightPerServing.unit,
-            nutrients: Nutrient(
-                cals: cals,
-                protein: protein,
-                carbs: carbs,
-                fats: fats),
+            cals: cals,
+            protein: protein,
+            carbs: carbs,
+            fats: fats,
             img: self.image
         )
     }
