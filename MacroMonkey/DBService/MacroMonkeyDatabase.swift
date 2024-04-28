@@ -40,28 +40,7 @@ class MacroMonkeyDatabase: ObservableObject {
     // access this error and it will update if things change.
     @Published var error: Error?
 
-    func createFood(food: Food) -> String {
-        var ref: DocumentReference? = nil
-        
-        // addDocument is one of those “odd” methods.
-        ref = db.collection("foods").addDocument(data: [
-            "id": food.id,
-            "name": food.name,
-            "servSize": food.servSize,
-            "servUnit": food.servUnit,
-            "calories": food.cals,
-            "protein": food.protein,
-            "carbohydrates": food.carbs,
-            "fats": food.fats,
-            "imgURL": food.img
-        ]) { possibleError in
-            if let actualError = possibleError {
-                self.error = actualError
-            }
-        }
-        // If we don’t get a ref back, return an empty string to indicate “no ID.”
-        return ref?.documentID ?? ""
-    }
+    
     
     func createUser(user: AppUser) -> String {
         var ref: DocumentReference? = nil
@@ -148,38 +127,29 @@ class MacroMonkeyDatabase: ObservableObject {
     // Note: This is quite unsophisticated! It only gets the first PAGE_LIMIT articles.
     // In a real app, you implement pagination.
     // TODO: Finish writing the fetchArticles Function (truly a fetch foods function)
-    func fetchFoods() async throws -> [Food] {
-            let foodQuery = db.collection(COLLECTION_NAME)
-                .order(by: "id", descending: true)
-                .limit(to: PAGE_LIMIT)
-
-            let querySnapshot = try await foodQuery.getDocuments()
-
-            return try querySnapshot.documents.compactMap { document in
-                guard let id = document.get("id") as? Int,
-                      let name = document.get("name") as? String,
-                      let servSize = document.get("servSize") as? Float,
-                      let servUnit = document.get("servUnit") as? String,
-                      let cals = document.get("cals") as? Float,
-                      let protein = document.get("protein") as? Float,
-                      let carbs = document.get("carbs") as? Float,
-                      let fats = document.get("fats") as? Float,
-                      let img = document.get("img") as? String else {
-                    throw FoodServiceError.mismatchedDocumentError
-                }
-
-//                return Food (
-//                    id: id,
-//                    name: name,
-//                    servSize: servSize,
-//                    servUnit: servUnit,
-//                    ratio: ratio,
-//                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
-//                    img: img
-//                )
-                return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, cals: cals, protein: protein, carbs: carbs, fats: fats, img: img)
-            }
-        }
+//    func fetchFoods() async throws -> [Food] {
+//            let foodQuery = db.collection(COLLECTION_NAME)
+//                .order(by: "id", descending: true)
+//                .limit(to: PAGE_LIMIT)
+//
+//            let querySnapshot = try await foodQuery.getDocuments()
+//
+//            return try querySnapshot.documents.compactMap { document in
+//                guard let id = document.get("id") as? Int,
+//                      let name = document.get("name") as? String,
+//                      let servSize = document.get("servSize") as? Float,
+//                      let servUnit = document.get("servUnit") as? String,
+//                      let cals = document.get("cals") as? Float,
+//                      let protein = document.get("protein") as? Float,
+//                      let carbs = document.get("carbs") as? Float,
+//                      let fats = document.get("fats") as? Float,
+//                      let img = document.get("img") as? String else {
+//                    throw FoodServiceError.mismatchedDocumentError
+//                }
+//
+//                return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, cals: cals, protein: protein, carbs: carbs, fats: fats, img: img)
+//            }
+//        }
     
     func fetchFoodInfo(foodID: Int) async throws -> Food {
         let querySnapshot = try await db.collection("foods").whereField("id", isEqualTo: foodID).getDocuments()
@@ -218,4 +188,29 @@ class MacroMonkeyDatabase: ObservableObject {
             )
     }
     
+    func createFood(fd: Food?) -> String {
+        var ref: DocumentReference? = nil
+        
+        if let food = fd {
+            // addDocument is one of those “odd” methods.
+            ref = db.collection("foods").addDocument(data: [
+                "id": food.id,
+                "name": food.name,
+                "servingSize": food.servSize,
+                "servingUnit": food.servUnit,
+                "calories": food.cals,
+                "protein": food.protein,
+                "carbs": food.carbs,
+                "fats": food.fats,
+                "img": food.img
+            ]) { possibleError in
+                if let actualError = possibleError {
+                    self.error = actualError
+                    print("Write was not successful")
+                }
+            }
+        }
+        // If we don’t get a ref back, return an empty string to indicate “no ID.”
+        return ref?.documentID ?? ""
+    }
 }

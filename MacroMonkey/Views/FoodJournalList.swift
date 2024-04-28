@@ -10,7 +10,6 @@ import SwiftUI
 struct FoodJournalList: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
-    // TODO: Figure out why when I add to the MonkeyUser's List, it doesn't update in the UI
     @EnvironmentObject var mu: MonkeyUser
 
     @Binding var requestLogin: Bool
@@ -92,11 +91,12 @@ struct FoodJournalList: View {
     var journalFoodList: some View {
         // TODO: Get values in here to stay consistent after adding another entry log
         List(mu.journal.entryLog.indices, id: \.self) { index in
-            NavigationLink {
-                FoodDetail(image: mu.journal.entryLog[index].food.img, name: mu.journal.entryLog[index].food.name, serv: mu.journal.entryLog[index].food.servSize, unit: mu.journal.entryLog[index].food.servUnit, macros: mu.journal.entryLog[index].food.formatted_macros())
-            } label: {
+            ZStack{
                 MacroFoodRow(food: mu.journal.entryLog[index].food, ratio: $mu.journal.entryLog[index].ratio)
+                
             }
+            .background(NavigationLink("", destination:FoodDetail(image: mu.journal.entryLog[index].food.img, name: mu.journal.entryLog[index].food.name, serv: mu.journal.entryLog[index].food.servSize, unit: mu.journal.entryLog[index].food.servUnit, macros: mu.journal.entryLog[index].food.formatted_macros())).opacity(0))
+            .listRowInsets(EdgeInsets())
         }
     }
 }

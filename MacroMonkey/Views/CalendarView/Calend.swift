@@ -17,7 +17,7 @@ struct Calend: View {
                         anotherCalenderView()
                     } else {
                         ForEach(0..<2, id:\.self){ rowIndex in
-                            tenDayBlock()
+                            TenDayBlock(daysInARow: 0)
                             Rectangle()
                                 .frame(width: 3, height: 50) // Adjust width and height as needed
                                 .foregroundColor(Color.white)

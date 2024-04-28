@@ -8,7 +8,7 @@
 import Foundation
 
 struct Journal: Hashable, Codable, Identifiable {
-    var id: Int
+    var id: String
     var journalDate: Date
     var entryLog = [Entry]()
     func getTotalMacros() -> [Float] {
@@ -34,13 +34,13 @@ struct Journal: Hashable, Codable, Identifiable {
     }
     
     static let `default` = Journal(
-        id: 1001,
+        id: "1001",
         journalDate: Date.now,
         entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
     )
     
     static let `empty` = Journal(
-        id: 0,
+        id: "0",
         journalDate: Date.now
     )
     

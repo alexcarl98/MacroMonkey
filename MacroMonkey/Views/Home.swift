@@ -10,6 +10,7 @@ import SwiftUI
 struct Home: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var firebaseServices: MacroMonkeyDatabase
+    @EnvironmentObject var mu: MonkeyUser
     @State var requestLogin = false
     @State var isNewUser = false
     @State private var currentUser: AppUser = AppUser.empty
@@ -17,6 +18,7 @@ struct Home: View {
     var body: some View {
         if let authUI = auth.authUI {
             FoodJournalList(requestLogin: $requestLogin)
+//                .environmentObject(mu)
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
