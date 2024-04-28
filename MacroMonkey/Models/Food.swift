@@ -17,7 +17,6 @@ struct Nutrient: Hashable, Codable{
     static let `pasta` = Nutrient(cals: 543.36, protein: 16.84, carbs: 83.7, fats: 16.2)
 }
 
-
 struct Food: Hashable, Codable, Identifiable {
     var id: Int
     var name: String
@@ -36,4 +35,3 @@ struct Food: Hashable, Codable, Identifiable {
         img: "https://img.spoonacular.com/recipes/716429-556x370.jpg"
     )
 }
-

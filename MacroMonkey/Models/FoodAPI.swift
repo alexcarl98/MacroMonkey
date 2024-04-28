@@ -47,7 +47,6 @@ struct FoodAPI: Hashable, Codable, Identifiable {
         let protein = nutrition.nutrients.first { $0.name == "Protein" }?.amount ?? 0.0
         let carbs = nutrition.nutrients.first { $0.name == "Carbohydrates" }?.amount ?? 0.0
         let fats = nutrition.nutrients.first { $0.name == "Fat" }?.amount ?? 0.0
-
         // where name == "Calories"
         return Food(
             id: self.id,

@@ -35,9 +35,7 @@ struct Home: View {
                                         currentUser.email = auth.userEmail
                                         isNewUser = true
                                     }
-                                    
                                     print("User: \(currentUser.name)")
-                                    
                                 }
                             }
                         }

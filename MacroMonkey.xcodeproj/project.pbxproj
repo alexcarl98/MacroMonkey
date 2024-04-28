@@ -14,6 +14,7 @@
 		5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5BB2BD05E0600C2C39B /* Calend.swift */; };
 		5C160D172BDDB06D00BDA912 /* otherDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D162BDDB06D00BDA912 /* otherDayView.swift */; };
 		5C160D192BDDB32300BDA912 /* anotherCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */; };
+		5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */; };
 		5C1CFCE82BD0DF3100163838 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C1CFCE72BD0DF3100163838 /* Config.plist */; };
 		5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CFCE92BD0E12B00163838 /* APIConfigAccess.swift */; };
 		5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F52BCB247500E4A070 /* ColorExtension.swift */; };
@@ -83,6 +84,7 @@
 		5C15B5BB2BD05E0600C2C39B /* Calend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calend.swift; sourceTree = "<group>"; };
 		5C160D162BDDB06D00BDA912 /* otherDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherDayView.swift; sourceTree = "<group>"; };
 		5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = anotherCalenderView.swift; sourceTree = "<group>"; };
+		5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyUser.swift; sourceTree = "<group>"; };
 		5C1CFCE72BD0DF3100163838 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		5C1CFCE92BD0E12B00163838 /* APIConfigAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfigAccess.swift; sourceTree = "<group>"; };
 		5C1E61F52BCB247500E4A070 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				5C1E622E2BCE4D4500E4A070 /* Journal.swift */,
 				5C1E72112BD31A1E00883CDC /* FoodAPI.swift */,
 				5C60D2372BD3556C0025AAF8 /* Entry.swift */,
+				5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				5C1E62172BCB4F7700E4A070 /* MacroMonkeyDatabase.swift in Sources */,
 				5C1E72122BD31A1E00883CDC /* FoodAPI.swift in Sources */,
 				5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */,
+				5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
 				5C160D172BDDB06D00BDA912 /* otherDayView.swift in Sources */,
 				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,

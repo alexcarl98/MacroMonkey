@@ -43,17 +43,21 @@ struct AppUser: Hashable, Codable, Identifiable {
     
     func idw() -> Float {
         // Calculation for ideal weight dependent on height
+        // TODO: add an if statement for `if sex == "Female"{}
         let lb_kg_convert = 2.20462
+        let height_over_five = height - 60.0
         if (height < 60){
             return Float(52.0 * lb_kg_convert)
         }
-        let height_over_five = height - 60.0
         return Float((52.0 + (1.9*Double(height_over_five)))*lb_kg_convert)
     }
     
     func bmr() -> Float {
         // Calculation for Basal Metabolic Rate [# of calories to eat to stay at current weight]
-        return ((6.23762 * weight) + (12.7084 * height) - (6.755 * Float(age)))*activityLvlMultiplier[level]
+        if sex == "Male" {
+            return (88.362 + (6.08 * weight) + (12.19 * height) - (5.677 * Float(age)))*activityLvlMultiplier[level]
+        }
+        return (444.592 + (4.19 * weight) + (7.87 * height) - (4.33 * Float(age)))*activityLvlMultiplier[level]
     }
     
     func goalCaloricIntake() -> Float{
