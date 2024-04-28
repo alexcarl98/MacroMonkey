@@ -21,6 +21,10 @@ struct Food: Hashable, Codable, Identifiable {
     var img: String
     var isFavorite = false
     
+    func formatted_macros() -> [Float] {
+        return [cals, fats, carbs, protein]
+    }
+    
     static let `pasta` = Food (
         id: 716429,
         name: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",

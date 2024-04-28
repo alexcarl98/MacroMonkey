@@ -20,11 +20,19 @@ struct NutrientAPI: Hashable, Codable{
 struct WeightAPI: Hashable, Codable{
     var amount: Float
     var unit: String
+    
+    func formatted() -> String {
+        return "Serving Size: \(String(format: "%.0f", amount)) \(unit)"
+    }
 }
 
 struct NutritionAPI: Hashable, Codable {
     var nutrients: [NutrientAPI]
     var weightPerServing: WeightAPI
+    
+    func formatted() -> [Float] {
+        return [nutrients[0].amount, nutrients[1].amount, nutrients[2].amount, nutrients[3].amount]
+    }
 }
 
 struct FoodAPI: Hashable, Codable, Identifiable {

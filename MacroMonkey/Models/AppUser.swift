@@ -77,7 +77,7 @@ struct AppUser: Hashable, Codable, Identifiable {
     
     static let `default` = AppUser (
         id: "12345",
-        uid: "91JqW2pm3DZioPnC1dW9Bv8JYf02",
+        uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
         name: "John Hanz",
         email: "jghanz1987@gmail.com",
         level: 2,

@@ -9,7 +9,7 @@ import Foundation
 
 import Firebase
 
-let COLLECTION_NAME = "foods"
+let COLLECTION_NAME = "food"
 let USER_COLLECTION_NAME = "user"
 let PAGE_LIMIT = 20
 
@@ -167,6 +167,16 @@ class MacroMonkeyDatabase: ObservableObject {
                       let img = document.get("img") as? String else {
                     throw FoodServiceError.mismatchedDocumentError
                 }
+
+//                return Food (
+//                    id: id,
+//                    name: name,
+//                    servSize: servSize,
+//                    servUnit: servUnit,
+//                    ratio: ratio,
+//                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
+//                    img: img
+//                )
                 return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, cals: cals, protein: protein, carbs: carbs, fats: fats, img: img)
             }
         }
@@ -180,27 +190,30 @@ class MacroMonkeyDatabase: ObservableObject {
             print("No document found with the specified UID")
             return Food.empty
         }
+        
         // Using nil-coalescing operator to ensure no property ends up being nil. Defaulting to an empty string if nil.
-        let cals = documentSnapshot.get("calories") as? Float ?? 0.0
-        let carbs = documentSnapshot.get("carbs") as? Float ?? 0.0
-        let fats = documentSnapshot.get("fats") as? Float ?? 0.0
+        let cals = documentSnapshot.get("calories") as? Double ?? 0.0
+        let carbs = documentSnapshot.get("carbs") as? Double ?? 0.0
+        let fats = documentSnapshot.get("fats") as? Double ?? 0.0
         let id = documentSnapshot.get("id") as? Int ?? 0
         let img = documentSnapshot.get("img") as? String ?? ""
         let name = documentSnapshot.get("name") as? String ?? ""
-        let protein = documentSnapshot.get("protein") as? Float ?? 0.0
+        let protein = documentSnapshot.get("protein") as? Double ?? 0.0
         let servSize = documentSnapshot.get("servingSize") as? Float ?? 0.0
-        let servUnit = documentSnapshot.get("servUnit") as? String ?? ""
+        let servUnit = documentSnapshot.get("servingUnit") as? String ?? ""
         
-        print("Successfully retrieved user:")
+        
+        
+        print("Successfully retrieved food:")
         return Food(
             id: id,
             name: name,
             servSize: servSize,
             servUnit: servUnit,
-            cals: cals,
-            protein: protein,
-            carbs: carbs,
-            fats: fats,
+            cals: Float(cals),
+            protein: Float(protein),
+            carbs: Float(carbs),
+            fats: Float(fats),
             img: img
             )
     }

@@ -15,6 +15,8 @@
 		5C160D172BDDB06D00BDA912 /* otherDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D162BDDB06D00BDA912 /* otherDayView.swift */; };
 		5C160D192BDDB32300BDA912 /* anotherCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */; };
 		5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */; };
+		5C1710D72BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */; };
+		5C1710D92BDE21DC005123E6 /* FoodDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1710D82BDE21DC005123E6 /* FoodDetail.swift */; };
 		5C1CFCE82BD0DF3100163838 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C1CFCE72BD0DF3100163838 /* Config.plist */; };
 		5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CFCE92BD0E12B00163838 /* APIConfigAccess.swift */; };
 		5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E61F52BCB247500E4A070 /* ColorExtension.swift */; };
@@ -36,7 +38,7 @@
 		5C1E62202BCC472600E4A070 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621F2BCC472600E4A070 /* Food.swift */; };
 		5C1E62252BCCA49300E4A070 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62242BCCA49300E4A070 /* Home.swift */; };
 		5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */; };
-		5C1E622A2BCCBDC700E4A070 /* FoodDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62292BCCBDC700E4A070 /* FoodDetail.swift */; };
+		5C1E622A2BCCBDC700E4A070 /* FoodAPIDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62292BCCBDC700E4A070 /* FoodAPIDetail.swift */; };
 		5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E622C2BCDB05300E4A070 /* Profile.swift */; };
 		5C1E622F2BCE4D4500E4A070 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E622E2BCE4D4500E4A070 /* Journal.swift */; };
 		5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62302BCF159000E4A070 /* ProfileSetup.swift */; };
@@ -85,6 +87,8 @@
 		5C160D162BDDB06D00BDA912 /* otherDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherDayView.swift; sourceTree = "<group>"; };
 		5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = anotherCalenderView.swift; sourceTree = "<group>"; };
 		5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyUser.swift; sourceTree = "<group>"; };
+		5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyDBHelperView.swift; sourceTree = "<group>"; };
+		5C1710D82BDE21DC005123E6 /* FoodDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetail.swift; sourceTree = "<group>"; };
 		5C1CFCE72BD0DF3100163838 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		5C1CFCE92BD0E12B00163838 /* APIConfigAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfigAccess.swift; sourceTree = "<group>"; };
 		5C1E61F52BCB247500E4A070 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -103,7 +107,7 @@
 		5C1E62232BCC4BF400E4A070 /* pitch.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = pitch.md; sourceTree = "<group>"; };
 		5C1E62242BCCA49300E4A070 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodJournalList.swift; sourceTree = "<group>"; };
-		5C1E62292BCCBDC700E4A070 /* FoodDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetail.swift; sourceTree = "<group>"; };
+		5C1E62292BCCBDC700E4A070 /* FoodAPIDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAPIDetail.swift; sourceTree = "<group>"; };
 		5C1E622C2BCDB05300E4A070 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		5C1E622E2BCE4D4500E4A070 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		5C1E62302BCF159000E4A070 /* ProfileSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetup.swift; sourceTree = "<group>"; };
@@ -221,7 +225,8 @@
 				5C1E621B2BCC44EC00E4A070 /* AuthenticationViewController.swift */,
 				5C1E62242BCCA49300E4A070 /* Home.swift */,
 				5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */,
-				5C1E62292BCCBDC700E4A070 /* FoodDetail.swift */,
+				5C1E62292BCCBDC700E4A070 /* FoodAPIDetail.swift */,
+				5C1710D82BDE21DC005123E6 /* FoodDetail.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 			children = (
 				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
+				5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -494,6 +500,7 @@
 			files = (
 				5C60D2382BD3556C0025AAF8 /* Entry.swift in Sources */,
 				5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */,
+				5C1710D92BDE21DC005123E6 /* FoodDetail.swift in Sources */,
 				5C15B5B72BD0560700C2C39B /* SpoonacularService.swift in Sources */,
 				5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */,
 				5C15B5BA2BD0597500C2C39B /* tenDayBlock.swift in Sources */,
@@ -504,7 +511,7 @@
 				5C91F6142BCB222700AEDC89 /* FavoriteButton.swift in Sources */,
 				5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */,
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
-				5C1E622A2BCCBDC700E4A070 /* FoodDetail.swift in Sources */,
+				5C1E622A2BCCBDC700E4A070 /* FoodAPIDetail.swift in Sources */,
 				5C1E62252BCCA49300E4A070 /* Home.swift in Sources */,
 				5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */,
 				5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */,
@@ -514,6 +521,7 @@
 				5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */,
 				5C1E72162BD3416A00883CDC /* MacroFoodRow.swift in Sources */,
 				5C1E621E2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift in Sources */,
+				5C1710D72BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift in Sources */,
 				5C1E62202BCC472600E4A070 /* Food.swift in Sources */,
 				5C1E61F82BCB24B100E4A070 /* NutritionGraph.swift in Sources */,
 				5C1E62172BCB4F7700E4A070 /* MacroMonkeyDatabase.swift in Sources */,

@@ -27,7 +27,7 @@ struct FoodSearchView: View {
                 } else {
                     List(searchResults){ result in
                         NavigationLink{
-                            FoodDetail(foodID: result.id)
+                            FoodAPIDetail(foodID: result.id)
                         } label: {
                             Text(result.title)
                         }

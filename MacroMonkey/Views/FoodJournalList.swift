@@ -10,10 +10,10 @@ import SwiftUI
 struct FoodJournalList: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
-    @EnvironmentObject var whoeverIsUsingThisMonkey: MonkeyUser
+    @EnvironmentObject var mu: MonkeyUser
 
     @Binding var requestLogin: Bool
-    @State var journal: Journal
+//    @State var journal: Journal
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
@@ -22,7 +22,7 @@ struct FoodJournalList: View {
             //TODO : This is hardcoded, make it work with normal ass values
             NavigationView {
                 VStack {
-                    NutritionGraph(current: journal.getTotalMacros(), goals: whoeverIsUsingThisMonkey.profile.goalMacros())
+                    NutritionGraph(current: mu.journal.getTotalMacros(), goals: mu.profile.goalMacros())
                     Divider()
                     if fetching {
                         ProgressView()
@@ -35,23 +35,22 @@ struct FoodJournalList: View {
                             } label:{
                                 Label("Add", systemImage: "plus")
                             }
-                            if journal.entryLog.count == 0 {
+                            if mu.journal.entryLog.count == 0 {
                                 VStack {
                                     Spacer()
                                     Text("There are no foods entered for today.")
                                     Spacer()
                                 }
                             } else {
-                                List(journal.entryLog.indices, id: \.self) { index in
+                                List(mu.journal.entryLog.indices, id: \.self) { index in
     //                            Text(journal.entryLog[index].food.name)
 //                                    print(journal.entryLog[index].ratio)
 //                                    let _ = print(journal.entryLog[index].ratio)
-                                    MacroFoodRow(food: journal.entryLog[index].food, ratio: $journal.entryLog[index].ratio)
-            //                        NavigationLink {
-            //                            ArticleDetail(article: article)
-            //                        } label: {
-            //                            ArticleMetadata(article: article)
-            //                        }
+                                    NavigationLink {
+                                        FoodDetail(image: mu.journal.entryLog[index].food.img, name: mu.journal.entryLog[index].food.name, serv: mu.journal.entryLog[index].food.servSize, unit: mu.journal.entryLog[index].food.servUnit, macros: mu.journal.entryLog[index].food.formatted_macros())
+                                    } label: {
+                                        MacroFoodRow(food: mu.journal.entryLog[index].food, ratio: $mu.journal.entryLog[index].ratio)
+                                    }
                                 }
                             }
                         }
@@ -101,7 +100,7 @@ struct FoodJournalList_Previews: PreviewProvider {
     @State static var requestLogin = false
 
     static var previews: some View {
-        FoodJournalList(requestLogin: $requestLogin, journal: Journal.default)
+        FoodJournalList(requestLogin: $requestLogin)
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
         .environmentObject(MonkeyUser())
