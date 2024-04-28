@@ -13,7 +13,6 @@ struct ApiResponse: Codable {
 
 struct FoodSearchView: View {
     @EnvironmentObject var Spoonacular: SpoonacularService
-//    @State private var apiKey: String = ""
     @State private var searchText = ""
     @State private var errorMessage: String?
     @State private var searchResults = [Fd]()
@@ -43,7 +42,6 @@ struct FoodSearchView: View {
         }
         .padding()
     }
-    
     func performSearch(for query: String) {
         // Invokes API Call depending on user search
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {

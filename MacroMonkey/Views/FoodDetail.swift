@@ -8,19 +8,15 @@
 import SwiftUI
 
 struct FoodDetail: View {
+    // TODO: Change foodToDisplay into:: @State private var foodToDisplay: Food?
     @EnvironmentObject var spoonacularService: SpoonacularService
+    @EnvironmentObject var firebaseService: MacroMonkeyDatabase
     @EnvironmentObject var whoeverIsUsingThisMonkey: MonkeyUser
     @State private var foodToDisplay: FoodAPI?  // Now optional
+//    @State private var foodFromDb: Food
     @State private var isLoading: Bool = true
-    @State private var macrosToDisplay = ["Calories", "Fat", "Protein", "Carbohydrates"]
+    @State private var notInDatabase = false
     var foodID: Int
-    
-    var filteredNutrients: [NutrientAPI] {
-        guard let nutrients = foodToDisplay?.nutrition.nutrients else {
-            return []
-        }
-        return nutrients.filter { macrosToDisplay.contains($0.name) }
-    }
     
     var body: some View {
         ScrollView {
@@ -34,18 +30,14 @@ struct FoodDetail: View {
                         .font(.headline)
                         .foregroundColor(.secondary)
                     Divider()
-                    Text("\(filteredNutrients[0].name): \(String(format: "%.0f", filteredNutrients[0].amount)) \(filteredNutrients[0].unit)")
-                        .frame(maxWidth: .infinity,alignment: .leading)
-                        .padding(3)
-                    Text("\(filteredNutrients[1].name): \(String(format: "%.0f", filteredNutrients[1].amount)) \(filteredNutrients[1].unit)")
-                        .frame(maxWidth: .infinity,alignment: .leading)
-                        .padding(3)
-                    Text("\(filteredNutrients[2].name): \(String(format: "%.0f", filteredNutrients[2].amount)) \(filteredNutrients[2].unit)")
-                        .frame(maxWidth: .infinity,alignment: .leading)
-                        .padding(3)
-                    Text("\(filteredNutrients[3].name): \(String(format: "%.0f", filteredNutrients[3].amount)) \(filteredNutrients[3].unit)")
-                        .frame(maxWidth: .infinity,alignment: .leading)
-                        .padding(3)
+                    ForEach(0...3, id:\.self){ macroIndex in
+                        HStack{
+                            Text(food.nutrition.nutrients[macroIndex].formatted())
+                                .frame(maxWidth: .infinity,alignment: .leading)
+                                .padding(3)
+                            Spacer()
+                        }
+                    }
                 }
             } else if isLoading {
                 // Display a loading indicator while fetching data
@@ -58,17 +50,16 @@ struct FoodDetail: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            isLoading = true  // Start loading
+            isLoading = true
             performSearch(for: foodID)
         }
     }
-    func addFoodToCurrentJournal(){
-        // Check if food is already in firestore Database
-        
-    }
 
     func performSearch(for query: Int) {
-        // NOTE: There are no errors from the urlString, it's retrieving the correct string (tested in Postman)
+        // TODO: First check whether food info is in the firestore
+        // foodFromDb = try firestoreService.fetchFoodInfo(foodID: query)
+        // if that doesn't work, then do the API Call
+        
         let urlString = spoonacularService.queryByFoodIDString(query)
 
         guard let url = URL(string: urlString) else {
@@ -81,15 +72,9 @@ struct FoodDetail: View {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
                 let decodedResponse = try JSONDecoder().decode(FoodAPI.self, from: data)
-                
-//                if let jsonString = String(data: data, encoding: .utf8) {
-//                    print("JSON String: \(jsonString)")
-//                } else{
-//                    print("decoded")
-//                }
-                
                 DispatchQueue.main.async {
                     foodToDisplay = decodedResponse
+                    foodToDisplay?.filterFood()
                     isLoading = false  // Stop loading
                 }
             } catch {
@@ -106,4 +91,5 @@ struct FoodDetail: View {
     FoodDetail(foodID: 716429)
         .environmentObject(SpoonacularService())
         .environmentObject(MonkeyUser())
+        .environmentObject(MacroMonkeyDatabase())
 }

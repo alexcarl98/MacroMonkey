@@ -32,4 +32,16 @@ struct Food: Hashable, Codable, Identifiable {
         fats: 16.2,
         img: "https://img.spoonacular.com/recipes/716429-556x370.jpg"
     )
+    
+    static let `empty` = Food (
+        id: 0,
+        name: "Nothing",
+        servSize: 0.0,
+        servUnit: "g",
+        cals: 0.0,
+        protein: 0.0,
+        carbs: 0.0,
+        fats: 0.0,
+        img: "https://upload.wikimedia.org/wikipedia/commons/1/18/Color-white.JPG"
+    )
 }

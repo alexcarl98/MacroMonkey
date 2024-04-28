@@ -9,7 +9,7 @@ import Foundation
 
 import Firebase
 
-let COLLECTION_NAME = "food"
+let COLLECTION_NAME = "foods"
 let USER_COLLECTION_NAME = "user"
 let PAGE_LIMIT = 20
 
@@ -44,7 +44,7 @@ class MacroMonkeyDatabase: ObservableObject {
         var ref: DocumentReference? = nil
         
         // addDocument is one of those “odd” methods.
-        ref = db.collection("food").addDocument(data: [
+        ref = db.collection("foods").addDocument(data: [
             "id": food.id,
             "name": food.name,
             "servSize": food.servSize,
@@ -167,18 +167,42 @@ class MacroMonkeyDatabase: ObservableObject {
                       let img = document.get("img") as? String else {
                     throw FoodServiceError.mismatchedDocumentError
                 }
-
-//                return Food (
-//                    id: id,
-//                    name: name,
-//                    servSize: servSize,
-//                    servUnit: servUnit,
-//                    ratio: ratio,
-//                    nutrients: Nutrient(cals: cals, protein: protein, carbs: carbs, fats: fats),
-//                    img: img
-//                )
                 return Food(id: id, name: name, servSize: servSize, servUnit: servUnit, cals: cals, protein: protein, carbs: carbs, fats: fats, img: img)
             }
         }
+    
+    func fetchFoodInfo(foodID: Int) async throws -> Food {
+        let querySnapshot = try await db.collection("foods").whereField("id", isEqualTo: foodID).getDocuments()
+        
+        guard let documentSnapshot = querySnapshot.documents.first else {
+            // If no document is found, you could decide to throw an error.
+            // For the purpose of this fix, returning an AppUser with empty strings.
+            print("No document found with the specified UID")
+            return Food.empty
+        }
+        // Using nil-coalescing operator to ensure no property ends up being nil. Defaulting to an empty string if nil.
+        let cals = documentSnapshot.get("calories") as? Float ?? 0.0
+        let carbs = documentSnapshot.get("carbs") as? Float ?? 0.0
+        let fats = documentSnapshot.get("fats") as? Float ?? 0.0
+        let id = documentSnapshot.get("id") as? Int ?? 0
+        let img = documentSnapshot.get("img") as? String ?? ""
+        let name = documentSnapshot.get("name") as? String ?? ""
+        let protein = documentSnapshot.get("protein") as? Float ?? 0.0
+        let servSize = documentSnapshot.get("servingSize") as? Float ?? 0.0
+        let servUnit = documentSnapshot.get("servUnit") as? String ?? ""
+        
+        print("Successfully retrieved user:")
+        return Food(
+            id: id,
+            name: name,
+            servSize: servSize,
+            servUnit: servUnit,
+            cals: cals,
+            protein: protein,
+            carbs: carbs,
+            fats: fats,
+            img: img
+            )
+    }
     
 }

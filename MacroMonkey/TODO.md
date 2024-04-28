@@ -72,3 +72,11 @@ food
     ↳ carbs
     ↳ fats
     ↳ imgURL
+
+
+
+Question to ChatGPT:
+I want to change the `FoodDetail` below, primarily the `func performSearch(for query: Int)`. It's only querying the API, but I want it to check whether the data has already been cached in the Firestore
+
+so that it first queries the Firestore Database for an existing food that matches the id. 
+If it's not in there, then query the API. 

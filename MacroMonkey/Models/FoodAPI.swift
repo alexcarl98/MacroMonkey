@@ -11,6 +11,10 @@ struct NutrientAPI: Hashable, Codable{
     var name: String
     var amount: Float
     var unit: String
+    
+    func formatted() -> String{
+        return "\(name): \(String(format: "%.0f", amount)) \(unit)"
+    }
 }
 
 struct WeightAPI: Hashable, Codable{
@@ -42,6 +46,13 @@ struct FoodAPI: Hashable, Codable, Identifiable {
             weightPerServing: WeightAPI(amount:259, unit: "g")
         )
     )
+    mutating func filterFood() {
+        let macrosToDisplay = ["Calories", "Fat", "Protein", "Carbohydrates"]
+        var filtered = [NutrientAPI]()
+        filtered = nutrition.nutrients.filter{ macrosToDisplay.contains($0.name) }
+        nutrition.nutrients = filtered
+    }
+    
     func convertToFood() -> Food{
         let cals = nutrition.nutrients.first { $0.name == "Calories" }?.amount ?? 0.0
         let protein = nutrition.nutrients.first { $0.name == "Protein" }?.amount ?? 0.0
