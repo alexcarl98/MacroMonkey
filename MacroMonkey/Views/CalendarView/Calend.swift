@@ -8,6 +8,17 @@
 import SwiftUI
 
 struct Calend: View {
+//    var days: Int
+    var streak = [0,0,0,0,0,0]
+    
+//    init(days: Int){
+//        _days = days
+//        ForEach(0...days){
+//            
+//        }
+//        
+//    }
+    
     var body: some View {
         VStack(spacing:0){
             ForEach(0..<3, id:\.self){ rowIndex in

@@ -18,7 +18,22 @@ struct ContentView: View {
     @EnvironmentObject var spoonacularService: SpoonacularService
     @EnvironmentObject var mu: MonkeyUser
 
-    var body: some View { Home() }
+    var body: some View {
+        TabView{
+            Home()
+                .tabItem{
+                    Label("Home", systemImage: "house.fill")
+                }
+            PlanProgressView()
+                .tabItem{
+                    Label("Progress", systemImage: "chart.bar")
+                }
+            Profile()
+                .tabItem{
+                    Label("Profile", systemImage: "person.fill")
+                }
+        }
+    }
 }
 
 #Preview {

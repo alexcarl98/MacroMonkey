@@ -8,11 +8,43 @@
 import SwiftUI
 
 struct Profile: View {
+    @EnvironmentObject var mu: MonkeyUser
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            // User Profile Section
+            Section {
+                HStack {
+                    Text(mu.profile.initials) // Changed to appUser
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(width: 72, height: 72)
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [.white, Color(hex: generateColor(from: mu.profile.name)), .black]), startPoint: .top, endPoint: .bottom)
+                        )
+                        .clipShape(Circle())
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(mu.profile.name) // Changed to appUser
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .padding(.top, 4)
+                        Text(mu.profile.email) // Changed to appUser
+                            .font(.footnote)
+                            .accentColor(.gray)
+                    }
+                }
+            }
+        }
+    }
+    func generateColor(from input: String) -> String {
+        let hash = input.hashValue
+        let color = String(format: "#%06X", abs(hash) % 0xFFFFFF)
+        return color
     }
 }
 
 #Preview {
     Profile()
+        .environmentObject(MonkeyUser())
 }

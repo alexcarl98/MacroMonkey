@@ -41,6 +41,12 @@ struct AppUser: Hashable, Codable, Identifiable {
         Calendar.current.dateComponents([.day], from: dietStartDate, to: Date()).day ?? 0
     }
     
+    var heightString: String{
+        let ft = Int(self.height) % 12
+        let inch = self.height - (Float(ft) * 12.0)
+        return "\(ft)' \(String(format: "%.0f", inch))\""
+    }
+    
     func idw() -> Float {
         // Calculation for ideal weight dependent on height
         // TODO: add an if statement for `if sex == "Female"{}
