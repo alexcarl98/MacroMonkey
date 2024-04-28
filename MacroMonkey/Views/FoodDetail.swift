@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FoodDetail: View {
     @EnvironmentObject var spoonacularService: SpoonacularService
+    @EnvironmentObject var whoeverIsUsingThisMonkey: MonkeyUser
     @State private var foodToDisplay: FoodAPI?  // Now optional
     @State private var isLoading: Bool = true
     @State private var macrosToDisplay = ["Calories", "Fat", "Protein", "Carbohydrates"]
@@ -61,6 +62,10 @@ struct FoodDetail: View {
             performSearch(for: foodID)
         }
     }
+    func addFoodToCurrentJournal(){
+        // Check if food is already in firestore Database
+        
+    }
 
     func performSearch(for query: Int) {
         // NOTE: There are no errors from the urlString, it's retrieving the correct string (tested in Postman)
@@ -100,4 +105,5 @@ struct FoodDetail: View {
 #Preview {
     FoodDetail(foodID: 716429)
         .environmentObject(SpoonacularService())
+        .environmentObject(MonkeyUser())
 }

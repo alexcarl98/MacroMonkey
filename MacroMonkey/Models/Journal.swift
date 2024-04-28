@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct Journal: Hashable, Codable, Identifiable {
     var id: Int
     var journalDate: Date

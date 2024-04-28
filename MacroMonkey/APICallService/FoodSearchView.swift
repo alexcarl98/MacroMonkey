@@ -80,4 +80,5 @@ struct FoodSearchView: View {
 #Preview {
     FoodSearchView()
         .environmentObject(SpoonacularService())
+        .environmentObject(MonkeyUser())
 }

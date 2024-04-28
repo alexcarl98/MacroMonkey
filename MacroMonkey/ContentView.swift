@@ -13,7 +13,6 @@ let FATS_COLOR = Color(hex: "#E97120")
 let CARBS_COLOR = Color(hex:"#4169E1")
 
 struct ContentView: View {
-    @State private var currentUser: AppUser = AppUser.default
     var body: some View {
         Home()
     }
@@ -24,4 +23,5 @@ struct ContentView: View {
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
         .environmentObject(SpoonacularService())
+        .environmentObject(MonkeyUser())
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct FoodJournalList: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
+    @EnvironmentObject var whoeverIsUsingThisMonkey: MonkeyUser
 
     @Binding var requestLogin: Bool
     @State var journal: Journal
@@ -21,7 +22,7 @@ struct FoodJournalList: View {
             //TODO : This is hardcoded, make it work with normal ass values
             NavigationView {
                 VStack {
-                    NutritionGraph(current: journal.getTotalMacros(), goals: [2500.0, 141.0, 344.0, 76.0])
+                    NutritionGraph(current: journal.getTotalMacros(), goals: whoeverIsUsingThisMonkey.profile.goalMacros())
                     Divider()
                     if fetching {
                         ProgressView()
@@ -100,8 +101,9 @@ struct FoodJournalList_Previews: PreviewProvider {
     @State static var requestLogin = false
 
     static var previews: some View {
-        FoodJournalList(requestLogin: $requestLogin, journal: Journal.default )
+        FoodJournalList(requestLogin: $requestLogin, journal: Journal.default)
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
+        .environmentObject(MonkeyUser())
     }
 }
