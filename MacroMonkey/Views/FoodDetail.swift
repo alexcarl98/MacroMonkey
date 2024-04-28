@@ -34,6 +34,7 @@ struct FoodDetail: View {
                     Spacer()
                 }
             }
+            Spacer()
         }
     }
 }

@@ -32,11 +32,16 @@ struct MacroFoodRow: View {
 
     var body: some View {
         VStack {
-            Text(food.name)
-                .bold()
-                .padding(6)
-                .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#0090FF"), Color(hex:"#6A5ACD")]), startPoint: .top, endPoint: .bottom))
+            HStack{
+                Spacer()
+                Text(food.name)
+                    .bold()
+                    .padding(6)
+                    .foregroundColor(.white)
+                    .frame(maxWidth:.infinity)
+                Spacer()
+            }
+            .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#0090FF"), Color(hex:"#6A5ACD")]), startPoint: .top, endPoint: .bottom), in: Rectangle())
             HStack {
                 TextField("(\(food.servUnit))", value: $quantity, formatter: NumberFormatter())
                     .keyboardType(.decimalPad)

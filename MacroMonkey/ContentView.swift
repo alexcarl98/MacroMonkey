@@ -13,9 +13,7 @@ let FATS_COLOR = Color(hex: "#E97120")
 let CARBS_COLOR = Color(hex:"#4169E1")
 
 struct ContentView: View {
-    var body: some View {
-        Home()
-    }
+    var body: some View { Home() }
 }
 
 #Preview {

@@ -13,6 +13,7 @@ struct ApiResponse: Codable {
 
 struct FoodSearchView: View {
     @EnvironmentObject var Spoonacular: SpoonacularService
+    @Environment(\.presentationMode) var presentationMode
     @State private var searchText = ""
     @State private var errorMessage: String?
     @State private var searchResults = [Fd]()
@@ -20,28 +21,28 @@ struct FoodSearchView: View {
     
     var body: some View {
         VStack {
-            NavigationStack {
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else {
-                    List(searchResults){ result in
-                        NavigationLink{
-                            FoodAPIDetail(foodID: result.id)
-                        } label: {
-                            Text(result.title)
-                        }
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+            } else {
+                List(searchResults) { result in
+                    NavigationLink {
+                        FoodAPIDetail(foodID: result.id)
+                    } label: {
+                        Text(result.title)
                     }
                 }
             }
-            .searchable(text: $searchText, prompt: "Search for a food")
-            .onChange(of: searchText) {
-                searchResults = [Fd]()
-                performSearch(for: searchText)
-            }
+//            .padding()
         }
-        .padding()
+        .searchable(text: $searchText, prompt: "Search for a food")
+        .onChange(of: searchText) {
+            searchResults = []
+            performSearch(for: searchText)
+        }
     }
+
+    
     func performSearch(for query: String) {
         // Invokes API Call depending on user search
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
@@ -74,9 +75,9 @@ struct FoodSearchView: View {
         }
     }
 }
-
-#Preview {
-    FoodSearchView()
-        .environmentObject(SpoonacularService())
-        .environmentObject(MonkeyUser())
-}
+//
+//#Preview {
+//    FoodSearchView()
+//        .environmentObject(SpoonacularService())
+//        .environmentObject(MonkeyUser())
+//}

@@ -18,7 +18,7 @@ struct MacroValueCell: View {
             .font(.system(size: 14, weight: .medium, design: .rounded))
             .foregroundColor(col)
             .padding(4)
-            .background(col.opacity(0.15))
+            .background(col.opacity(0.15), in: Capsule())
             .cornerRadius(5)
     }
 }

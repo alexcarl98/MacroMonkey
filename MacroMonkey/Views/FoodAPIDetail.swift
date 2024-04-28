@@ -12,15 +12,24 @@ struct FoodAPIDetail: View {
     @EnvironmentObject var spoonacularService: SpoonacularService
     @EnvironmentObject var firebaseService: MacroMonkeyDatabase
     @EnvironmentObject var whoeverIsUsingThisMonkey: MonkeyUser
+    @Environment(\.presentationMode) var presentationMode
     @State private var foodToDisplay: FoodAPI?  // Now optional
-    @State private var foodFromDb: Food = Food.empty
     @State private var isLoading: Bool = true
     var foodID: Int
     
     var body: some View {
         ScrollView {
             if let food = foodToDisplay {
-                FoodDetail(image: food.image, name: food.title, serv: food.nutrition.weightPerServing.amount, unit: food.nutrition.weightPerServing.unit, macros: food.nutrition.formatted())
+                VStack{
+                    FoodDetail(image: food.image, name: food.title, serv: food.nutrition.weightPerServing.amount, unit: food.nutrition.weightPerServing.unit, macros: food.nutrition.formatted())
+                    Spacer()
+                    Button {
+                        addToList()
+                    } label: {
+                        Text("Add +")
+                            .font(.title)
+                    }
+                }
             } else if isLoading {
                 // Display a loading indicator while fetching data
                 ProgressView()
@@ -34,6 +43,14 @@ struct FoodAPIDetail: View {
         .onAppear {
             isLoading = true
             performSearch(for: foodID)
+        }
+    }
+    
+    func addToList(){
+        if let fd = foodToDisplay{
+            whoeverIsUsingThisMonkey.addFood(fd.convertToFood())
+            let _ = print(whoeverIsUsingThisMonkey.journal.entryLog)
+            presentationMode.wrappedValue.dismiss()
         }
     }
 
@@ -50,29 +67,6 @@ struct FoodAPIDetail: View {
 //                fetchFromSpoonacular(for: query)
 //            }
 //        }
-        let urlString = spoonacularService.queryByFoodIDString(query)
-        guard let url = URL(string: urlString) else {
-            isLoading = false
-            return
-        }
-        Task {
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let decodedResponse = try JSONDecoder().decode(FoodAPI.self, from: data)
-                DispatchQueue.main.async {
-                    foodToDisplay = decodedResponse
-                    foodToDisplay?.filterFood()
-                    isLoading = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    isLoading = false
-                    print("Error: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    func fetchFromSpoonacular(for query: Int) {
         let urlString = spoonacularService.queryByFoodIDString(query)
         guard let url = URL(string: urlString) else {
             isLoading = false

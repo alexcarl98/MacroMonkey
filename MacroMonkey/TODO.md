@@ -76,5 +76,48 @@ food
 Question to ChatGPT:
 I want to change the `FoodDetail` below, primarily the `func performSearch(for query: Int)`. It's only querying the API, but I want it to check whether the data has already been cached in the Firestore
 
-so that it first queries the Firestore Database for an existing food that matches the id. 
-If it's not in there, then query the API. 
+make a function in the `Journal` that takes in a food and adds it to the entries list:
+```swift
+// Journal.swift
+import Foundation
+
+struct Journal: Hashable, Codable, Identifiable {
+    var id: Int
+    var journalDate: Date
+    var entryLog = [Entry]()
+    func getTotalMacros() -> [Float] {
+        var totals: [Float] = [0.0, 0.0, 0.0, 0.0]
+        for entry in entryLog {
+            totals[0] += entry.calories
+            totals[1] += entry.proteins
+            totals[2] += entry.carbohydrates
+            totals[3] += entry.fats
+        }
+        return totals
+    }
+    
+    mutating func removeFoodByIndex(_ index: Int) {
+        guard index >= 0 && index < entryLog.count else {
+            print("Index out of bounds")
+            return
+        }
+        entryLog.remove(at: index)
+    }
+    
+    static let `default` = Journal(
+        id: 1001,
+        journalDate: Date.now,
+        entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
+    )
+    
+    static let `empty` = Journal(
+        id: 0,
+        journalDate: Date.now
+    )
+    
+}
+//
+```
+
+```swift
+// Entry.

@@ -25,7 +25,7 @@ class SpoonacularService: ObservableObject {
     init() {
         do {
             self.apiKey = try Config.apiKey()
-            print("Retrieved API key: \(self.apiKey)")
+
         } catch {
             self.apiKey = "default_api_key"  // Use a default or dummy API key
             print("Failed to retrieve API key, using default: \(self.apiKey)")

@@ -10,18 +10,18 @@ import SwiftUI
 struct FoodJournalList: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
+    // TODO: Figure out why when I add to the MonkeyUser's List, it doesn't update in the UI
     @EnvironmentObject var mu: MonkeyUser
 
     @Binding var requestLogin: Bool
-//    @State var journal: Journal
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
     
     var body: some View {
-            //TODO : This is hardcoded, make it work with normal ass values
-            NavigationView {
+            NavigationStack {
                 VStack {
+                    // TODO: Get this to stay consistent to reflect mu.journal values
                     NutritionGraph(current: mu.journal.getTotalMacros(), goals: mu.profile.goalMacros())
                     Divider()
                     if fetching {
@@ -30,11 +30,7 @@ struct FoodJournalList: View {
                         Text("Something went wrong…we wish we can say more 🤷🏽")
                     } else {
                         VStack {
-                            NavigationLink{
-                                FoodSearchView()
-                            } label:{
-                                Label("Add", systemImage: "plus")
-                            }
+                            foodSearchLink
                             if mu.journal.entryLog.count == 0 {
                                 VStack {
                                     Spacer()
@@ -42,16 +38,7 @@ struct FoodJournalList: View {
                                     Spacer()
                                 }
                             } else {
-                                List(mu.journal.entryLog.indices, id: \.self) { index in
-    //                            Text(journal.entryLog[index].food.name)
-//                                    print(journal.entryLog[index].ratio)
-//                                    let _ = print(journal.entryLog[index].ratio)
-                                    NavigationLink {
-                                        FoodDetail(image: mu.journal.entryLog[index].food.img, name: mu.journal.entryLog[index].food.name, serv: mu.journal.entryLog[index].food.servSize, unit: mu.journal.entryLog[index].food.servUnit, macros: mu.journal.entryLog[index].food.formatted_macros())
-                                    } label: {
-                                        MacroFoodRow(food: mu.journal.entryLog[index].food, ratio: $mu.journal.entryLog[index].ratio)
-                                    }
-                                }
+                                journalFoodList
                             }
                         }
                     }
@@ -79,13 +66,12 @@ struct FoodJournalList: View {
                             }
                         }
                     }
+                    
                 }
             }
             .task {
                 fetching = true
                 do {
-                    // SEE TODO.md
-//                    foods = try await databaseService.fetchFoods()
                     fetching = false
                 } catch {
                     self.error = error
@@ -93,6 +79,26 @@ struct FoodJournalList: View {
                 }
             }
         }
+    var foodSearchLink: some View{
+        Group {
+            NavigationLink {
+                FoodSearchView()
+            } label:{
+                Label("Add", systemImage: "plus")
+            }
+        }
+    }
+    
+    var journalFoodList: some View {
+        // TODO: Get values in here to stay consistent after adding another entry log
+        List(mu.journal.entryLog.indices, id: \.self) { index in
+            NavigationLink {
+                FoodDetail(image: mu.journal.entryLog[index].food.img, name: mu.journal.entryLog[index].food.name, serv: mu.journal.entryLog[index].food.servSize, unit: mu.journal.entryLog[index].food.servUnit, macros: mu.journal.entryLog[index].food.formatted_macros())
+            } label: {
+                MacroFoodRow(food: mu.journal.entryLog[index].food, ratio: $mu.journal.entryLog[index].ratio)
+            }
+        }
+    }
 }
 
 

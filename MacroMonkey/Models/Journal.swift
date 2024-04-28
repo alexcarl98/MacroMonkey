@@ -27,8 +27,12 @@ struct Journal: Hashable, Codable, Identifiable {
             print("Index out of bounds")
             return
         }
-        entryLog.remove(at: index)
+        self.entryLog.remove(at: index)
     }
+    mutating func addFoodEntry(_ food: Food){
+        self.entryLog.append(Entry(food: food, ratio: 1.0))
+    }
+    
     static let `default` = Journal(
         id: 1001,
         journalDate: Date.now,
