@@ -172,23 +172,51 @@ class MacroMonkeyDatabase: ObservableObject {
         // If we don’t get a ref back, return an empty string to indicate “no ID.”
         return ref?.documentID ?? ""
     }
-    
-    func fetchJournalEntries(journalRef: DocumentReference) async throws -> [Entry] {
-        let querySnapshot = try await journalRef.collection("entryLog").getDocuments()
-        var entries = [Entry]()
+
+    func writeFBEntry(journalID: String, en: FBEntry?) -> String {
+        var ref: DocumentReference? = nil
         
-        for document in querySnapshot.documents {
-            let foodId = document.get("foodId") as? Int ?? 0
-            let ratio = document.get("ratio") as? Float ?? 0.0
-            let time = (document.get("time") as? Timestamp)?.dateValue() ?? Date()
-            
-            let food = try await fetchFoodInfo(foodID: foodId)
-            entries.append(Entry(food: food, ratio: ratio, time: time))
+        if let entry = en {
+            // addDocument is one of those “odd” methods.
+            ref = db.collection("foods").addDocument(data: [
+                "date": Timestamp(date: entry.time),
+                "foodID": entry.foodID,
+                "jid": journalID,
+                "ratio": entry.ratio
+            ]) { possibleError in
+                if let actualError = possibleError {
+                    self.error = actualError
+                    print("Write was not successful")
+                }
+            }
         }
-        return entries
+        // If we don’t get a ref back, return an empty string to indicate “no ID.”
+        return ref?.documentID ?? ""
     }
     
-    func fetchJournal(by uid: String, journalDate: Date) async throws -> Journal {
+    func fetchJournalEntries(journalID: String) async throws -> [FBEntry] {
+        let querySnapshot = try await db.collection("entryLog").whereField("jid", isEqualTo: journalID).getDocuments()
+        
+        return try querySnapshot.documents.map {
+            // This is likely new Swift for you: type conversion is conditional, so they
+            // must be guarded in case they fail.
+            guard let jid = $0.get("jid") as? String,
+                let dateAsTimestamp = $0.get("date") as? Timestamp,
+                let ratio = $0.get("ratio") as? Double,
+                let foodID = $0.get("foodID") as? Int else {
+                throw ArticleServiceError.mismatchedDocumentError
+            }
+            return FBEntry(
+                jid: jid,
+                foodID: foodID,
+                ratio: Float(ratio),
+                time: dateAsTimestamp.dateValue(),
+                id: $0.documentID
+            )
+        }
+    }
+    
+    func fetchJournal(by uid: String, journalDate: Date, jid: String) async throws -> Journal {
         let journalDateString = formatDate(date: journalDate)
         let journalTimestamp = journalDate.timeIntervalSince1970
         
@@ -198,9 +226,8 @@ class MacroMonkeyDatabase: ObservableObject {
         }
 
         // Query Firestore for the journal
-        let journalQuery = db.collection("journals")
-            .whereField("uid", isEqualTo: uid)
-            .whereField("journalDate", isEqualTo: journalTimestamp)
+        let journalQuery = db.collection("journals").whereField("uid", isEqualTo: uid)
+            
 
         let querySnapshot = try await journalQuery.getDocuments()
 
@@ -210,17 +237,19 @@ class MacroMonkeyDatabase: ObservableObject {
 
         let journalID = document.documentID
         let fetchedJournalDate = (document.get("journalDate") as? Timestamp)?.dateValue() ?? Date()
-        let entries = try await fetchJournalEntries(journalRef: document.reference)
+        let entries = try await fetchJournalEntries(journalID: jid)
 
-        let journal = Journal(id: journalID, journalDate: fetchedJournalDate, entryLog: entries)
+        var journal = Journal(id: journalID, journalDate: fetchedJournalDate, uid: uid, entryLog: entries)
+        journal.entryLog = try await fetchJournalEntries(journalID: journalID)
         journalCache[journalDateString] = journal  // Cache the fetched journal
 
         return journal
     }
-    func writeJournalEntries(journalRef: DocumentReference, entries: [Entry]) async throws -> String {
+    
+    func writeJournalEntries(journalID: String, entries: [FBEntry]) async throws -> String {
         // TODO: Get to also read and write from the cache
         // Fetch all current entries in the journal's 'entryLog' subcollection
-        let currentEntriesSnapshot = try await journalRef.collection("entryLog").getDocuments()
+        let currentEntriesSnapshot = try await db.collection("entryLog").whereField("jid", isEqualTo: journalID).getDocuments()
         var currentEntries = [String: DocumentSnapshot]()  // Dictionary to map time and foodId to document snapshot
 
         // Populate the dictionary with existing entries
@@ -233,25 +262,23 @@ class MacroMonkeyDatabase: ObservableObject {
 
         // Iterate over new entries to add or update
         for entry in entries {
-            let key = "\(entry.food.id)_\(entry.time.timeIntervalSince1970)"
+            let key = "\(entry.foodID)_\(entry.time)"
             if let existingDocument = currentEntries[key] {
                 // Check if ratio has changed; if so, update
                 if existingDocument.get("ratio") as? Float != entry.ratio {
                     let updateData: [String: Any] = [
-                        "ratio": entry.ratio,
-                        "foodId": entry.food.id,
-                        "time": Timestamp(date: entry.time)
+                        "ratio": entry.ratio
                     ]
                     try await existingDocument.reference.updateData(updateData)
                 }
             } else {
                 // If the entry doesn't exist, add it
                 let newData: [String: Any] = [
-                    "foodId": entry.food.id,
+                    "foodId": entry.foodID,
                     "ratio": entry.ratio,
                     "time": Timestamp(date: entry.time)
                 ]
-                let _ = journalRef.collection("entryLog").addDocument(data: newData)
+                let _ = db.collection("entryLog").addDocument(data: newData)
             }
             // Remove the processed entry from the dictionary to track entries that are no longer present
             currentEntries.removeValue(forKey: key)
@@ -262,33 +289,33 @@ class MacroMonkeyDatabase: ObservableObject {
         }
         return ""
     }
+    
     func fetchEntries(journalID: String) async throws -> [FBEntry] {
         let querySnapshot = try await db.collection("entryLog").whereField("jid", isEqualTo: journalID).getDocuments()
         
         return try querySnapshot.documents.map {
             // This is likely new Swift for you: type conversion is conditional, so they
             // must be guarded in case they fail.
-            guard let title = $0.get("title") as? String,
-                // Firestore returns Swift Dates as its own Timestamp data type.
+            guard let jid = $0.get("jid") as? String,
                 let dateAsTimestamp = $0.get("date") as? Timestamp,
-                let jid = $0.get("jid") as? String,
                 let ratio = $0.get("ratio") as? Double,
                 let foodID = $0.get("foodID") as? Int else {
                 throw ArticleServiceError.mismatchedDocumentError
             }
             return FBEntry(
-                id: $0.documentID,
-                jid: journalID,
+                jid: jid,
                 foodID: foodID,
                 ratio: Float(ratio),
-                date: dateAsTimestamp.dateValue()
+                time: dateAsTimestamp.dateValue(),
+                id: $0.documentID
             )
         }
         
     }
+
     
     
-    func writeJournal(journal: Journal, uid: String) async throws {
+    func writeJournal(journal: Journal, uid: String) async throws -> String{
         let journalDateString = formatDate(date: journal.journalDate)
         // JournalDateString formatted
         let journalTimeStamp = journal.journalDate.timeIntervalSince1970
@@ -297,11 +324,8 @@ class MacroMonkeyDatabase: ObservableObject {
         
         if journalCache[journalDateString] == nil {
             ref = db.collection("journals").addDocument(data: ["uid": uid, "journalDate": journalDateString])
-            journalCache[journalDateString] = Journal(id: journal.id, journalDate: journal.journalDate)
+            journalCache[journalDateString] = Journal(id: ref!.documentID, journalDate: journal.journalDate, uid: uid)
         }
-        
-        ref = try await db.collection("journals").whereField("uid", isEqualTo: journal.id).whereField("journalDate", isEqualTo: journalTimeStamp).getDocuments().documents.first?.reference
-        
-        let _ = try await writeJournalEntries(journalRef: ref!, entries: journal.entryLog)
+        return ref?.documentID ?? ""
     }
 }

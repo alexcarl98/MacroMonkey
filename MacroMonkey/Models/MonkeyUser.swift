@@ -25,5 +25,11 @@ class MonkeyUser: ObservableObject {
     func updateUI(){
         objectWillChange.send()
     }
+    
+    func getFood(by index: Int) -> Food {
+        objectWillChange.send()
+        return foodCache[journal.entryLog[index].foodID] ?? Food.empty
+    }
+    
 }
 

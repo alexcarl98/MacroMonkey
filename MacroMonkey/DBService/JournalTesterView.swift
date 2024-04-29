@@ -50,6 +50,7 @@ struct JournalTesterView: View {
                         Task {
                             do {
 //                                let food = try await database.fetchFoodInfo(foodID: foodID)
+                                
                                 let _ = try await database.writeJournal(journal: mu.journal, uid: mu.profile.uid)
                                 outputText = "Entry added successfully"
                             } catch {

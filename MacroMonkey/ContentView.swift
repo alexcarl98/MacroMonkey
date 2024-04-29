@@ -12,6 +12,9 @@ let PROTEIN_COLOR = Color(hex: "#009688")
 let FATS_COLOR = Color(hex: "#E97120")
 let CARBS_COLOR = Color(hex:"#4169E1")
 
+var foodCache: [Int:Food]=[:]
+var journalCache:[String: Journal]=[:]
+
 func formatDate(date: Date) -> String{
     let formatter = DateFormatter()
     formatter.dateFormat = "MM-dd-yy"

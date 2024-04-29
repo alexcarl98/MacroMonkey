@@ -10,7 +10,8 @@ import Foundation
 struct Journal: Hashable, Codable, Identifiable {
     var id: String
     var journalDate: Date
-    var entryLog = [Entry]()
+    var uid: String
+    var entryLog = [FBEntry]()
     func getTotalMacros() -> [Float] {
         var totals: [Float] = [0.0, 0.0, 0.0, 0.0]
         for entry in entryLog {
@@ -31,17 +32,20 @@ struct Journal: Hashable, Codable, Identifiable {
     }
     
     mutating func addFoodEntry(_ food: Food){
-        self.entryLog.append(Entry(food: food, ratio: 1.0))
+        self.entryLog.append(FBEntry(jid: id, foodID: food.id, ratio: 1.0))
     }
     
     static let `default` = Journal(
-        id: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
+        id: "SdOuQS0iGMpapHaHGfWw",
         journalDate: Date.now,
-        entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
+        uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
+        entryLog: [FBEntry.default]
     )
     
     static let `empty` = Journal(
         id: "0",
-        journalDate: Date.now
+        journalDate: Date.now,
+        uid: "",
+        entryLog: [FBEntry.empty]
     )
 }
