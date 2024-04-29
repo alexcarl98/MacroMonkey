@@ -26,7 +26,6 @@ struct TenDayBlock: View {
             }
         }
     }
-
     private func getColorForDay(dayIndex: Int) -> Color {
         return dayIndex < daysInARow ? .red : Color.black.opacity(0.15)
     }

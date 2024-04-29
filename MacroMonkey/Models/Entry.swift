@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Entry: Hashable, Codable {
+struct Entry: Hashable, Codable, Identifiable {
     var food: Food
     var ratio: Float
+    var id: String = ""
     var time: Date = Date.now
     var calories: Float { return food.cals * ratio }
     var proteins: Float { return food.protein * ratio }

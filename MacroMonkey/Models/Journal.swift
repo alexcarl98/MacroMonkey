@@ -29,6 +29,7 @@ struct Journal: Hashable, Codable, Identifiable {
         }
         self.entryLog.remove(at: index)
     }
+    
     mutating func addFoodEntry(_ food: Food){
         self.entryLog.append(Entry(food: food, ratio: 1.0))
     }
@@ -43,5 +44,4 @@ struct Journal: Hashable, Codable, Identifiable {
         id: "0",
         journalDate: Date.now
     )
-    
 }

@@ -73,51 +73,279 @@ food
     ↳ fats
     ↳ imgURL
 
-Question to ChatGPT:
-I want to change the `FoodDetail` below, primarily the `func performSearch(for query: Int)`. It's only querying the API, but I want it to check whether the data has already been cached in the Firestore
 
-make a function in the `Journal` that takes in a food and adds it to the entries list:
+Journal Logic:
+
+I need help with Firebase Firestore reading and writing functions in my swift app
+Within firestore, we have a collection: `journals` containing:
+- A subcollection called `entryLog` containing:
+    - `foodId`: Number value corresponding with foodID (this corresponds to a separate collection)
+    - `ratio`: The amount of that food eaten at that time
+    - `time`: The time it was documented
+- `journalDate`: time stamp of the journal's date
+- `uid`: String for user id corresponding to this specific journal
+The foodId corresponds to another collection, `foods`. I already have a fetch function for getting these foods by the corresponding `foodID`
+
+write a swift function that can read and write data to the firestore collection given the following Swift structs:
 ```swift
-// Journal.swift
 import Foundation
 
 struct Journal: Hashable, Codable, Identifiable {
-    var id: Int
+    var id: String
     var journalDate: Date
     var entryLog = [Entry]()
-    func getTotalMacros() -> [Float] {
-        var totals: [Float] = [0.0, 0.0, 0.0, 0.0]
-        for entry in entryLog {
-            totals[0] += entry.calories
-            totals[1] += entry.proteins
-            totals[2] += entry.carbohydrates
-            totals[3] += entry.fats
-        }
-        return totals
-    }
-    
-    mutating func removeFoodByIndex(_ index: Int) {
-        guard index >= 0 && index < entryLog.count else {
-            print("Index out of bounds")
-            return
-        }
-        entryLog.remove(at: index)
-    }
-    
-    static let `default` = Journal(
-        id: 1001,
-        journalDate: Date.now,
-        entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
-    )
-    
-    static let `empty` = Journal(
-        id: 0,
-        journalDate: Date.now
-    )
-    
 }
-//
+
+struct Entry: Hashable, Codable {
+    //would need to use the existing function: fetchFoodInfo(food: Int) to get this Food object as the entryLog only has the foodID string
+    var food: Food  
+    var ratio: Float
+    var time: Date = Date.now
+}
+struct Food: Hashable, Codable, Identifiable {
+    var id: Int
+    var name: String
+    var servSize: Float
+    var servUnit: String
+    var cals: Float
+    var protein: Float
+    var carbs: Float
+    var fats: Float
+    var img: String
+}
+struct AppUser: Hashable, Codable, Identifiable {
+    var id: String
+    var uid: String
+    var name: String
+    var email: String
+    var level: Int
+    var weight: Float
+    var height: Float
+    var dietStartDate: Date
+    var dob: Date
+    var completedCycles: Int
+    var goalWeightChange: Int
+    var sex: String
+    var imgID: String
+
+
+    static let `default` = AppUser (
+        id: "12345",
+        uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
+        name: "John Hanz",
+        email: "jghanz1987@gmail.com",
+        level: 2,
+        weight: 170,
+        height: 65,
+        dietStartDate: Calendar.current.date(from: DateComponents(year: 2024, month: 4, day: 1))!,
+        dob: Calendar.current.date(from: DateComponents(year: 2000, month: 1, day: 1))!,
+        completedCycles: 1,
+        goalWeightChange: -2,
+        sex: "Male",
+        imgID: ""
+    )
+}
+
 ```
 
+
+Logic Within `Home.swift`
+if `mu.journal.entryLog`.size > 0 {
+    // i.e. if a food is added for the current date:
+    
+}
+
+157106
+716429
+
 ```swift
-// Entry.
+//
+//  MacroMonkeyDatabase.swift
+//  MacroMonkey
+//
+//  Created by Alex Alvarez on 4/13/24.
+//
+
+import Foundation
+
+import Firebase
+
+let COLLECTION_NAME = "food"
+let USER_COLLECTION_NAME = "user"
+let PAGE_LIMIT = 20
+
+enum ArticleServiceError: Error {
+    case mismatchedDocumentError
+    case unexpectedError
+}
+
+enum FoodServiceError: Error {
+    case mismatchedDocumentError
+}
+
+class MacroMonkeyDatabase: ObservableObject {
+    private let db = Firestore.firestore()
+    var foodCache: [Int:Food]=[:]
+    var journalCache:[String: Journal]=[:]
+
+    // Some of the iOS Firebase library’s methods are currently a little…odd.
+    // They execute synchronously to return an initial result, but will then
+    // attempt to write to the database across the network asynchronously but
+    // not in a way that can be checked via try async/await. Instead, a
+    // callback function is invoked containing an error _if it happened_.
+    // They are almost like functions that return two results, one synchronously
+    // and another asynchronously.
+    //
+    // To deal with this, we have a published variable called `error` which gets
+    // set if a callback function comes back with an error. SwiftUI views can
+    // access this error and it will update if things change.
+    @Published var error: Error?
+    
+    func createUser(user: AppUser) -> String {
+        var ref: DocumentReference? = nil
+        // Add user document to the "users" collection
+        ref = db.collection("users").addDocument(data: [
+            "uid": user.uid,
+            "name": user.name,
+            "email": user.email,
+            "level": user.level,
+            "weight": user.weight,
+            "height": user.height,
+            "dietStartDate": Timestamp(date: user.dietStartDate),
+            "dob": Timestamp(date: user.dob),
+            "completedCycles": user.completedCycles,
+            "goalWeightChange": user.goalWeightChange,
+            "sex": user.sex,
+            "imgID": user.imgID
+        ]) { possibleError in
+            if let actualError = possibleError {
+                print("Error adding user: \(actualError.localizedDescription)")
+            }
+        }
+        // Return the document ID of the new user entry, or an empty string if no ID is available
+        return ref?.documentID ?? ""
+    }
+    func fetchUserProfile(userID: String) async throws -> AppUser {
+        let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
+        
+        guard let documentSnapshot = querySnapshot.documents.first else {
+            // If no document is found, you could decide to throw an error.
+            // For the purpose of this fix, returning an AppUser with empty strings.
+            print("No document found with the specified UID")
+            return AppUser.default
+        }
+        
+        let documentId = documentSnapshot.documentID
+        // Using nil-coalescing operator to ensure no property ends up being nil. Defaulting to an empty string if nil.
+        let uid = documentSnapshot.get("uid") as? String ?? ""
+        let dietStartDate = (documentSnapshot.get("dietStartDate") as? Timestamp)?.dateValue() ?? Date()
+        let dob =  (documentSnapshot.get("dob") as? Timestamp)?.dateValue() ?? Date()
+        let name = documentSnapshot.get("name") as? String ?? ""
+        let email = documentSnapshot.get("email") as? String ?? ""
+        let goalWeightChange = documentSnapshot.get("goalWeightChange") as? Int ?? 0
+        let level = documentSnapshot.get("level") as? Int ?? 0
+        let completedCycles = documentSnapshot.get("completedCycles") as? Int ?? 0
+        let height = documentSnapshot.get("height") as? Float ?? 0.0
+        let weight = documentSnapshot.get("weight") as? Float ?? 0.0
+        let sex = documentSnapshot.get("sex") as? String ?? ""
+        let imgID = documentSnapshot.get("imgID") as? String ?? ""
+        
+        print("Successfully retrieved user:")
+        return AppUser(
+                id: documentId,
+                uid: uid,
+                name: name,
+                email: email,
+                level: level,
+                weight: weight,
+                height: height,
+                dietStartDate: dietStartDate,
+                dob: dob,
+                completedCycles: completedCycles,
+                goalWeightChange: goalWeightChange,
+                sex: sex,
+                imgID: imgID
+            )
+    }
+    
+    func userExists(userID: String) async throws -> Bool {
+        let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
+        guard let documentSnapshot = querySnapshot.documents.first else {
+            // If no document is found, you could decide to throw an error.
+            // For the purpose of this fix, returning an AppUser with empty strings.
+            print("No document found with the specified UID")
+            return false
+        }
+        return true
+    }
+
+    func fetchFoodInfo(foodID: Int) async throws -> Food {
+        if let food = foodCache[foodID]{
+            return food
+        }
+        let querySnapshot = try await db.collection("foods").whereField("id", isEqualTo: foodID).getDocuments()
+        
+        guard let documentSnapshot = querySnapshot.documents.first else {
+            // If no document is found, you could decide to throw an error.
+            // For the purpose of this fix, returning an AppUser with empty strings.
+            print("No document found with the specified UID")
+            return Food.empty
+        }
+        
+        // Using nil-coalescing operator to ensure no property ends up being nil. Defaulting to an empty string if nil.
+        let cals = documentSnapshot.get("calories") as? Double ?? 0.0
+        let carbs = documentSnapshot.get("carbs") as? Double ?? 0.0
+        let fats = documentSnapshot.get("fats") as? Double ?? 0.0
+        let id = documentSnapshot.get("id") as? Int ?? 0
+        let img = documentSnapshot.get("img") as? String ?? ""
+        let name = documentSnapshot.get("name") as? String ?? ""
+        let protein = documentSnapshot.get("protein") as? Double ?? 0.0
+        let servSize = documentSnapshot.get("servingSize") as? Float ?? 0.0
+        let servUnit = documentSnapshot.get("servingUnit") as? String ?? ""
+        
+        print("Successfully retrieved food:")
+        foodCache[foodID] = Food(
+            id: id,
+            name: name,
+            servSize: servSize,
+            servUnit: servUnit,
+            cals: Float(cals),
+            protein: Float(protein),
+            carbs: Float(carbs),
+            fats: Float(fats),
+            img: img
+            )
+        
+        return foodCache[foodID]!
+    }
+    
+    func createFood(fd: Food?) -> String {
+        var ref: DocumentReference? = nil
+        
+        if let food = fd {
+            // addDocument is one of those “odd” methods.
+            ref = db.collection("foods").addDocument(data: [
+                "id": food.id,
+                "name": food.name,
+                "servingSize": food.servSize,
+                "servingUnit": food.servUnit,
+                "calories": food.cals,
+                "protein": food.protein,
+                "carbs": food.carbs,
+                "fats": food.fats,
+                "img": food.img
+            ]) { possibleError in
+                if let actualError = possibleError {
+                    self.error = actualError
+                    print("Write was not successful")
+                }
+            }
+            foodCache[food.id] = food
+        }
+        
+        // If we don’t get a ref back, return an empty string to indicate “no ID.”
+        return ref?.documentID ?? ""
+    }
+}
+
+```

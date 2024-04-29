@@ -12,6 +12,13 @@ let PROTEIN_COLOR = Color(hex: "#009688")
 let FATS_COLOR = Color(hex: "#E97120")
 let CARBS_COLOR = Color(hex:"#4169E1")
 
+func formatDate(date: Date) -> String{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MM-dd-yy"
+    return formatter.string(from: date)
+}
+
+
 struct ContentView: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase

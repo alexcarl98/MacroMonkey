@@ -48,6 +48,9 @@
 		5C5A343E2BCF1C1E005DE7E8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5A343D2BCF1C1E005DE7E8 /* FirebaseAuth */; };
 		5C60D2382BD3556C0025AAF8 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C60D2372BD3556C0025AAF8 /* Entry.swift */; };
 		5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */; };
+		5C8ABEB92BDF0D8A00674307 /* LittleJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */; };
+		5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */; };
+		5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -123,6 +126,9 @@
 		5C1E72172BD345C100883CDC /* MacroValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroValueCell.swift; sourceTree = "<group>"; };
 		5C60D2372BD3556C0025AAF8 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
+		5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleJournalView.swift; sourceTree = "<group>"; };
+		5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodList.swift; sourceTree = "<group>"; };
+		5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTesterView.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -225,6 +231,7 @@
 		5C1E61FB2BCB29D200E4A070 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C8ABEB72BDF0D1900674307 /* AltJournalView */,
 				5C94AEF52BDEFBDD008B00D8 /* Badges */,
 				5C15B5B82BD0595200C2C39B /* CalendarView */,
 				5C15B5B22BCFAEBE00C2C39B /* FoodSearchView */,
@@ -245,6 +252,7 @@
 				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
 				5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */,
+				5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -280,6 +288,15 @@
 				5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */,
 			);
 			path = UserProfileView;
+			sourceTree = "<group>";
+		};
+		5C8ABEB72BDF0D1900674307 /* AltJournalView */ = {
+			isa = PBXGroup;
+			children = (
+				5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */,
+				5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */,
+			);
+			path = AltJournalView;
 			sourceTree = "<group>";
 		};
 		5C91F54E2BC5DE4600AEDC89 = {
@@ -527,6 +544,8 @@
 				5C94AEFB2BDEFC2C008B00D8 /* BadgeSymbol.swift in Sources */,
 				5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */,
 				5C15B5BA2BD0597500C2C39B /* TenDayBlock.swift in Sources */,
+				5C8ABEB92BDF0D8A00674307 /* LittleJournalView.swift in Sources */,
+				5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */,
 				5C91F6122BCB21A500AEDC89 /* AsyncCircleImage.swift in Sources */,
 				5C94AEFF2BDEFC88008B00D8 /* HexagonParameters.swift in Sources */,
 				5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */,
@@ -556,6 +575,7 @@
 				5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */,
 				5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
+				5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */,
 				5C160D172BDDB06D00BDA912 /* otherDayView.swift in Sources */,
 				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,
 				5C160D192BDDB32300BDA912 /* anotherCalenderView.swift in Sources */,

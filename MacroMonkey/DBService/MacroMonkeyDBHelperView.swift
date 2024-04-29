@@ -47,7 +47,7 @@ struct MacroMonkeyDBHelperView: View {
                             do {
 
                                 let food = try await database.fetchFoodInfo(foodID: Int(foodID) ?? 0)
-                                resultMessage = "Food: \(food.name)\nCalories: \(String(food.cals))\nProtein:\(String(food.protein))\nFats:\(food.fats)\nCarbs:\(food.carbs)\nServingSize:\(food.servSize)\(food.servUnit)"
+                                resultMessage = "Food: \(food.name)\nCalories: \(String(food.cals))\nProtein:\(String(food.protein))\nFats:\(food.fats)\nCarbs:\(food.carbs)\nServingSize:\(food.servSize)\(food.servUnit)\n\nFoodCache Size:\(database.foodCache.count)"
                             } catch {
                                 resultMessage = "Error: \(error.localizedDescription)"
                             }
