@@ -35,7 +35,7 @@ struct Journal: Hashable, Codable, Identifiable {
     }
     
     static let `default` = Journal(
-        id: "1001",
+        id: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
         journalDate: Date.now,
         entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
     )

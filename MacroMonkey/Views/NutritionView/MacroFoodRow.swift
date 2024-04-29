@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MacroFoodRow: View {
+    @EnvironmentObject var mu: MonkeyUser
     @State var food: Food
     @Binding var ratio: Float
     @State private var quantity: Float
@@ -43,6 +44,7 @@ struct MacroFoodRow: View {
             }
             .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#0090FF"), Color(hex:"#6A5ACD")]), startPoint: .top, endPoint: .bottom), in: Rectangle())
             HStack {
+                
                 TextField("(\(food.servUnit))", value: $quantity, formatter: NumberFormatter())
                     .keyboardType(.decimalPad)
                     .frame(width: 50)
@@ -50,6 +52,9 @@ struct MacroFoodRow: View {
                     .background(Color.white)
                     .cornerRadius(5)
                     .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray, lineWidth: 1))
+                    .onSubmit {
+                        mu.updateUI()
+                    }
                 MacroValueCell(value: macros[0], col: CALORIES_COLOR)
                 MacroValueCell(value: macros[1], col: PROTEIN_COLOR)
                 MacroValueCell(value: macros[2], col: CARBS_COLOR)
@@ -64,6 +69,8 @@ struct MacroFoodRow: View {
             ratio = quantity / food.servSize
         }
     }
+    
+    
 }
 
 //// Preview
@@ -75,4 +82,5 @@ struct MacroFoodRow: View {
 
 #Preview {
     MacroFoodRow(food: Food.pasta, ratio: .constant(1.0))
+        .environmentObject(MonkeyUser())
 }

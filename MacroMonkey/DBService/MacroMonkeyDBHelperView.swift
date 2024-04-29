@@ -54,6 +54,7 @@ struct MacroMonkeyDBHelperView: View {
                         }
                     }
                 }
+                
                 Section(header: Text("Results")) {
                     Text(resultMessage)
                         .foregroundColor(.blue)

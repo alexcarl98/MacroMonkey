@@ -21,5 +21,9 @@ class MonkeyUser: ObservableObject {
         objectWillChange.send()
         journal.removeFoodByIndex(idx)
     }
+    
+    func updateUI(){
+        objectWillChange.send()
+    }
 }
 

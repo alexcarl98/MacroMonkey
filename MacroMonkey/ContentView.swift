@@ -18,7 +18,6 @@ func formatDate(date: Date) -> String{
     return formatter.string(from: date)
 }
 
-
 struct ContentView: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
@@ -42,6 +41,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()

@@ -14,6 +14,7 @@ struct JournalTesterView: View {
     @State private var foodID: Int = 1
     @State private var ratio: Float = 1.0
     @State private var outputText: String = "Output will be displayed here"
+    let ids = [635350, 658615, 157106, 1095931]
     
     var body: some View {
         NavigationView {
@@ -31,16 +32,25 @@ struct JournalTesterView: View {
                         }
                     }
                 }
-                Section(header: Text("Journal Entries")) {
+                Section(header: Text("Journal")){
                     DatePicker("Journal Date", selection: $journalDate, displayedComponents: .date)
-                    TextField("Food ID", value: $foodID, formatter: NumberFormatter())
-                    Slider(value: $ratio, in: 0.0...10.0, step: 0.1)
+                    HStack{
+                        Text("UserID: \(mu.profile.uid)")
+                    }
+                }
+                Section(header: Text("Entries")) {
+                    HStack {
+                        Text("Food ID: \(String(ids[0]))")
+                    }
+                    HStack {
+                        Text("Ratio:")
+                        TextField("Ratio", value: $ratio, formatter: NumberFormatter())
+                    }
                     Button("Add Entry") {
                         Task {
                             do {
-                                let food = try await database.fetchFoodInfo(foodID: foodID)
-                                let entry = Entry(food: food, ratio: ratio, time: Date.now)
-                                let _ = try await database.writeJournal(journal: mu.journal)
+//                                let food = try await database.fetchFoodInfo(foodID: foodID)
+                                let _ = try await database.writeJournal(journal: mu.journal, uid: mu.profile.uid)
                                 outputText = "Entry added successfully"
                             } catch {
                                 outputText = "Error: \(error.localizedDescription)"

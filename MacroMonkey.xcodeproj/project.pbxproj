@@ -50,6 +50,8 @@
 		5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */; };
 		5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */; };
 		5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */; };
+		5C8ABEC42BE0143300674307 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC32BE0143300674307 /* SignInView.swift */; };
+		5C8ABEC62BE04E3200674307 /* FBEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC52BE04E3200674307 /* FBEntry.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -127,6 +129,8 @@
 		5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTesterView.swift; sourceTree = "<group>"; };
 		5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBlocks.swift; sourceTree = "<group>"; };
 		5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeCellRow.swift; sourceTree = "<group>"; };
+		5C8ABEC32BE0143300674307 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		5C8ABEC52BE04E3200674307 /* FBEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBEntry.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 				5C1E72112BD31A1E00883CDC /* FoodAPI.swift */,
 				5C60D2372BD3556C0025AAF8 /* Entry.swift */,
 				5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */,
+				5C8ABEC52BE04E3200674307 /* FBEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -296,6 +301,14 @@
 			path = AltJournalView;
 			sourceTree = "<group>";
 		};
+		5C8ABEC22BE0142700674307 /* SignInView */ = {
+			isa = PBXGroup;
+			children = (
+				5C8ABEC32BE0143300674307 /* SignInView.swift */,
+			);
+			path = SignInView;
+			sourceTree = "<group>";
+		};
 		5C91F54E2BC5DE4600AEDC89 = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +334,7 @@
 		5C91F5592BC5DE4600AEDC89 /* MacroMonkey */ = {
 			isa = PBXGroup;
 			children = (
+				5C8ABEC22BE0142700674307 /* SignInView */,
 				5C1CFCE02BD0967800163838 /* APICallService */,
 				5C1E62182BCC3EF200E4A070 /* Models */,
 				5C1E61FC2BCB2BFE00E4A070 /* GoogleService-Info.plist */,
@@ -544,10 +558,12 @@
 				5C8ABEB92BDF0D8A00674307 /* LittleJournalView.swift in Sources */,
 				5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */,
 				5C91F6122BCB21A500AEDC89 /* AsyncCircleImage.swift in Sources */,
+				5C8ABEC42BE0143300674307 /* SignInView.swift in Sources */,
 				5C94AEFF2BDEFC88008B00D8 /* HexagonParameters.swift in Sources */,
 				5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */,
 				5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */,
 				5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */,
+				5C8ABEC62BE04E3200674307 /* FBEntry.swift in Sources */,
 				5C91F6142BCB222700AEDC89 /* FavoriteButton.swift in Sources */,
 				5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */,
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,

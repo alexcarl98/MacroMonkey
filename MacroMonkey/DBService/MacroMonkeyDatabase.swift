@@ -172,6 +172,7 @@ class MacroMonkeyDatabase: ObservableObject {
         // If we don’t get a ref back, return an empty string to indicate “no ID.”
         return ref?.documentID ?? ""
     }
+    
     func fetchJournalEntries(journalRef: DocumentReference) async throws -> [Entry] {
         let querySnapshot = try await journalRef.collection("entryLog").getDocuments()
         var entries = [Entry]()
@@ -186,6 +187,7 @@ class MacroMonkeyDatabase: ObservableObject {
         }
         return entries
     }
+    
     func fetchJournal(by uid: String, journalDate: Date) async throws -> Journal {
         let journalDateString = formatDate(date: journalDate)
         let journalTimestamp = journalDate.timeIntervalSince1970
@@ -215,7 +217,7 @@ class MacroMonkeyDatabase: ObservableObject {
 
         return journal
     }
-    func writeJournalEntries(journalRef: DocumentReference, entries: [Entry]) async throws {
+    func writeJournalEntries(journalRef: DocumentReference, entries: [Entry]) async throws -> String {
         // TODO: Get to also read and write from the cache
         // Fetch all current entries in the journal's 'entryLog' subcollection
         let currentEntriesSnapshot = try await journalRef.collection("entryLog").getDocuments()
@@ -258,20 +260,48 @@ class MacroMonkeyDatabase: ObservableObject {
         for (_, document) in currentEntries {
             try await document.reference.delete()
         }
+        return ""
     }
-    func writeJournal(journal: Journal) async throws {
+    func fetchEntries(journalID: String) async throws -> [FBEntry] {
+        let querySnapshot = try await db.collection("entryLog").whereField("jid", isEqualTo: journalID).getDocuments()
+        
+        return try querySnapshot.documents.map {
+            // This is likely new Swift for you: type conversion is conditional, so they
+            // must be guarded in case they fail.
+            guard let title = $0.get("title") as? String,
+                // Firestore returns Swift Dates as its own Timestamp data type.
+                let dateAsTimestamp = $0.get("date") as? Timestamp,
+                let jid = $0.get("jid") as? String,
+                let ratio = $0.get("ratio") as? Double,
+                let foodID = $0.get("foodID") as? Int else {
+                throw ArticleServiceError.mismatchedDocumentError
+            }
+            return FBEntry(
+                id: $0.documentID,
+                jid: journalID,
+                foodID: foodID,
+                ratio: Float(ratio),
+                date: dateAsTimestamp.dateValue()
+            )
+        }
+        
+    }
+    
+    
+    func writeJournal(journal: Journal, uid: String) async throws {
         let journalDateString = formatDate(date: journal.journalDate)
+        // JournalDateString formatted
         let journalTimeStamp = journal.journalDate.timeIntervalSince1970
         
         var ref: DocumentReference? = nil
         
         if journalCache[journalDateString] == nil {
-            ref = db.collection("journals").addDocument(data: ["uid": journal.id, "journalDate": journalTimeStamp])
+            ref = db.collection("journals").addDocument(data: ["uid": uid, "journalDate": journalDateString])
             journalCache[journalDateString] = Journal(id: journal.id, journalDate: journal.journalDate)
         }
         
         ref = try await db.collection("journals").whereField("uid", isEqualTo: journal.id).whereField("journalDate", isEqualTo: journalTimeStamp).getDocuments().documents.first?.reference
+        
         let _ = try await writeJournalEntries(journalRef: ref!, entries: journal.entryLog)
     }
 }
-
