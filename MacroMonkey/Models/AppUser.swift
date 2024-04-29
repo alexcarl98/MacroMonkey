@@ -66,6 +66,11 @@ struct AppUser: Hashable, Codable, Identifiable {
         return (444.592 + (4.19 * weight) + (7.87 * height) - (4.33 * Float(age)))*activityLvlMultiplier[level]
     }
     
+    func goalDate() -> Date{
+        //
+        return Calendar.current.date(byAdding: .day, value: daysToDiet, to: Date())!
+    }
+    
     func goalCaloricIntake() -> Float{
         // Goal Caloric intake, dependent on: Current weight relative to ideal weight, Base metabolic rate, and the goal amount to lose or gain after diet period
         var dif: Float = Float(goalWeightChange)

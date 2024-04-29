@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct TenDayBlock: View {
     var daysInARow: Int
 
@@ -21,6 +19,7 @@ struct TenDayBlock: View {
                             .frame(width: 30, height: 50)
                             .padding(1)
                             .foregroundColor(getColorForDay(dayIndex: rowIndex * 5 + columnIndex))
+                            .cornerRadius(5)
                     }
                 }
             }

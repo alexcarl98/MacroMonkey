@@ -10,9 +10,6 @@
 		5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */; };
 		5C15B5B72BD0560700C2C39B /* SpoonacularService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B62BD0560700C2C39B /* SpoonacularService.swift */; };
 		5C15B5BA2BD0597500C2C39B /* TenDayBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5B92BD0597500C2C39B /* TenDayBlock.swift */; };
-		5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C15B5BB2BD05E0600C2C39B /* Calend.swift */; };
-		5C160D172BDDB06D00BDA912 /* otherDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D162BDDB06D00BDA912 /* otherDayView.swift */; };
-		5C160D192BDDB32300BDA912 /* anotherCalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */; };
 		5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */; };
 		5C1710D72BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */; };
 		5C1710D92BDE21DC005123E6 /* FoodDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1710D82BDE21DC005123E6 /* FoodDetail.swift */; };
@@ -51,6 +48,8 @@
 		5C8ABEB92BDF0D8A00674307 /* LittleJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */; };
 		5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */; };
 		5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */; };
+		5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */; };
+		5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -92,9 +91,6 @@
 		5C15B5B02BCF93ED00C2C39B /* ProfileEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditor.swift; sourceTree = "<group>"; };
 		5C15B5B62BD0560700C2C39B /* SpoonacularService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoonacularService.swift; sourceTree = "<group>"; };
 		5C15B5B92BD0597500C2C39B /* TenDayBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenDayBlock.swift; sourceTree = "<group>"; };
-		5C15B5BB2BD05E0600C2C39B /* Calend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calend.swift; sourceTree = "<group>"; };
-		5C160D162BDDB06D00BDA912 /* otherDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherDayView.swift; sourceTree = "<group>"; };
-		5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = anotherCalenderView.swift; sourceTree = "<group>"; };
 		5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonkeyUser.swift; sourceTree = "<group>"; };
 		5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyDBHelperView.swift; sourceTree = "<group>"; };
 		5C1710D82BDE21DC005123E6 /* FoodDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetail.swift; sourceTree = "<group>"; };
@@ -129,6 +125,8 @@
 		5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleJournalView.swift; sourceTree = "<group>"; };
 		5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodList.swift; sourceTree = "<group>"; };
 		5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTesterView.swift; sourceTree = "<group>"; };
+		5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBlocks.swift; sourceTree = "<group>"; };
+		5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeCellRow.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -198,11 +196,10 @@
 			isa = PBXGroup;
 			children = (
 				5C15B5B92BD0597500C2C39B /* TenDayBlock.swift */,
-				5C15B5BB2BD05E0600C2C39B /* Calend.swift */,
-				5C160D162BDDB06D00BDA912 /* otherDayView.swift */,
-				5C160D182BDDB32300BDA912 /* anotherCalenderView.swift */,
 				5C94AEF32BDEF8E6008B00D8 /* PlanProgressView.swift */,
 				5C94AF042BDEFDE4008B00D8 /* Stats.swift */,
+				5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */,
+				5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */,
 			);
 			path = CalendarView;
 			sourceTree = "<group>";
@@ -555,8 +552,8 @@
 				5C1E61F62BCB247500E4A070 /* ColorExtension.swift in Sources */,
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
 				5C1E622A2BCCBDC700E4A070 /* FoodAPIDetail.swift in Sources */,
+				5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */,
 				5C1E62252BCCA49300E4A070 /* Home.swift in Sources */,
-				5C15B5BC2BD05E0600C2C39B /* Calend.swift in Sources */,
 				5C94AEF92BDEFC14008B00D8 /* RotatedBadgeSymbol.swift in Sources */,
 				5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */,
 				5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */,
@@ -573,12 +570,11 @@
 				5C1E62172BCB4F7700E4A070 /* MacroMonkeyDatabase.swift in Sources */,
 				5C1E72122BD31A1E00883CDC /* FoodAPI.swift in Sources */,
 				5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */,
+				5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */,
 				5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
 				5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */,
-				5C160D172BDDB06D00BDA912 /* otherDayView.swift in Sources */,
 				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,
-				5C160D192BDDB32300BDA912 /* anotherCalenderView.swift in Sources */,
 				5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */,
 				5C94AF012BDEFCFD008B00D8 /* BadgesCollected.swift in Sources */,
 			);

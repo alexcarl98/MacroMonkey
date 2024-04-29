@@ -216,6 +216,7 @@ class MacroMonkeyDatabase: ObservableObject {
         return journal
     }
     func writeJournalEntries(journalRef: DocumentReference, entries: [Entry]) async throws {
+        // TODO: Get to also read and write from the cache
         // Fetch all current entries in the journal's 'entryLog' subcollection
         let currentEntriesSnapshot = try await journalRef.collection("entryLog").getDocuments()
         var currentEntries = [String: DocumentSnapshot]()  // Dictionary to map time and foodId to document snapshot

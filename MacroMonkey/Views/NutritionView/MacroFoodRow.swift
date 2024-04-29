@@ -57,7 +57,7 @@ struct MacroFoodRow: View {
             }
             .frame(height: 45)
         }
-        .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#EEEEEE"), Color(hex:"#F0F0F0")]), startPoint: .top, endPoint: .bottom))
+        .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#EEEEEE"), Color(hex:"#F2EFED"), .white]), startPoint: .top, endPoint: .bottom))
         .cornerRadius(10)
         .onAppear {
             // Ensure the initial ratio reflects the initialized quantity and servSize

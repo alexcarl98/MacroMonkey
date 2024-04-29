@@ -15,7 +15,7 @@ struct PlanProgressView: View {
             BadgesCollected()
             Divider()
             Section(header: Text("Cycle Days Left: \(mu.profile.daysToDiet)").font(.headline)){
-                Calend()
+                CalendarBlocks(days: 66 - mu.profile.daysToDiet)
             }
             Divider()
             HStack{
