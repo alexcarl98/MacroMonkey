@@ -27,8 +27,8 @@ struct EntryLog: Codable, Hashable {
 
 // Constants
 let FOOD_COLLECTION_NAME = "foods"
-let JOURNAL_COLLECTION_NAME = "journals"
-let ENTRY_COLLECTION_NAME = "entryLog"
+//let JOURNAL_COLLECTION_NAME = "journals"
+//let ENTRY_COLLECTION_NAME = "entryLog"
 
 
 // Database class for accessing Firestore

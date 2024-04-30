@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignInView: View {
-    @State var requestLogin: Bool = false
+    @Binding var rqst: Bool
     
     var body: some View {
         ZStack{
@@ -19,7 +19,7 @@ struct SignInView: View {
                     .frame(width:90*2, height:80*2)
                 Text("Log In Or create an account")
                 Button(action: {
-                    requestLogin = true
+                    rqst = true
                 }, label:{
                     loginBtn
                 })
@@ -36,7 +36,7 @@ struct SignInView: View {
         }
     }
 }
-
-#Preview {
-    SignInView()
-}
+//
+//#Preview {
+//    SignInView(rqst: .constant(true))
+//}

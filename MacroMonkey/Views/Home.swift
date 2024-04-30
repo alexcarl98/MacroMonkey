@@ -22,28 +22,28 @@ struct Home: View {
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
-                .sheet(isPresented: $requestLogin) {
-                    AuthenticationViewController(authUI: authUI)
-                        .onDisappear {
-                            // Functionality to record user information into a 'users' collection
-                            Task {
-                                if !auth.userID.isEmpty {
-                                    if try await firebaseServices.userExists(userID: auth.userID){
-                                        currentUser = try await firebaseServices.fetchUserProfile(userID: auth.userID)
-                                    } else {
-                                        currentUser.name = auth.userName
-                                        currentUser.uid = auth.userID
-                                        currentUser.email = auth.userEmail
-                                        isNewUser = true
-                                    }
-                                    print("User: \(currentUser.name)")
-                                }
-                            }
-                        }
-                }
-                .sheet(isPresented: $isNewUser){
-                    ProfileSetup(newUser: $currentUser, editing: $isNewUser)
-                }
+//                .sheet(isPresented: $requestLogin) {
+//                    AuthenticationViewController(authUI: authUI)
+//                        .onDisappear {
+//                            // Functionality to record user information into a 'users' collection
+//                            Task {
+//                                if !auth.userID.isEmpty {
+//                                    if try await firebaseServices.userExists(userID: auth.userID){
+//                                        currentUser = try await firebaseServices.fetchUserProfile(userID: auth.userID)
+//                                    } else {
+//                                        currentUser.name = auth.userName
+//                                        currentUser.uid = auth.userID
+//                                        currentUser.email = auth.userEmail
+//                                        isNewUser = true
+//                                    }
+//                                    print("User: \(currentUser.name)")
+//                                }
+//                            }
+//                        }
+//                }
+//                .sheet(isPresented: $isNewUser){
+//                    ProfileSetup(newUser: $currentUser, editing: $isNewUser)
+//                }
         } else {
             VStack {
                 Text("Sorry, looks like we aren’t set up right!")

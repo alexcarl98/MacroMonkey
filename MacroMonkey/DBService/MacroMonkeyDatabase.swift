@@ -11,6 +11,7 @@ import Firebase
 
 let COLLECTION_NAME = "food"
 let USER_COLLECTION_NAME = "user"
+let JOURNAL_COLLECTION_NAME = "journals"
 let PAGE_LIMIT = 20
 
 enum ArticleServiceError: Error {
@@ -33,6 +34,8 @@ class MacroMonkeyDatabase: ObservableObject {
     func createUser(user: AppUser) -> String {
         var ref: DocumentReference? = nil
         // Add user document to the "users" collection
+        let initJournalString = createNewJournalForUser(userID: user.uid)
+        
         ref = db.collection("users").addDocument(data: [
             "uid": user.uid,
             "name": user.name,
@@ -43,6 +46,7 @@ class MacroMonkeyDatabase: ObservableObject {
             "dietStartDate": Timestamp(date: user.dietStartDate),
             "dob": Timestamp(date: user.dob),
             "completedCycles": user.completedCycles,
+            "journals": [initJournalString],
             "goalWeightChange": user.goalWeightChange,
             "sex": user.sex,
             "imgID": user.imgID
@@ -54,6 +58,21 @@ class MacroMonkeyDatabase: ObservableObject {
         // Return the document ID of the new user entry, or an empty string if no ID is available
         return ref?.documentID ?? ""
     }
+    
+    func createNewJournalForUser(userID: String) -> String {
+        var ref: DocumentReference? = nil
+        
+        ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
+            "date": Timestamp(date: Date.now),
+            "uid": userID,
+            "entries": [EntryLog]()
+        ])
+        return ref?.documentID ?? ""
+    }
+    
+    
+    
+    
     func fetchUserProfile(userID: String) async throws -> AppUser {
         let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
         

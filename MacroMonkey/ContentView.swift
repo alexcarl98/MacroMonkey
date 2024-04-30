@@ -20,24 +20,66 @@ func formatDate(date: Date) -> String{
 
 struct ContentView: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
-    @EnvironmentObject var databaseService: MacroMonkeyDatabase
+    @EnvironmentObject var firebaseServices: MacroMonkeyDatabase
     @EnvironmentObject var spoonacularService: SpoonacularService
     @EnvironmentObject var mu: MonkeyUser
+    @State var requestLogin: Bool = false
+    @State var isNewUser: Bool = false
 
     var body: some View {
-        TabView{
-            Home()
-                .tabItem{
-                    Label("Home", systemImage: "house.fill")
+        if mu.profile.name != "" {
+            if !isNewUser {
+                let _ = print("User info:\(mu.profile.name)|")
+                TabView{
+                    FoodJournalList(requestLogin: $requestLogin)
+                        .tabItem{
+                            Label("Home", systemImage: "house.fill")
+                        }
+                    
+                    PlanProgressView()
+                        .tabItem{
+                            Label("Progress", systemImage: "chart.bar")
+                        }
+                    Profile()
+                        .tabItem{
+                            Label("Profile", systemImage: "person.fill")
+                        }
                 }
-            PlanProgressView()
-                .tabItem{
-                    Label("Progress", systemImage: "chart.bar")
+            } else {
+                ProfileSetup(newUser: $mu.profile, editing: $isNewUser)
+            }
+        } else {
+            if let authUI = auth.authUI {
+                
+                SignInView(rqst: $requestLogin)
+                    .sheet(isPresented: $requestLogin) {
+                        ZStack{
+                            
+                            AuthenticationViewController(authUI: authUI)
+                                .onDisappear {
+                                    // Functionality to record user information into a 'users' collection
+                                    Task {
+                                        if !auth.userID.isEmpty {
+                                            if try await firebaseServices.userExists(userID: auth.userID){
+                                                mu.profile = try await firebaseServices.fetchUserProfile(userID: auth.userID)
+                                            } else {
+                                                mu.userLoginInfo(userName: auth.userName, userID: auth.userID, email: auth.userEmail)
+                                                isNewUser = true
+                                            }
+                                            print("User: \(mu.profile.name)")
+                                        }
+                                    }
+                                }
+                        }
+                    }
+            } else {
+                VStack {
+                    Text("Sorry, looks like we aren’t set up right!")
+                        .padding()
+                    Text("Please contact this app’s developer for assistance.")
+                        .padding()
                 }
-            Profile()
-                .tabItem{
-                    Label("Profile", systemImage: "person.fill")
-                }
+            }
         }
     }
 }

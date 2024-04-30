@@ -38,9 +38,9 @@ struct MacMunkViewer: View {
                                     Text("Ratio: \(entry.ratio)")
                                     Text("Time: \(entry.time, formatter: timeFormatter)")
                                     // NOTE: This won't load right away
-                                    if let food = dbservice.foodCache[entry.foodID]{
-                                        MacroFoodRow(food: food, ratio: $entry.ratio)
-                                    }
+//                                    if let food = dbservice.foodCache[entry.foodID]{
+//                                        MacroFoodRow(food: food, ratio: entry.ratio)
+//                                    }
                                 }
                             }
                         } else {
@@ -56,7 +56,6 @@ struct MacMunkViewer: View {
                 .padding()
             }
         }
-
         var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
             formatter.dateStyle = .short

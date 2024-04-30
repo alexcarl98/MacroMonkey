@@ -44,12 +44,12 @@ struct Journal: Hashable, Codable, Identifiable {
         id: "0",
         journalDate: Date.now
     )
-//    func getFirebaseEntries() -> [EntryLog] {
-//        var entries = [EntryLog]()
-//        for entry in entryLog {
-//            entries.append(EntryLog(foodID: entry.food.id, ratio: Double(entry.ratio), time: entry.time))
-//        }
-//        
-//        return entries
-//    }
+    func getFirebaseEntries() -> [EntryLog] {
+        var entries = [EntryLog]()
+        for entry in entryLog {
+            entries.append(EntryLog(foodID: entry.food.id, ratio: Double(entry.ratio), time: entry.time))
+        }
+        
+        return entries
+    }
 }

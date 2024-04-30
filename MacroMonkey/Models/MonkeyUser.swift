@@ -9,8 +9,8 @@ import SwiftUI
 
 
 class MonkeyUser: ObservableObject {
-    var profile: AppUser = AppUser.default
-    var journal: Journal = Journal.default
+    @Published var profile: AppUser = AppUser.empty
+    @Published var journal: Journal = Journal.empty
     
     func addFood(_ food: Food){
         objectWillChange.send()
@@ -25,5 +25,13 @@ class MonkeyUser: ObservableObject {
     func updateUI(){
         objectWillChange.send()
     }
+    
+    func userLoginInfo(userName: String, userID: String, email: String) {
+        objectWillChange.send()
+        profile.name = userName
+        profile.uid = userID
+        profile.email = email
+    }
+    
 }
 

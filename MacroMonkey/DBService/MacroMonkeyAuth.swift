@@ -64,4 +64,6 @@ class MacroMonkeyAuth: NSObject, ObservableObject, FUIAuthDelegate {
         userName = ""
         userEmail = ""
     }
+    
+    
 }
