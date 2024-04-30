@@ -218,7 +218,7 @@ class MacroMonkeyDatabase: ObservableObject {
     
     func fetchJournal(by uid: String, journalDate: Date, jid: String) async throws -> Journal {
         let journalDateString = formatDate(date: journalDate)
-        let journalTimestamp = journalDate.timeIntervalSince1970
+//        let journalTimestamp = journalDate.timeIntervalSince1970
         
         // Check cache first
         if let cachedJournal = journalCache[journalDateString] {

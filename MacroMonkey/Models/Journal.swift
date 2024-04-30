@@ -12,16 +12,7 @@ struct Journal: Hashable, Codable, Identifiable {
     var journalDate: Date
     var uid: String
     var entryLog = [FBEntry]()
-    func getTotalMacros() -> [Float] {
-        var totals: [Float] = [0.0, 0.0, 0.0, 0.0]
-        for entry in entryLog {
-            totals[0] += entry.calories
-            totals[1] += entry.proteins
-            totals[2] += entry.carbohydrates
-            totals[3] += entry.fats
-        }
-        return totals
-    }
+
     
     mutating func removeFoodByIndex(_ index: Int) {
         guard index >= 0 && index < entryLog.count else {

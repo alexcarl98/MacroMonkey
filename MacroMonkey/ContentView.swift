@@ -12,8 +12,7 @@ let PROTEIN_COLOR = Color(hex: "#009688")
 let FATS_COLOR = Color(hex: "#E97120")
 let CARBS_COLOR = Color(hex:"#4169E1")
 
-var foodCache: [Int:Food]=[:]
-var journalCache:[String: Journal]=[:]
+
 
 func formatDate(date: Date) -> String{
     let formatter = DateFormatter()
@@ -23,16 +22,23 @@ func formatDate(date: Date) -> String{
 
 struct ContentView: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
-    @EnvironmentObject var databaseService: MacroMonkeyDatabase
+    @EnvironmentObject var firebaseServices: MacroMonkeyDatabase
     @EnvironmentObject var spoonacularService: SpoonacularService
     @EnvironmentObject var mu: MonkeyUser
+    @State var requestLogin = false
+    @State var fetching = false
+    @State var isNewUser = false
 
     var body: some View {
+        
+//        if let authUI = auth.authUI {
         TabView{
+            if fetching
             Home()
                 .tabItem{
                     Label("Home", systemImage: "house.fill")
                 }
+                
             PlanProgressView()
                 .tabItem{
                     Label("Progress", systemImage: "chart.bar")
@@ -42,6 +48,20 @@ struct ContentView: View {
                     Label("Profile", systemImage: "person.fill")
                 }
         }
+        .onApper{
+            fetching = true
+            try {
+                
+                let journal = try await fetchJournal(auth)
+            }
+            // ❷ Check if today's journal exists:
+            // i.e. try to get the journalID for the journal corresponding to this user's uid and the current date
+            // otherwise build out the journal,
+            // then: try and get the entries that match the JournalID
+        }
+//        } else {
+//            SignInView()
+//        }
     }
 }
 
