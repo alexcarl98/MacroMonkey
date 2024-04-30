@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NutritionGraph: View {
-    var current: [Float]
-    var goals: [Float]
+    var current: [Double]
+    var goals: [Double]
     
     var body: some View {
         VStack {

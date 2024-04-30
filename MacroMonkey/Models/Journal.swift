@@ -11,8 +11,8 @@ struct Journal: Hashable, Codable, Identifiable {
     var id: String
     var journalDate: Date
     var entryLog = [Entry]()
-    func getTotalMacros() -> [Float] {
-        var totals: [Float] = [0.0, 0.0, 0.0, 0.0]
+    func getTotalMacros() -> [Double] {
+        var totals: [Double] = [0.0, 0.0, 0.0, 0.0]
         for entry in entryLog {
             totals[0] += entry.calories
             totals[1] += entry.proteins
@@ -44,4 +44,12 @@ struct Journal: Hashable, Codable, Identifiable {
         id: "0",
         journalDate: Date.now
     )
+//    func getFirebaseEntries() -> [EntryLog] {
+//        var entries = [EntryLog]()
+//        for entry in entryLog {
+//            entries.append(EntryLog(foodID: entry.food.id, ratio: Double(entry.ratio), time: entry.time))
+//        }
+//        
+//        return entries
+//    }
 }

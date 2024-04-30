@@ -10,17 +10,17 @@ import SwiftUI
 struct MacroFoodRow: View {
     @EnvironmentObject var mu: MonkeyUser
     @State var food: Food
-    @Binding var ratio: Float
-    @State private var quantity: Float
+    @Binding var ratio: Double
+    @State private var quantity: Double
 
     // Initialize the state variables with default values using the custom initializer
-    init(food: Food, ratio: Binding<Float>) {
+    init(food: Food, ratio: Binding<Double>) {
         self._food = State(initialValue: food)
         self._ratio = ratio
         self._quantity = State(initialValue: food.servSize * ratio.wrappedValue)  // Set initial quantity to food's servSize
     }
 
-    private var macros: [Float] {
+    private var macros: [Double] {
         // Calculate the ratio based on quantity and servSize
         ratio = quantity / food.servSize
         return [

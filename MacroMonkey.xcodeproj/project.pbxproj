@@ -52,6 +52,9 @@
 		5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */; };
 		5C8ABEC42BE0143300674307 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC32BE0143300674307 /* SignInView.swift */; };
 		5C8ABEC62BE04E3200674307 /* FBEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC52BE04E3200674307 /* FBEntry.swift */; };
+		5C8ABEC92BE0C91100674307 /* FirestoreObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC82BE0C91100674307 /* FirestoreObjects.swift */; };
+		5C8ABECB2BE0D0AF00674307 /* MacMunkDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABECA2BE0D0AF00674307 /* MacMunkDB.swift */; };
+		5C8ABECD2BE0D0E400674307 /* MacMunkViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABECC2BE0D0E400674307 /* MacMunkViewer.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -131,6 +134,9 @@
 		5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeCellRow.swift; sourceTree = "<group>"; };
 		5C8ABEC32BE0143300674307 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		5C8ABEC52BE04E3200674307 /* FBEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBEntry.swift; sourceTree = "<group>"; };
+		5C8ABEC82BE0C91100674307 /* FirestoreObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreObjects.swift; sourceTree = "<group>"; };
+		5C8ABECA2BE0D0AF00674307 /* MacMunkDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMunkDB.swift; sourceTree = "<group>"; };
+		5C8ABECC2BE0D0E400674307 /* MacMunkViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMunkViewer.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -254,6 +260,8 @@
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
 				5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */,
 				5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */,
+				5C8ABECA2BE0D0AF00674307 /* MacMunkDB.swift */,
+				5C8ABECC2BE0D0E400674307 /* MacMunkViewer.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -268,6 +276,7 @@
 				5C60D2372BD3556C0025AAF8 /* Entry.swift */,
 				5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */,
 				5C8ABEC52BE04E3200674307 /* FBEntry.swift */,
+				5C8ABEC82BE0C91100674307 /* FirestoreObjects.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -551,6 +560,7 @@
 				5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */,
 				5C94AEFD2BDEFC6D008B00D8 /* BadgeBackground.swift in Sources */,
 				5C1710D92BDE21DC005123E6 /* FoodDetail.swift in Sources */,
+				5C8ABECB2BE0D0AF00674307 /* MacMunkDB.swift in Sources */,
 				5C15B5B72BD0560700C2C39B /* SpoonacularService.swift in Sources */,
 				5C94AEFB2BDEFC2C008B00D8 /* BadgeSymbol.swift in Sources */,
 				5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */,
@@ -588,9 +598,11 @@
 				5C1E72142BD31E0300883CDC /* APIKeyViewHelper.swift in Sources */,
 				5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */,
 				5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */,
+				5C8ABEC92BE0C91100674307 /* FirestoreObjects.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
 				5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */,
 				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,
+				5C8ABECD2BE0D0E400674307 /* MacMunkViewer.swift in Sources */,
 				5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */,
 				5C94AF012BDEFCFD008B00D8 /* BadgesCollected.swift in Sources */,
 			);

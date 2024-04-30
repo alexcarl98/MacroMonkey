@@ -9,8 +9,8 @@ import SwiftUI
 
 struct NutritionBar: View {
     var macroNutrient: String
-    var amtConsumedSoFar: Float
-    var goalConsumption: Float
+    var amtConsumedSoFar: Double
+    var goalConsumption: Double
     var color: Color
     var barHeight: CGFloat = 20
     

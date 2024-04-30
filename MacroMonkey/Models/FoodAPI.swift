@@ -68,14 +68,14 @@ struct FoodAPI: Hashable, Codable, Identifiable {
         let fats = nutrition.nutrients.first { $0.name == "Fat" }?.amount ?? 0.0
         // where name == "Calories"
         return Food(
-            id: self.id,
+            fid: self.id,
             name: self.title,
-            servSize: self.nutrition.weightPerServing.amount,
+            servSize: Double(self.nutrition.weightPerServing.amount),
             servUnit: self.nutrition.weightPerServing.unit,
-            cals: cals,
-            protein: protein,
-            carbs: carbs,
-            fats: fats,
+            cals: Double(cals),
+            protein: Double(protein),
+            carbs: Double(carbs),
+            fats: Double(fats),
             img: self.image
         )
     }
