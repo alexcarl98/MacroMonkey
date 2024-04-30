@@ -51,14 +51,14 @@ struct Food: Hashable, Codable, Identifiable {
     
     enum CodingKeys: String, CodingKey {
         case id
-        case fid
-        case name
-        case servSize = "servingSize"
-        case servUnit = "servingUnit"
-        case img
-        case fats
         case cals = "calories"
         case carbs
+        case fats
+        case fid
+        case img
+        case name
         case protein
+        case servSize = "servingSize"
+        case servUnit = "servingUnit"
     }
 }

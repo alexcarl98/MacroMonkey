@@ -21,7 +21,7 @@ struct FoodAPIDetail: View {
         ScrollView {
             if let food = foodToDisplay {
                 VStack{
-                    FoodDetail(image: food.image, name: food.title, serv: food.nutrition.weightPerServing.amount, unit: food.nutrition.weightPerServing.unit, macros: food.nutrition.formatted())
+                    FoodDetail(image: food.image, name: food.title, serv: Double(food.nutrition.weightPerServing.amount), unit: food.nutrition.weightPerServing.unit, macros: (food.nutrition.formattedDbl()))
                     Spacer()
                     Button {
                         addToList()

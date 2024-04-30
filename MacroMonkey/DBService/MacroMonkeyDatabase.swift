@@ -27,6 +27,8 @@ class MacroMonkeyDatabase: ObservableObject {
     var foodCache: [Int:Food]=[:]
     var journalCache:[String: Journal]=[:]
     @Published var error: Error?
+    @Published var errorMessage: String?
+    var journ: Jnl?
     
     func createUser(user: AppUser) -> String {
         var ref: DocumentReference? = nil
@@ -172,209 +174,54 @@ class MacroMonkeyDatabase: ObservableObject {
         return ref?.documentID ?? ""
     }
     
-    func fetchJournalEntries(journalRef: DocumentReference) async throws -> [Entry] {
-        let querySnapshot = try await journalRef.collection("entryLog").getDocuments()
-        var entries = [Entry]()
+    func fetchJournal(documentId: String) {
+          let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
+          
+            docRef.getDocument(as: Jnl.self) { result in
+                switch result {
+                case .success(let log):
+                  // A Book value was successfully initialized from the DocumentSnapshot.
+                  self.journ = log
+                  self.error = nil
+                    
+                    // Check if there are entries to process
+                    guard let entries = log.entries else {
+                        return
+                    }
+
+                    // Fetch food details for each entry
+                    for entry in entries {
+                        self.fetchFood(documentId: entry.altfid) {foodResult in
+                            switch foodResult {
+                            case .success(let food):
+                                // Process each food item as it's loaded
+                                // Optionally update a UI element or perform an action
+                                print("Successfully retrieved food for entry: \(food.name)")
+                            case .failure(let error):
+                                print("Error fetching food for entry: \(error.localizedDescription)")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                  // A Book value could not be initialized from the DocumentSnapshot.
+                    self.error = error
+                    self.errorMessage = "Error decoding document: \(error.localizedDescription)"
+                }
+              }
+            }
+
+    func fetchFood(documentId: String, completion: @escaping (Result<Food, Error>) -> Void) {
+        let docRef = db.collection(FOOD_COLLECTION_NAME).document(documentId)
         
-        for document in querySnapshot.documents {
-            let foodId = document.get("foodId") as? Int ?? 0
-            let ratio = document.get("ratio") as? Double ?? 0.0
-            let time = (document.get("time") as? Timestamp)?.dateValue() ?? Date()
-            
-            let food = try await fetchFoodInfo(foodID: foodId)
-            entries.append(Entry(food: food, ratio: ratio, time: time))
+        docRef.getDocument(as: Food.self) { result in
+            switch result {
+            case .success(let food):
+                self.foodCache[food.fid] = food
+                completion(.success(food))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
-        return entries
     }
-    
-    func fetchJournal(by uid: String, journalDate: Date) async throws -> Journal {
-        let journalDateString = formatDate(date: journalDate)
-        let journalTimestamp = journalDate.timeIntervalSince1970
-        
-        // Check cache first
-        if let cachedJournal = journalCache[journalDateString] {
-            return cachedJournal
-        }
 
-        // Query Firestore for the journal
-        let journalQuery = db.collection("journals")
-            .whereField("uid", isEqualTo: uid)
-            .whereField("journalDate", isEqualTo: journalTimestamp)
-
-        let querySnapshot = try await journalQuery.getDocuments()
-
-        guard let document = querySnapshot.documents.first else {
-            throw ArticleServiceError.mismatchedDocumentError // Using a relevant error
-        }
-
-        let journalID = document.documentID
-        let fetchedJournalDate = (document.get("journalDate") as? Timestamp)?.dateValue() ?? Date()
-        let entries = try await fetchJournalEntries(journalRef: document.reference)
-
-        let journal = Journal(id: journalID, journalDate: fetchedJournalDate, entryLog: entries)
-        journalCache[journalDateString] = journal  // Cache the fetched journal
-
-        return journal
-    }
-//    func writeJournalEntries(journalRef: DocumentReference, entries: [Entry]) async throws -> String {
-//        // TODO: Get to also read and write from the cache
-//        // Fetch all current entries in the journal's 'entryLog' subcollection
-//        let currentEntriesSnapshot = try await journalRef.collection("entryLog").getDocuments()
-//        var currentEntries = [String: DocumentSnapshot]()  // Dictionary to map time and foodId to document snapshot
-//
-//        // Populate the dictionary with existing entries
-//        for document in currentEntriesSnapshot.documents {
-//            let time = (document.get("time") as? Timestamp)?.dateValue() ?? Date()
-//            let foodId = document.get("foodId") as? Int ?? 0
-//            let key = "\(foodId)_\(time.timeIntervalSince1970)"
-//            currentEntries[key] = document
-//        }
-//
-//        // Iterate over new entries to add or update
-//        for entry in entries {
-//            let key = "\(entry.food.id)_\(entry.time.timeIntervalSince1970)"
-//            if let existingDocument = currentEntries[key] {
-//                // Check if ratio has changed; if so, update
-//                if existingDocument.get("ratio") as? Float != entry.ratio {
-//                    let updateData: [String: Any] = [
-//                        "ratio": entry.ratio,
-//                        "foodId": entry.food.id,
-//                        "time": Timestamp(date: entry.time)
-//                    ]
-//                    try await existingDocument.reference.updateData(updateData)
-//                }
-//            } else {
-//                // If the entry doesn't exist, add it
-//                let newData: [String: Any] = [
-//                    "foodId": entry.food.id,
-//                    "ratio": entry.ratio,
-//                    "time": Timestamp(date: entry.time)
-//                ]
-//                let _ = journalRef.collection("entryLog").addDocument(data: newData)
-//            }
-//            // Remove the processed entry from the dictionary to track entries that are no longer present
-//            currentEntries.removeValue(forKey: key)
-//        }
-//        // Any remaining entries in the dictionary are not in the new entries list and should be deleted
-//        for (_, document) in currentEntries {
-//            try await document.reference.delete()
-//        }
-//        return ""
-//    }
-//    func fetchEntries(journalID: String) async throws -> [FBEntry] {
-//        let querySnapshot = try await db.collection("entryLog").whereField("jid", isEqualTo: journalID).getDocuments()
-//        
-//        return try querySnapshot.documents.map {
-//            // This is likely new Swift for you: type conversion is conditional, so they
-//            // must be guarded in case they fail.
-//            guard let title = $0.get("title") as? String,
-//                // Firestore returns Swift Dates as its own Timestamp data type.
-//                let dateAsTimestamp = $0.get("date") as? Timestamp,
-//                let jid = $0.get("jid") as? String,
-//                let ratio = $0.get("ratio") as? Double,
-//                let foodID = $0.get("foodID") as? Int else {
-//                throw ArticleServiceError.mismatchedDocumentError
-//            }
-//            return FBEntry(
-//                id: $0.documentID,
-//                jid: journalID,
-//                foodID: foodID,
-//                ratio: Float(ratio),
-//                date: dateAsTimestamp.dateValue()
-//            )
-//        }
-//        
-//    }
-    
-//    func writeJournal(journal: Journal, uid: String) async throws {
-//        let journalDateString = formatDate(date: journal.journalDate)
-//        // JournalDateString formatted
-//        let journalTimeStamp = journal.journalDate.timeIntervalSince1970
-//        
-//        var ref: DocumentReference? = nil
-//        
-//        if journalCache[journalDateString] == nil {
-//            ref = db.collection("journals").addDocument(data: ["uid": uid, "journalDate": journalDateString])
-//            journalCache[journalDateString] = Journal(id: journal.id, journalDate: journal.journalDate)
-//        }
-//        
-//        ref = try await db.collection("journals").whereField("uid", isEqualTo: journal.id).whereField("journalDate", isEqualTo: journalTimeStamp).getDocuments().documents.first?.reference
-//        
-//        let _ = try await writeJournalEntries(journalRef: ref!, entries: journal.entryLog)
-//    }
 }
-
-//
-//import Foundation
-//import FirebaseFirestore
-//
-//struct FBJournal: Hashable, Codable, Identifiable {
-//    var id: String
-//    var uid: String
-//    var entryLog = [DocumentReference]()
-//    var journalDate: String {
-//        let fm =  DateFormatter()
-//        fm.dateFormat = "MM-dd-yyyy"
-//        return fm.string(from: Date.now)
-//    }
-//    
-//}
-//
-//struct FBEntryLog: Hashable, Codable, Identifiable {
-//    var id: String
-//    var food: DocumentReference
-//    var ratio: Float = 1.0
-//    var time = Date.now
-//}
-//
-//// struct Food: Hashable, Codable, Identifiable {
-////    var id: Int
-////    var name: String
-////    var servSize: Float
-////    var servUnit: String
-////    var cals: Float
-////    var protein: Float
-////    var carbs: Float
-////    var fats: Float
-////    var img: String
-//// }
-//
-//let FOOD_COLLECTION_NAME = "food"
-//let JOURNAL_COLLECTION_NAME = "journal"
-//let ENTRY_COLLECTION_NAME = "entryLog"
-////let PAGE_LIMIT = 20
-//
-//class MacroMunkeyDatabase: ObservableObject {
-//    var foodCache: [Int: Food] = [:]
-//    private let db = Firestore.firestore()
-//    @Published var error: Error?
-//    
-//    func getJournals(forUserID userID: String, completion: @escaping (Result<[FBJournal], Error>) -> Void) {
-//    let dateFormatter = DateFormatter()
-//    dateFormatter.dateFormat = "MM-dd-yyyy"
-//    let currentDate = dateFormatter.string(from: Date.now)
-//    
-//    db.collection(JOURNAL_COLLECTION_NAME)
-//        .whereField("uid", isEqualTo: userID)
-//        .getDocuments { (querySnapshot, err) in
-//            if let err = err {
-//                completion(.failure(err))
-//            } else {
-//                let journals: [FBJournal] = querySnapshot?.documents.compactMap { document in
-//                    try? document.data(as: FBJournal.self)
-//                } ?? []
-//                
-//                if !journals.contains(where: { $0.date == currentDate }) {
-//                    let newJournal = FBJournal(uid: userID, date: currentDate)
-//                    do {
-//                        try db.collection(JOURNAL_COLLECTION_NAME).addDocument(from: newJournal)
-//                    } catch let error {
-//                        completion(.failure(error))
-//                    }
-//                }
-//                
-//                completion(.success(journals))
-//            }
-//        }
-//    }
-//}

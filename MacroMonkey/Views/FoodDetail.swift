@@ -10,9 +10,9 @@ import SwiftUI
 struct FoodDetail: View {
     @State var image: String
     @State var name: String
-    @State var serv: Float
+    @State var serv: Double
     @State var unit: String
-    @State var macros: [Float]
+    @State var macros: [Double]
     var macroNames = ["Calories", "Fat", "Carbohydrates", "Protein"]
     
     var body: some View {

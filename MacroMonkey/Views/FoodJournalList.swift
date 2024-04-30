@@ -37,7 +37,7 @@ struct FoodJournalList: View {
                                     Spacer()
                                 }
                             } else {
-                                journalFoodList
+                                MacroFoodList()
                             }
                         }
                     }
@@ -85,18 +85,6 @@ struct FoodJournalList: View {
             } label:{
                 Label("Add", systemImage: "plus")
             }
-        }
-    }
-    
-    var journalFoodList: some View {
-        // TODO: Get values in here to stay consistent after adding another entry log
-        List(mu.journal.entryLog.indices, id: \.self) { index in
-            ZStack{
-                MacroFoodRow(food: mu.journal.entryLog[index].food, ratio: $mu.journal.entryLog[index].ratio)
-                
-            }
-            .background(NavigationLink("", destination:FoodDetail(image: mu.journal.entryLog[index].food.img, name: mu.journal.entryLog[index].food.name, serv: mu.journal.entryLog[index].food.servSize, unit: mu.journal.entryLog[index].food.servUnit, macros: mu.journal.entryLog[index].food.formatted_macros())).opacity(0))
-            .listRowInsets(EdgeInsets())
         }
     }
 }

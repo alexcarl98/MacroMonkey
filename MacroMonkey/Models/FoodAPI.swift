@@ -33,6 +33,9 @@ struct NutritionAPI: Hashable, Codable {
     func formatted() -> [Float] {
         return [nutrients[0].amount, nutrients[1].amount, nutrients[2].amount, nutrients[3].amount]
     }
+    func formattedDbl() -> [Double] {
+        return [Double(nutrients[0].amount), Double(nutrients[1].amount), Double(nutrients[2].amount), Double(nutrients[3].amount)]
+    }
 }
 
 struct FoodAPI: Hashable, Codable, Identifiable {
