@@ -142,7 +142,7 @@ class MacroMonkeyDatabase: ObservableObject {
         return true
     }
     
-    func createNewJournalForUser(userID: String) async  -> String {
+    func createNewJournalForUser(userID: String) async throws -> String {
         var ref: DocumentReference? = nil
         
         ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
@@ -154,15 +154,15 @@ class MacroMonkeyDatabase: ObservableObject {
         
         let userRef = db.collection("users")
         do{
-            let querySnapshot = await userRef.whereField("uid", isEqualTo: userID).getDocuments()
+            let querySnapshot = try await userRef.whereField("uid", isEqualTo: userID).getDocuments()
             for document in querySnapshot.documents{
-                try await document.updateData(["journals": FieldValue.arrayUnion([journalStr])])
+                try await document?.updateData(["journals": FieldValue.arrayUnion([journalStr])])
             }
+        } catch {
+            print("Error getting documents: \(error.localizedDescription)")
         }
         
-        
-        
-        return
+        return journalStr
     }
     
     func fetchManyJournals(uid: String) async throws -> [Journal] {

@@ -123,7 +123,7 @@ struct ContentView: View {
             if let todayJournal = journals.first(where: { Calendar.current.isDateInToday($0.journalDate) }){
                 foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
             } else {
-                let journalStr = await firebaseServices.createNewJournalForUser(userID: uid)
+                let journalStr = try await firebaseServices.createNewJournalForUser(userID: uid)
                 let todayJournal = Journal(id: journalStr, uid: uid)
                 foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
             }
