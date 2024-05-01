@@ -26,7 +26,6 @@ struct Journal: Hashable, Codable, Identifiable {
     var journalDate: Date = Date.now
     var entryLog = [Entry]()
     
-    
     mutating func removeFoodByIndex(_ index: Int) {
         guard index >= 0 && index < entryLog.count else {
             print("Index out of bounds")
@@ -36,7 +35,11 @@ struct Journal: Hashable, Codable, Identifiable {
     }
     
     mutating func addFoodEntry(_ food: Food){
-        self.entryLog.append(Entry(food: food.fid, ratio: 1.0))
+        self.entryLog.append(Entry(food: food.id, ratio: 1.0))
+    }
+    
+    func getEntry(at index: Int) -> Entry{
+        return self.entryLog[index]
     }
     
     static let `default` = Journal(
@@ -44,10 +47,6 @@ struct Journal: Hashable, Codable, Identifiable {
         journalDate: Date.now,
         entryLog: [Entry(food: 716429, ratio: 1.2)]
     )
-    
-    func getEntry(at index: Int) -> Entry{
-        return entryLog[index]
-    }
 //
     static let `empty` = Journal(
         uid: ""

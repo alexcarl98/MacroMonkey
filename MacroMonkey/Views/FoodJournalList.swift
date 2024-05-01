@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import Firebase
 
 struct FoodJournalList: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
@@ -20,7 +22,6 @@ struct FoodJournalList: View {
     var body: some View {
             NavigationStack {
                 VStack {
-                    // TODO: Get this to stay consistent to reflect mu.journal values
                     NutritionGraph(current: mu.getTotalMacros(), goals: mu.profile.goalMacros())
                     Divider()
                     if fetching {
@@ -31,14 +32,24 @@ struct FoodJournalList: View {
                         VStack {
                             foodSearchLink
                             if mu.foodCache.count == 0 {
-                                VStack {
+                                VStack{
                                     Spacer()
                                     Text("There are no foods entered for today.")
                                     Spacer()
                                 }
                             } else {
-                                MacroFoodList()
+                                List(Array(zip(mu.journal.entryLog.indices, mu.journal.entryLog)), id: \.0) { index, entry in
+                                    if let fd = mu.foodCache[entry.food] {
+                                        // One gets fixed another thing gets broken. porque
+//                                        ZStack {
+                                        MacroFoodRow(food: fd, ratio: $mu.journal.entryLog[index].ratio)
+//                                        }
+//                                        .background(NavigationLink("", destination: FoodDetail(image: fd.img, name: fd.name, serv: fd.servSize, unit: fd.servUnit, macros: fd.formatted_macros())).opacity(0))
+//                                        .listRowInsets(EdgeInsets())
+                                    }
+                                }
                             }
+                            
                         }
                     }
                 }
@@ -68,15 +79,6 @@ struct FoodJournalList: View {
                     
                 }
             }
-            .task {
-                fetching = true
-                do {
-                    fetching = false
-                } catch {
-                    self.error = error
-                    fetching = false
-                }
-            }
         }
     
     var foodSearchLink: some View{
@@ -88,6 +90,20 @@ struct FoodJournalList: View {
             }
         }
     }
+    
+//    var journalFoodList: some View {
+//        List(Array(mu.journal.entryLog.enumerated()), id: \.offset) { index, entry in
+//            if let food = mu.foodCache[entry.food] {
+//                ZStack {
+//                    MacroFoodRow(food: food, ratio: $mu.journal.entryLog[index].ratio)
+//                }
+//                .background(NavigationLink("", destination:FoodDetail(image: food.img, name: food.name, serv: food.servSize, unit: food.servUnit, macros: food.formatted_macros())).opacity(0))
+//                .listRowInsets(EdgeInsets())
+//            }
+//        }
+//        .navigationTitle("Food Entries")
+//        .navigationBarTitleDisplayMode(.inline)
+//    }
 }
 
 
@@ -98,6 +114,6 @@ struct FoodJournalList_Previews: PreviewProvider {
         FoodJournalList(requestLogin: $requestLogin)
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
-        .environmentObject(MonkeyUser(profile: AppUser.default, journals: [Journal.empty], foodCache: [716429: Food.pasta]))
+        .environmentObject(MonkeyUser(profile: AppUser.default, journals: [Journal.default], foodCache: [716429: Food.pasta]))
     }
 }

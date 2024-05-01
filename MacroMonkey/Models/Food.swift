@@ -8,11 +8,10 @@
 import Foundation
 import SwiftUI
 import CoreLocation
-import FirebaseFirestore
 
 struct Food: Hashable, Codable, Identifiable {
-    @DocumentID var id: String?
-    var fid: Int
+    var id: Int
+//    var fid: Int
     var name: String
     var servSize: Double
     var servUnit: String
@@ -22,10 +21,11 @@ struct Food: Hashable, Codable, Identifiable {
     var fats: Double
     var img: String
     
+    
     func formatted_macros() -> [Double] { return [cals, fats, carbs, protein] }
     
     static let `pasta` = Food (
-        fid: 716429,
+        id: 716429,
 //        name: "Pasta",
         name: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
         servSize: 259.0,
@@ -38,7 +38,7 @@ struct Food: Hashable, Codable, Identifiable {
     )
     
     static let `empty` = Food (
-        fid: 0,
+        id: 0,
         name: "Nothing",
         servSize: 0.0,
         servUnit: "g",
@@ -48,17 +48,4 @@ struct Food: Hashable, Codable, Identifiable {
         fats: 0.0,
         img: "https://upload.wikimedia.org/wikipedia/commons/1/18/Color-white.JPG"
     )
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case cals = "calories"
-        case carbs
-        case fats
-        case fid
-        case img
-        case name
-        case protein
-        case servSize = "servingSize"
-        case servUnit = "servingUnit"
-    }
 }

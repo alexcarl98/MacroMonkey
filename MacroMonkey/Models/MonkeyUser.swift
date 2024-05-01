@@ -28,7 +28,7 @@ class MonkeyUser: ObservableObject {
     
     func addFood(_ food: Food){
         objectWillChange.send()
-        foodCache[food.fid] = food
+        foodCache[food.id] = food
         journal.addFoodEntry(food)
     }
     
