@@ -38,8 +38,12 @@ struct Journal: Hashable, Codable, Identifiable {
         self.entryLog.append(Entry(food: food.id, ratio: 1.0))
     }
     
-    func getEntry(at index: Int) -> Entry{
+    func getEntry(at index: Int) -> Entry {
         return self.entryLog[index]
+    }
+    
+    func getEntriesInBulk() -> [Int] {
+        return entryLog.map { $0.food }
     }
     
     static let `default` = Journal(
@@ -47,7 +51,7 @@ struct Journal: Hashable, Codable, Identifiable {
         journalDate: Date.now,
         entryLog: [Entry(food: 716429, ratio: 1.2)]
     )
-//
+
     static let `empty` = Journal(
         uid: ""
     )

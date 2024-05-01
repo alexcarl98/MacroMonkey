@@ -57,6 +57,7 @@ struct FoodAPI: Hashable, Codable, Identifiable {
             weightPerServing: WeightAPI(amount:259, unit: "g")
         )
     )
+    
     mutating func filterFood() {
         let macrosToDisplay = ["Calories", "Fat", "Protein", "Carbohydrates"]
         var filtered = [NutrientAPI]()

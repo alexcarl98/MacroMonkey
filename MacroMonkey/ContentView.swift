@@ -114,26 +114,23 @@ struct ContentView: View {
             let user = try await firebaseServices.fetchUserProfile(userID: uid)
             
             // Fetch journals
-            let journals = [Journal.default]
-//            for journalId in user.journalIDs {
-//                let journal = try await firebaseServices.fetchJournal(documentId: journalId)
-//                journals.append(journal)
-//            }
-//            
-            // this broke
-            //            print("Journal entry: \(journals[0].entryLog[0])")
-            // Fetch food details for each journal entry
-            // TODO: The code is getting stuck below
-            var foodCache = [Int: Food]()
-            for journal in journals {
-                for entry in journal.entryLog {
-                    if let food = await spoonacularService.performSearch(for: entry.food), foodCache[entry.food] == nil {
-                        foodCache[entry.food] = food
-                        print("Found food: \(food.name)")
-                    } else {
-                        print("Error fetching food")
-                    }
-                }
+            let journals = try await firebaseServices.fetchManyJournals(uid: uid)
+            
+            var foods:[Food] = [Food]()
+            var foodCache: [Int: Food] = [:] // Initialize an empty food cache
+
+            
+            if let todayJournal = journals.first(where: { Calendar.current.isDateInToday($0.journalDate) }){
+                foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
+            } else {
+                let journalStr = await firebaseServices.createNewJournalForUser(userID: uid)
+                let todayJournal = Journal(id: journalStr, uid: uid)
+                foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
+            }
+            
+            // Populate the foodCache map
+            for food in foods {
+                foodCache[food.id] = food
             }
             
             // Combine everything into a MonkeyUser object

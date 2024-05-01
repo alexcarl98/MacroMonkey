@@ -78,16 +78,7 @@ class MacroMonkeyDatabase: ObservableObject {
         return ref?.documentID ?? ""
     }
     
-    func createNewJournalForUser(userID: String) -> String {
-        var ref: DocumentReference? = nil
-        
-        ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
-            "date": Timestamp(date: Date.now),
-            "uid": userID,
-            "entries": [Entry]()
-        ])
-        return ref?.documentID ?? ""
-    }
+    
     
     func fetchUserProfile(userID: String) async throws -> AppUser {
         let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
@@ -138,6 +129,8 @@ class MacroMonkeyDatabase: ObservableObject {
                 journalIDs: journalIDs
             )
     }
+    
+    
     func userExists(userID: String) async throws -> Bool {
         let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
         guard let documentSnapshot = querySnapshot.documents.first else {
@@ -148,7 +141,49 @@ class MacroMonkeyDatabase: ObservableObject {
         }
         return true
     }
-
+    
+    func createNewJournalForUser(userID: String) async  -> String {
+        var ref: DocumentReference? = nil
+        
+        ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
+            "date": Timestamp(date: Date.now),
+            "uid": userID,
+            "entries": [Entry]()
+        ])
+        let journalStr = ref?.documentID ?? ""
+        
+        let userRef = db.collection("users")
+        do{
+            let querySnapshot = await userRef.whereField("uid", isEqualTo: userID).getDocuments()
+            for document in querySnapshot.documents{
+                try await document.updateData(["journals": FieldValue.arrayUnion([journalStr])])
+            }
+        }
+        
+        
+        
+        return
+    }
+    
+    func fetchManyJournals(uid: String) async throws -> [Journal] {
+        var journals = [Journal]()
+        let journalRef = db.collection(JOURNAL_COLLECTION_NAME)
+        do {
+            let querySnapshot = try await journalRef.whereField("uid", isEqualTo: uid).getDocuments()
+            for document in querySnapshot.documents {
+                // Journal object is encodable and decodable. how do I get this as a list and then return
+                if let journalData = try? document.data(as: Journal.self) {
+                    journals.append(journalData)
+                }
+            }
+        } catch{
+            print("Error getting documents: \(error.localizedDescription)")
+        }
+        return journals
+    }
+    
+    
+    
     func fetchJournal(documentId: String) async throws -> Journal {
         let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
         do {
@@ -162,6 +197,20 @@ class MacroMonkeyDatabase: ObservableObject {
             }
             print("Fetched Journal \(documentId) successfully")
             return journal
+        } catch {
+            print("ERROR: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    
+    func addJournalEntries(documentId: String, entry: Entry) async throws {
+        let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
+        do {
+            // want to create a new map:
+            //
+            try await docRef.updateData(["entries": FieldValue.arrayUnion([entry])])
+            print("Updated entries for Journal \(documentId) successfully")
         } catch {
             print("ERROR: \(error.localizedDescription)")
             throw error

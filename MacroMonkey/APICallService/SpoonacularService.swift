@@ -66,7 +66,15 @@ class SpoonacularService: ObservableObject {
         return "https://api.spoonacular.com/recipes/\(foodID)/information?apiKey=\(apiKey)&includeNutrition=true"
     }
     
+    func queryByFoodIDInBulk(_ foodID: [Int]) -> String {
+        let ids = foodID.map(String.init).joined(separator: ",")
+        return "https://api.spoonacular.com/recipes/informationBulk?apiKey=\(apiKey)&ids=\(ids)&includeNutrition=true"
+    }
+
+    
+    
     func performSearch(for query: Int) async -> Food? {
+        // TODO: modify this function to accept an array of ints and call the queryByFoodIDInBulk
         let urlString = queryByFoodIDString(query)
         guard let url = URL(string: urlString) else {
             return nil
@@ -84,6 +92,47 @@ class SpoonacularService: ObservableObject {
             return nil
         }
     }
+    
+    func getListOfFoodsFromBulk(bulk: [FoodAPI]) -> [Food]{
+        var fds = [Food]()
+        for food in bulk {
+            let cals = food.nutrition.nutrients.first {$0.name == "Calories" }?.amount ?? 0.0
+            let protein = food.nutrition.nutrients.first { $0.name == "Protein" }?.amount ?? 0.0
+            let carbs = food.nutrition.nutrients.first { $0.name == "Carbohydrates" }?.amount ?? 0.0
+            let fats = food.nutrition.nutrients.first { $0.name == "Fat" }?.amount ?? 0.0
+            fds.append(Food(
+                id: food.id,
+                name: food.title,
+                servSize: Double(food.nutrition.weightPerServing.amount),
+                servUnit: food.nutrition.weightPerServing.unit,
+                cals: Double(cals),
+                protein: Double(protein),
+                carbs: Double(carbs),
+                fats: Double(fats),
+                img: food.image
+            ))
+        }
+        return fds
+    }
+    
+    func performBulkSearch(for queries: [Int]) async -> [Food]? {
+        // Construct the query URL for bulk search
+        let urlString = queryByFoodIDInBulk(queries)
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decodedResponse = try JSONDecoder().decode([FoodAPI].self, from: data)
+            decodedResponse.forEach { food in
+                print("Found food : \(food.title)")
+            }
+            return getListOfFoodsFromBulk(bulk: decodedResponse)
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            return nil
+        }
+    }
 }
 
 struct Fd: Codable, Identifiable {
@@ -91,3 +140,4 @@ struct Fd: Codable, Identifiable {
     let title: String
     // Add other properties as per the API response
 }
+

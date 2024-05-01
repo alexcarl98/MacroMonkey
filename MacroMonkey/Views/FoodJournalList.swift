@@ -41,11 +41,7 @@ struct FoodJournalList: View {
                                 List(Array(zip(mu.journal.entryLog.indices, mu.journal.entryLog)), id: \.0) { index, entry in
                                     if let fd = mu.foodCache[entry.food] {
                                         // One gets fixed another thing gets broken. porque
-//                                        ZStack {
                                         MacroFoodRow(food: fd, ratio: $mu.journal.entryLog[index].ratio)
-//                                        }
-//                                        .background(NavigationLink("", destination: FoodDetail(image: fd.img, name: fd.name, serv: fd.servSize, unit: fd.servUnit, macros: fd.formatted_macros())).opacity(0))
-//                                        .listRowInsets(EdgeInsets())
                                     }
                                 }
                             }
@@ -90,20 +86,6 @@ struct FoodJournalList: View {
             }
         }
     }
-    
-//    var journalFoodList: some View {
-//        List(Array(mu.journal.entryLog.enumerated()), id: \.offset) { index, entry in
-//            if let food = mu.foodCache[entry.food] {
-//                ZStack {
-//                    MacroFoodRow(food: food, ratio: $mu.journal.entryLog[index].ratio)
-//                }
-//                .background(NavigationLink("", destination:FoodDetail(image: food.img, name: food.name, serv: food.servSize, unit: food.servUnit, macros: food.formatted_macros())).opacity(0))
-//                .listRowInsets(EdgeInsets())
-//            }
-//        }
-//        .navigationTitle("Food Entries")
-//        .navigationBarTitleDisplayMode(.inline)
-//    }
 }
 
 
