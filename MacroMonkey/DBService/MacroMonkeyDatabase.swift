@@ -53,8 +53,6 @@ class MacroMonkeyDatabase: ObservableObject {
     func createUser(user: AppUser) -> String {
         var ref: DocumentReference? = nil
         // Add user document to the "users" collection
-        let initJournalString = createNewJournalForUser(userID: user.uid)
-        
         ref = db.collection("users").addDocument(data: [
             "uid": user.uid,
             "name": user.name,
@@ -65,7 +63,7 @@ class MacroMonkeyDatabase: ObservableObject {
             "dietStartDate": Timestamp(date: user.dietStartDate),
             "dob": Timestamp(date: user.dob),
             "completedCycles": user.completedCycles,
-            "journals": [initJournalString],
+            "journals": [String](),
             "goalWeightChange": user.goalWeightChange,
             "sex": user.sex,
             "imgID": user.imgID
@@ -133,16 +131,16 @@ class MacroMonkeyDatabase: ObservableObject {
     
     func userExists(userID: String) async throws -> Bool {
         let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
-        guard let documentSnapshot = querySnapshot.documents.first else {
-            // If no document is found, you could decide to throw an error.
-            // For the purpose of this fix, returning an AppUser with empty strings.
-            print("No document found with the specified UID")
-            return false
-        }
-        return true
+//        guard let documentSnapshot = querySnapshot.documents.first else {
+//            // If no document is found, you could decide to throw an error.
+//            // For the purpose of this fix, returning an AppUser with empty strings.
+//            print("No document found with the specified UID")
+//            return false
+//        }
+        return querySnapshot.documents.first != nil
     }
     
-    func createNewJournalForUser(userID: String) async throws -> String {
+    func createNewJournalForUser(userID: String) -> String {
         var ref: DocumentReference? = nil
         
         ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
@@ -151,17 +149,6 @@ class MacroMonkeyDatabase: ObservableObject {
             "entries": [Entry]()
         ])
         let journalStr = ref?.documentID ?? ""
-        
-        let userRef = db.collection("users")
-        do{
-            let querySnapshot = try await userRef.whereField("uid", isEqualTo: userID).getDocuments()
-            for document in querySnapshot.documents{
-                try await document?.updateData(["journals": FieldValue.arrayUnion([journalStr])])
-            }
-        } catch {
-            print("Error getting documents: \(error.localizedDescription)")
-        }
-        
         return journalStr
     }
     
@@ -182,8 +169,6 @@ class MacroMonkeyDatabase: ObservableObject {
         return journals
     }
     
-    
-    
     func fetchJournal(documentId: String) async throws -> Journal {
         let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
         do {
@@ -202,7 +187,6 @@ class MacroMonkeyDatabase: ObservableObject {
             throw error
         }
     }
-    
     
     func addJournalEntries(documentId: String, entry: Entry) async throws {
         let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)

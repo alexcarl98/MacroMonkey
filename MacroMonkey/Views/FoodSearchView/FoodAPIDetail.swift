@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct FoodAPIDetail: View {
-    // TODO: Change foodToDisplay into:: @State private var foodToDisplay: Food?
     @EnvironmentObject var spoonacularService: SpoonacularService
     @EnvironmentObject var firebaseService: MacroMonkeyDatabase
-    @EnvironmentObject var whoeverIsUsingThisMonkey: MonkeyUser
+    @EnvironmentObject var mu: MonkeyUser
     @Environment(\.presentationMode) var presentationMode
     @State private var foodToDisplay: FoodAPI?  // Now optional
     @State private var isLoading: Bool = true
@@ -21,7 +20,13 @@ struct FoodAPIDetail: View {
         ScrollView {
             if let food = foodToDisplay {
                 VStack{
-                    FoodDetail(image: food.image, name: food.title, serv: Double(food.nutrition.weightPerServing.amount), unit: food.nutrition.weightPerServing.unit, macros: food.nutrition.formattedDbl())
+                    FoodDetail(
+                        image: food.image,
+                        name: food.title,
+                        serv: Double(food.nutrition.weightPerServing.amount),
+                        unit: food.nutrition.weightPerServing.unit,
+                        macros: food.nutrition.formattedDbl()
+                    )
                     Spacer()
                     Button {
                         addToList()
@@ -48,8 +53,7 @@ struct FoodAPIDetail: View {
     
     func addToList(){
         if let fd = foodToDisplay{
-            whoeverIsUsingThisMonkey.addFood(fd.convertToFood())
-//            let _ = print(whoeverIsUsingThisMonkey.journal.entryLog)
+            mu.addFood(fd.convertToFood())
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -64,24 +68,16 @@ struct FoodAPIDetail: View {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 let decodedResponse = try JSONDecoder().decode(FoodAPI.self, from: data)
-                DispatchQueue.main.async {
-                    foodToDisplay = decodedResponse
-                    foodToDisplay?.filterFood()
-                    isLoading = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    isLoading = false
-                    print("Error: \(error.localizedDescription)")
-                }
+                foodToDisplay = decodedResponse
+                foodToDisplay?.filterFood()
+                isLoading = false
+            
+            } catch {    
+                isLoading = false
+                print("Error: \(error.localizedDescription)")
+                
             }
         }
     }
 }
-//
-//#Preview {
-//    FoodAPIDetail(foodID: 716429)
-//        .environmentObject(SpoonacularService())
-//        .environmentObject(MonkeyUser())
-//        .environmentObject(MacroMonkeyDatabase())
-//}
+

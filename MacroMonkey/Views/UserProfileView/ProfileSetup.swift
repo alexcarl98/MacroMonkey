@@ -21,10 +21,7 @@ struct ProfileSetup: View {
                 newUser.id = userCollectionID
                 editing = false
             } label:{
-                Text("Submit")
-//                    .padding()
-//                    .background(Color.gray, in: RoundedRectangle(cornerRadius: 8))
-            }
+                Text("Submit")            }
         }
     }
 }

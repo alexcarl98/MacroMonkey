@@ -32,7 +32,7 @@ struct FoodJournalList: View {
                         VStack {
                             foodSearchLink
                             if mu.foodCache.count == 0 {
-                                VStack{
+                                VStack {
                                     Spacer()
                                     Text("There are no foods entered for today.")
                                     Spacer()
@@ -51,11 +51,6 @@ struct FoodJournalList: View {
                 }
                 .navigationTitle("Macro Monkey 🙈")
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        if auth.user != nil {
-                            Button("New Article") { writing = true }
-                        }
-                    }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         if auth.user != nil {
                             Button("Sign Out") {

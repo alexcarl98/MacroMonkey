@@ -9,11 +9,6 @@ import SwiftUI
 
 struct CalendarBlocks: View {
     var days: Int
-    /*
-     10 : 10, 0, 0, 0, 0, 0, 0, 0           || days % 10
-     11: 10, 0, 0, 0, 0, 0, 0, 0
-     32: 10, 10, 10, 2, 0, 0, 0, 0
-     */
     
     var body: some View {
             VStack(spacing: 5) {
@@ -45,11 +40,11 @@ struct CalendarBlocks: View {
         let daysPast = index * 10
         
         if daysPast >= days {
-            return 0 // No days left to display in this block
+            return 0
         } else if days - daysPast >= 10 {
             return 10 // Full block of 10 days
         } else {
-            return days - daysPast // Remaining days for the last partial block
+            return days - daysPast 
         }
     }
 }

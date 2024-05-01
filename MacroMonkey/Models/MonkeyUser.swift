@@ -9,8 +9,8 @@ import SwiftUI
 
 
 class MonkeyUser: ObservableObject {
-    @Published var profile: AppUser
-    @Published var journals: [Journal]
+    @Published var profile: AppUser = AppUser.empty
+    @Published var journals: [Journal] = [Journal.empty]
     @Published var foodCache: [Int: Food]
     @Published var journal: Journal = Journal.default
     

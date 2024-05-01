@@ -26,8 +26,3 @@ struct PlanProgressView: View {
         }
     }
 }
-
-//#Preview {
-//    PlanProgressView()
-//        .environmentObject(MonkeyUser())
-//}

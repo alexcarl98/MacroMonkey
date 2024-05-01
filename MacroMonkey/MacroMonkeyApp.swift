@@ -17,7 +17,7 @@ struct MacroMonkeyApp: App {
                 .environmentObject(MacroMonkeyAuth())
                 .environmentObject(MacroMonkeyDatabase())
                 .environmentObject(SpoonacularService())
+                .environmentObject(MonkeyUser(profile:AppUser.empty, journals:[Journal.empty], foodCache:[:]))
         }
     }
 }
-

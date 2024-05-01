@@ -18,6 +18,9 @@ Beyond this, MacroMonkey is beginner friendly and encourages habit building with
 
 
 ### App in action
+￼
+￼
+￼
 
 
 In the about.md file: Provide screenshots of your app, with captions/commentary as appropriate
@@ -29,3 +32,4 @@ In the about.md file: Provide screenshots of your app, with captions/commentary 
 ### acknowledgements/thanks/credits
 - ChatGPT
 - StackOverflow
+- Professor Dionisio

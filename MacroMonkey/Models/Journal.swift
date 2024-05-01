@@ -19,7 +19,7 @@ struct Entry: Hashable, Codable {
         case time
     }
 }
-    
+
 struct Journal: Hashable, Codable, Identifiable {
     @DocumentID var id: String?
     var uid: String

@@ -34,7 +34,7 @@ struct ContentView: View {
                 SignInFlow()
             }
         }
-        
+    
     var mainTabView: some View {
         TabView {
             FoodJournalList(requestLogin: $requestLogin)
@@ -62,7 +62,7 @@ struct ContentView: View {
                     ZStack {
                         AuthenticationViewController(authUI: authUI)
                             .onDisappear {
-                                mu.objectWillChange.send()
+//                                mu.objectWillChange.send()
                                 handleUserAuthentication()
                             }
                     }
@@ -81,9 +81,9 @@ struct ContentView: View {
                 .padding()
         }
     }
-
-
+    
     private func handleUserAuthentication() {
+        isLoading = true
         Task {
             do {
                 if !auth.userID.isEmpty {
@@ -100,11 +100,12 @@ struct ContentView: View {
                         isNewUser = true
                     }
                     print("User: \(mu.profile.name)")
+                    isLoading = false
                 }
             } catch {
                 print("Error during user authentication: \(error)")
+                isLoading = false
             }
-            isLoading = false
         }
     }
     
@@ -118,12 +119,11 @@ struct ContentView: View {
             
             var foods:[Food] = [Food]()
             var foodCache: [Int: Food] = [:] // Initialize an empty food cache
-
             
             if let todayJournal = journals.first(where: { Calendar.current.isDateInToday($0.journalDate) }){
                 foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
             } else {
-                let journalStr = try await firebaseServices.createNewJournalForUser(userID: uid)
+                let journalStr = firebaseServices.createNewJournalForUser(userID: uid)
                 let todayJournal = Journal(id: journalStr, uid: uid)
                 foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
             }
@@ -138,6 +138,7 @@ struct ContentView: View {
         } catch {
             print("Error fetching user information: \(error)")
             // Handle errors or return a default/fallback MonkeyUser object
+            isLoading = false
             return MonkeyUser(profile: AppUser.empty, journals: [Journal.empty], foodCache: [:]) // Return an empty/default user on failure
         }
     }

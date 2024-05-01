@@ -35,7 +35,6 @@ struct FoodSearchView: View {
                     }
                 }
             }
-//            .padding()
         }
         .searchable(text: $searchText, prompt: "Search for a food")
         .onChange(of: searchText) {
@@ -52,7 +51,6 @@ struct FoodSearchView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
         }
     }
-
     
     func performSearch(for query: String) {
         // Invokes API Call depending on user search
