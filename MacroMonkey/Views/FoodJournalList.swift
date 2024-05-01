@@ -21,7 +21,7 @@ struct FoodJournalList: View {
             NavigationStack {
                 VStack {
                     // TODO: Get this to stay consistent to reflect mu.journal values
-                    NutritionGraph(current: mu.journal.getTotalMacros(), goals: mu.profile.goalMacros())
+                    NutritionGraph(current: mu.getTotalMacros(), goals: mu.profile.goalMacros())
                     Divider()
                     if fetching {
                         ProgressView()
@@ -30,7 +30,7 @@ struct FoodJournalList: View {
                     } else {
                         VStack {
                             foodSearchLink
-                            if mu.journal.entryLog.count == 0 {
+                            if mu.foodCache.count == 0 {
                                 VStack {
                                     Spacer()
                                     Text("There are no foods entered for today.")
@@ -78,6 +78,7 @@ struct FoodJournalList: View {
                 }
             }
         }
+    
     var foodSearchLink: some View{
         Group {
             NavigationLink {
@@ -97,6 +98,6 @@ struct FoodJournalList_Previews: PreviewProvider {
         FoodJournalList(requestLogin: $requestLogin)
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
-        .environmentObject(MonkeyUser())
+        .environmentObject(MonkeyUser(profile: AppUser.default, journals: [Journal.empty], foodCache: [716429: Food.pasta]))
     }
 }

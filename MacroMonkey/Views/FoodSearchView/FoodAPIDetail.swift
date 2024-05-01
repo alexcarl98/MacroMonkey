@@ -21,7 +21,7 @@ struct FoodAPIDetail: View {
         ScrollView {
             if let food = foodToDisplay {
                 VStack{
-                    FoodDetail(image: food.image, name: food.title, serv: Double(food.nutrition.weightPerServing.amount), unit: food.nutrition.weightPerServing.unit, macros: (food.nutrition.formattedDbl()))
+                    FoodDetail(image: food.image, name: food.title, serv: Double(food.nutrition.weightPerServing.amount), unit: food.nutrition.weightPerServing.unit, macros: food.nutrition.formattedDbl())
                     Spacer()
                     Button {
                         addToList()
@@ -49,7 +49,7 @@ struct FoodAPIDetail: View {
     func addToList(){
         if let fd = foodToDisplay{
             whoeverIsUsingThisMonkey.addFood(fd.convertToFood())
-            let _ = print(whoeverIsUsingThisMonkey.journal.entryLog)
+//            let _ = print(whoeverIsUsingThisMonkey.journal.entryLog)
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -78,10 +78,10 @@ struct FoodAPIDetail: View {
         }
     }
 }
-
-#Preview {
-    FoodAPIDetail(foodID: 716429)
-        .environmentObject(SpoonacularService())
-        .environmentObject(MonkeyUser())
-        .environmentObject(MacroMonkeyDatabase())
-}
+//
+//#Preview {
+//    FoodAPIDetail(foodID: 716429)
+//        .environmentObject(SpoonacularService())
+//        .environmentObject(MonkeyUser())
+//        .environmentObject(MacroMonkeyDatabase())
+//}

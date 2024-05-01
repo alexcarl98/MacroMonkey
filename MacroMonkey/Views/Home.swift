@@ -16,12 +16,12 @@ struct Home: View {
     @State private var currentUser: AppUser = AppUser.empty
     
     var body: some View {
-        if let authUI = auth.authUI {
-            FoodJournalList(requestLogin: $requestLogin)
+//        if let authUI = auth.authUI {
+        FoodJournalList(requestLogin: $requestLogin)
 //                .environmentObject(mu)
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
-                }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
 //                .sheet(isPresented: $requestLogin) {
 //                    AuthenticationViewController(authUI: authUI)
 //                        .onDisappear {
@@ -44,22 +44,22 @@ struct Home: View {
 //                .sheet(isPresented: $isNewUser) {
 //                    ProfileSetup(newUser: $currentUser, editing: $isNewUser)
 //                }
-        } else {
-            VStack {
-                Text("Sorry, looks like we aren’t set up right!")
-                    .padding()
-                Text("Please contact this app’s developer for assistance.")
-                    .padding()
-            }
-        }
+//        } else {
+//            VStack {
+//                Text("Sorry, looks like we aren’t set up right!")
+//                    .padding()
+//                Text("Please contact this app’s developer for assistance.")
+//                    .padding()
+//            }
+//        }
     }
 }
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-            .environmentObject(MacroMonkeyAuth())
-            .environmentObject(MacroMonkeyDatabase())
-            .environmentObject(MonkeyUser())
-    }
-}
+//struct Home_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Home()
+//            .environmentObject(MacroMonkeyAuth())
+//            .environmentObject(MacroMonkeyDatabase())
+//            .environmentObject(MonkeyUser())
+//    }
+//}

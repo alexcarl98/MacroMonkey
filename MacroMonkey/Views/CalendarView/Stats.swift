@@ -23,7 +23,7 @@ struct Stats: View {
     }
 }
 
-#Preview {
-    Stats()
-        .environmentObject(MonkeyUser())
-}
+//#Preview {
+//    Stats()
+//        .environmentObject(MonkeyUser())
+//}

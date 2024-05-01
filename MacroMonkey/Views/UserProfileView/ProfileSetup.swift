@@ -29,7 +29,6 @@ struct ProfileSetup: View {
     }
 }
 
-
 struct ProfileSetup_Previews: PreviewProvider {
     static var previews: some View {
         ProfileSetup(newUser: .constant(AppUser.default), editing: .constant(true))

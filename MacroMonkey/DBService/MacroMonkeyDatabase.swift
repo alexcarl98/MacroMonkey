@@ -48,7 +48,7 @@ class MacroMonkeyDatabase: ObservableObject {
     var journalCache:[String: Journal]=[:]
     @Published var error: Error?
     @Published var errorMessage: String?
-    var journ: Jnl?
+    var journ: Journal?
     
     func createUser(user: AppUser) -> String {
         var ref: DocumentReference? = nil
@@ -84,7 +84,7 @@ class MacroMonkeyDatabase: ObservableObject {
         ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
             "date": Timestamp(date: Date.now),
             "uid": userID,
-            "entries": [EntryLog]()
+            "entries": [Entry]()
         ])
         return ref?.documentID ?? ""
     }
@@ -115,14 +115,8 @@ class MacroMonkeyDatabase: ObservableObject {
         let imgID = documentSnapshot.get("imgID") as? String ?? ""
         var journalIDs = documentSnapshot.get("journals") as? [String] ?? [String]()
         
-        if journalIDs.count > 0 {
-            if let todays = journalIDs.last{
-                // if the last journal is today's, then get today's
-                fetchJournal(documentId: todays)
-            }
-        } else {
-            // otherwise, instantiate a new journal entry
-            var str = createNewJournalForUser(userID: uid)
+        if journalIDs.count == 0 {
+            let str = createNewJournalForUser(userID: uid)
             journalIDs.append(str)
         }
         
@@ -222,44 +216,47 @@ class MacroMonkeyDatabase: ObservableObject {
 //        return ref?.documentID ?? ""
 //    }
     
-    func fetchJournal(documentId: String) {
+//    func fetchJournal(documentId: String) {
+//        let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
+//          
+//            docRef.getDocument(as: Journal.self) { result in
+//                switch result {
+//                case .success(let log):
+//                  // A Book value was successfully initialized from the DocumentSnapshot.
+//                  self.journ = log
+//                  self.error = nil
+//
+//                case .failure(let error):
+//                  // A Book value could not be initialized from the DocumentSnapshot.
+//                    self.error = error
+//                    self.errorMessage = "Error decoding document: \(error.localizedDescription)"
+//                }
+//              }
+//            }
+
+
+    func fetchJournal(documentId: String) async throws -> Journal {
         let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
-          
-            docRef.getDocument(as: Jnl.self) { result in
-                switch result {
-                case .success(let log):
-                  // A Book value was successfully initialized from the DocumentSnapshot.
-                  self.journ = log
-                  self.error = nil
-                    
-                    // Check if there are entries to process
-//                    guard let entries = log.entries else {
-//                        return
-//                    }
-                    // Fetch food details for each entry
-//                    for entry in entries {
-//                        self.fetchFood(documentId: entry.altfid) {foodResult in
-//                            switch foodResult {
-//                            case .success(let food):
-//                                // Process each food item as it's loaded
-//                                // Optionally update a UI element or perform an action
-//                                print("Successfully retrieved food for entry: \(food.name)")
-//                            case .failure(let error):
-//                                print("Error fetching food for entry: \(error.localizedDescription)")
-//                            }
-//                        }
-//                    }
-                case .failure(let error):
-                  // A Book value could not be initialized from the DocumentSnapshot.
-                    self.error = error
-                    self.errorMessage = "Error decoding document: \(error.localizedDescription)"
+        do {
+            let journal: Journal = try await docRef.getDocument(as: Journal.self)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted // Optional, for more readable output
+            if let jsonData = try? encoder.encode(journal) {
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)  // Printing the JSON string
                 }
-              }
             }
+            print("Fetched Journal \(documentId) successfully")
+            return journal
+        } catch {
+            print("ERROR: \(error.localizedDescription)")
+            throw error
+        }
+    }
+
 
     func addNewJournal(uid: String) async -> String {
         let journalRef = db.collection(JOURNAL_COLLECTION_NAME)
-
         do {
             // Ensure that the date and entries are properly formatted for Firestore
             let newRef = try await journalRef.addDocument(data: [
@@ -273,6 +270,8 @@ class MacroMonkeyDatabase: ObservableObject {
             return ""
         }
     }
+    
+    
     
 //    func fetchFood(documentId: String, completion: @escaping (Result<Food, Error>) -> Void) {
 //        let docRef = db.collection(FOOD_COLLECTION_NAME).document(documentId)

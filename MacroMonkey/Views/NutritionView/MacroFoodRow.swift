@@ -44,7 +44,6 @@ struct MacroFoodRow: View {
             }
             .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#0090FF"), Color(hex:"#6A5ACD")]), startPoint: .top, endPoint: .bottom), in: Rectangle())
             HStack {
-                
                 TextField("(\(food.servUnit))", value: $quantity, formatter: NumberFormatter())
                     .keyboardType(.decimalPad)
                     .frame(width: 50)
@@ -69,18 +68,4 @@ struct MacroFoodRow: View {
             ratio = quantity / food.servSize
         }
     }
-    
-    
-}
-
-//// Preview
-//struct MacroFoodRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MacroFoodRow(food: Food(pasta), ratio: .constant(1.0))
-//    }
-//}
-
-#Preview {
-    MacroFoodRow(food: Food.pasta, ratio: .constant(1.0))
-        .environmentObject(MonkeyUser())
 }

@@ -9,12 +9,11 @@ import Foundation
 import FirebaseFirestore
 
 struct Entry: Hashable, Codable {
-//    var food: Food
     var food: Int
     var ratio: Double
     var time: Date = Date.now
     
-    enum CodingKeys: String,CodingKeys{
+    enum CodingKeys: String,CodingKey{
         case food = "foodID"
         case ratio
         case time
@@ -24,27 +23,9 @@ struct Entry: Hashable, Codable {
 struct Journal: Hashable, Codable, Identifiable {
     @DocumentID var id: String?
     var uid: String
-    var journalDate: Date
-//    var entryLog = [Entry]()
-    var entries: [Entry]?
+    var journalDate: Date = Date.now
+    var entryLog = [Entry]()
     
-//    var entryLog: [Entry] {
-//        return entries ?? [Entry]()
-//    }
-    
-    func getTotalMacros(foodCache: [Int:Food]) -> [Double] {
-        var totals: [Double] = [0.0, 0.0, 0.0, 0.0]
-        if let entryLog = entries{
-            for entry in entryLog {
-                totals[0] += (foodCache[entry.food]?.cals ?? 0) * entry.ratio
-                totals[1] += (foodCache[entry.food]?.protein ?? 0) * entry.ratio
-                totals[2] += (foodCache[entry.food]?.carbs ?? 0) * entry.ratio
-                totals[3] += (foodCache[entry.food]?.fats ?? 0) * entry.ratio
-            }
-        }
-        
-        return totals
-    }
     
     mutating func removeFoodByIndex(_ index: Int) {
         guard index >= 0 && index < entryLog.count else {
@@ -55,22 +36,24 @@ struct Journal: Hashable, Codable, Identifiable {
     }
     
     mutating func addFoodEntry(_ food: Food){
-        self.entryLog.append(Entry(food: food, ratio: 1.0))
+        self.entryLog.append(Entry(food: food.fid, ratio: 1.0))
     }
     
-//    static let `default` = Journal(
-//        uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
-//        journalDate: Date.now,
-//        entryLog: [Entry(food: 716429, ratio: 1.2)]
-//    )
-//    
-//    static let `empty` = Journal(
-//        id: "0",
-//        uid: "",
-//        journalDate: Date.now
-//    )
+    static let `default` = Journal(
+        uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
+        journalDate: Date.now,
+        entryLog: [Entry(food: 716429, ratio: 1.2)]
+    )
     
-    enum CodingKeys: String,CodingKeys {
+    func getEntry(at index: Int) -> Entry{
+        return entryLog[index]
+    }
+//
+    static let `empty` = Journal(
+        uid: ""
+    )
+    
+    enum CodingKeys: String,CodingKey {
         case id
         case uid
         case journalDate = "date"

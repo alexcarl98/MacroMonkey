@@ -51,7 +51,7 @@ struct Profile: View {
     }
 }
 
-#Preview {
-    Profile()
-        .environmentObject(MonkeyUser())
-}
+//#Preview {
+//    Profile()
+//        .environmentObject(MonkeyUser())
+//}
