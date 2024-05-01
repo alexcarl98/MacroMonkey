@@ -39,22 +39,6 @@ struct MacroMonkeyDBHelperView: View {
                         }
                     }
                 }
-
-                Section(header: Text("Food Functions")) {
-                    TextField("Enter Food ID", text: $foodID)
-                    Button("Fetch Food Info") {
-                        Task {
-                            do {
-
-                                let food = try await database.fetchFoodInfo(foodID: Int(foodID) ?? 0)
-                                resultMessage = "Food: \(food.name)\nCalories: \(String(food.cals))\nProtein:\(String(food.protein))\nFats:\(food.fats)\nCarbs:\(food.carbs)\nServingSize:\(food.servSize)\(food.servUnit)\n\nFoodCache Size:\(database.foodCache.count)"
-                            } catch {
-                                resultMessage = "Error: \(error.localizedDescription)"
-                            }
-                        }
-                    }
-                }
-                
                 Section(header: Text("Results")) {
                     Text(resultMessage)
                         .foregroundColor(.blue)

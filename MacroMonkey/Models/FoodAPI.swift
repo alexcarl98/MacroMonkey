@@ -12,7 +12,7 @@ struct NutrientAPI: Hashable, Codable{
     var amount: Float
     var unit: String
     
-    func formatted() -> String{
+    func formatted() -> String {
         return "\(name): \(String(format: "%.0f", amount)) \(unit)"
     }
 }

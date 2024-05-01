@@ -41,7 +41,7 @@ struct Home: View {
 //                            }
 //                        }
 //                }
-//                .sheet(isPresented: $isNewUser){
+//                .sheet(isPresented: $isNewUser) {
 //                    ProfileSetup(newUser: $currentUser, editing: $isNewUser)
 //                }
         } else {

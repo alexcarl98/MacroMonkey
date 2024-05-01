@@ -53,17 +53,6 @@ struct FoodAPIDetail: View {
             presentationMode.wrappedValue.dismiss()
         }
     }
-    func performDBAdd(for query: Int) {
-        Task {
-            //ERROR : Initializer for conditional binding must have Optional type, not 'Food'
-            if let foodInfo = try? await firebaseService.fetchFoodInfo(foodID: query) {
-            } else {
-                DispatchQueue.main.async {
-                    let _ = firebaseService.createFood(fd: foodToDisplay?.convertToFood())
-                }
-            }
-        }
-    }
     
     func performSearch(for query: Int) {
         let urlString = spoonacularService.queryByFoodIDString(query)

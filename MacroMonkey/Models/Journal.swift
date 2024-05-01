@@ -6,19 +6,43 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
+struct Entry: Hashable, Codable {
+//    var food: Food
+    var food: Int
+    var ratio: Double
+    var time: Date = Date.now
+    
+    enum CodingKeys: String,CodingKeys{
+        case food = "foodID"
+        case ratio
+        case time
+    }
+}
+    
 struct Journal: Hashable, Codable, Identifiable {
-    var id: String
+    @DocumentID var id: String?
+    var uid: String
     var journalDate: Date
-    var entryLog = [Entry]()
-    func getTotalMacros() -> [Double] {
+//    var entryLog = [Entry]()
+    var entries: [Entry]?
+    
+//    var entryLog: [Entry] {
+//        return entries ?? [Entry]()
+//    }
+    
+    func getTotalMacros(foodCache: [Int:Food]) -> [Double] {
         var totals: [Double] = [0.0, 0.0, 0.0, 0.0]
-        for entry in entryLog {
-            totals[0] += entry.calories
-            totals[1] += entry.proteins
-            totals[2] += entry.carbohydrates
-            totals[3] += entry.fats
+        if let entryLog = entries{
+            for entry in entryLog {
+                totals[0] += (foodCache[entry.food]?.cals ?? 0) * entry.ratio
+                totals[1] += (foodCache[entry.food]?.protein ?? 0) * entry.ratio
+                totals[2] += (foodCache[entry.food]?.carbs ?? 0) * entry.ratio
+                totals[3] += (foodCache[entry.food]?.fats ?? 0) * entry.ratio
+            }
         }
+        
         return totals
     }
     
@@ -34,22 +58,22 @@ struct Journal: Hashable, Codable, Identifiable {
         self.entryLog.append(Entry(food: food, ratio: 1.0))
     }
     
-    static let `default` = Journal(
-        id: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
-        journalDate: Date.now,
-        entryLog: [Entry(food: Food.pasta, ratio: 1.2)]
-    )
+//    static let `default` = Journal(
+//        uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
+//        journalDate: Date.now,
+//        entryLog: [Entry(food: 716429, ratio: 1.2)]
+//    )
+//    
+//    static let `empty` = Journal(
+//        id: "0",
+//        uid: "",
+//        journalDate: Date.now
+//    )
     
-    static let `empty` = Journal(
-        id: "0",
-        journalDate: Date.now
-    )
-    func getFirebaseEntries() -> [EntryLog] {
-        var entries = [EntryLog]()
-        for entry in entryLog {
-            entries.append(EntryLog(foodID: entry.food.id, ratio: Double(entry.ratio), time: entry.time))
-        }
-        
-        return entries
+    enum CodingKeys: String,CodingKeys {
+        case id
+        case uid
+        case journalDate = "date"
+        case entryLog = "entries"
     }
 }

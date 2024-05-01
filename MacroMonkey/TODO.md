@@ -349,3 +349,11 @@ class MacroMonkeyDatabase: ObservableObject {
 }
 
 ```
+
+
+
+
+# TODO:
+
+
+

@@ -18,7 +18,7 @@ class MacroMonkeyAuth: NSObject, ObservableObject, FUIAuthDelegate {
     let providers: [FUIAuthProvider] = [
         FUIEmailAuth()
     ]
-
+    
     @Published var user: User?
     @Published var userID: String = ""
     @Published var userName: String = ""

@@ -11,6 +11,7 @@ import SwiftUI
 class MonkeyUser: ObservableObject {
     @Published var profile: AppUser = AppUser.empty
     @Published var journal: Journal = Journal.empty
+    @Published var foodCache: [Int:Food] = [:]
     
     func addFood(_ food: Food){
         objectWillChange.send()

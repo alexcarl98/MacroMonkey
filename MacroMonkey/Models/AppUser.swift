@@ -21,10 +21,7 @@ struct AppUser: Hashable, Codable, Identifiable {
     var goalWeightChange: Int
     var sex: String
     var imgID: String
-    
-    var display: String {
-        return "ID: \(id)\nUID: \(uid)\nName: \(name)\nEmail: \(email)\nLvl: \(level)"
-    }
+    var journalIDs = [String]()
     
     var initials: String {
         let formatter = PersonNameComponentsFormatter()

@@ -13,8 +13,7 @@ struct MacroFoodList: View {
     
     var body: some View {
         List(mu.journal.entryLog.indices, id: \.self) { index in
-            if let food = dbService.foodCache[mu.journal.entryLog[index].food.fid]{
-                
+            if let food = mu.foodCache[mu.journal.entryLog[index].food.fid]{
                 ZStack{
                     MacroFoodRow(food: food, ratio: $mu.journal.entryLog[index].ratio)
                     
