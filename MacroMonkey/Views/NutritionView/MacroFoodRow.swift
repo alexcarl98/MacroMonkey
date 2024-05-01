@@ -13,12 +13,12 @@ struct MacroFoodRow: View {
     @Binding var ratio: Double
     @State private var quantity: Double
 
-    // Initialize the state variables with default values using the custom initializer
-    init(food: Food, ratio: Binding<Double>) {
-        self._food = State(initialValue: food)
-        self._ratio = ratio
-        self._quantity = State(initialValue: food.servSize * ratio.wrappedValue)  // Set initial quantity to food's servSize
-    }
+//    // Initialize the state variables with default values using the custom initializer
+//    init(food: Food, ratio: Binding<Double>) {
+//        self._food = State(initialValue: food)
+//        self._ratio = ratio
+//        self._quantity = State(initialValue: food.servSize * ratio.wrappedValue)  // Set initial quantity to food's servSize
+//    }
 
     private var macros: [Double] {
         // Calculate the ratio based on quantity and servSize
@@ -32,6 +32,7 @@ struct MacroFoodRow: View {
     }
 
     var body: some View {
+        let _ = print("MacroFoodRow")
         VStack {
             HStack{
                 Spacer()
@@ -51,9 +52,9 @@ struct MacroFoodRow: View {
                     .background(Color.white)
                     .cornerRadius(5)
                     .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray, lineWidth: 1))
-                    .onSubmit {
-                        mu.updateUI()
-                    }
+//                    .onSubmit {
+//                        mu.updateUI()
+//                    }
                 MacroValueCell(value: macros[0], col: CALORIES_COLOR)
                 MacroValueCell(value: macros[1], col: PROTEIN_COLOR)
                 MacroValueCell(value: macros[2], col: CARBS_COLOR)

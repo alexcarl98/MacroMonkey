@@ -188,17 +188,17 @@ class MacroMonkeyDatabase: ObservableObject {
         }
     }
     
-    func addJournalEntries(documentId: String, entry: Entry) async throws {
-        let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
-        do {
-            // want to create a new map:
-            //
-            try await docRef.updateData(["entries": FieldValue.arrayUnion([entry])])
-            print("Updated entries for Journal \(documentId) successfully")
-        } catch {
-            print("ERROR: \(error.localizedDescription)")
-            throw error
-        }
-    }
+//    func addJournalEntries(documentId: String, entry: Entry) async throws {
+//        let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
+//        do {
+//            // want to create a new map:
+//            //
+//            try await docRef.updateData(["entries": FieldValue.arrayUnion([entry])])
+//            print("Updated entries for Journal \(documentId) successfully")
+//        } catch {
+//            print("ERROR: \(error.localizedDescription)")
+//            throw error
+//        }
+//    }
 
 }

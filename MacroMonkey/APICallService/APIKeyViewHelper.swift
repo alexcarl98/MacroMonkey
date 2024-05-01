@@ -22,7 +22,6 @@ struct APIKeyViewHelper: View {
             print("Failed to retrieve API key, using default: \(self.apiKey)")
         }
     }
-    
     var body: some View {
         VStack {
             if let errorMessage = errorMessage {

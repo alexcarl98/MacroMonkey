@@ -30,7 +30,11 @@ struct FoodJournalList: View {
                         Text("Something went wrong…we wish we can say more 🤷🏽")
                     } else {
                         VStack {
-                            foodSearchLink
+                            NavigationLink {
+                                FoodSearchView()
+                            } label:{
+                                Label("Add", systemImage: "plus")
+                            }
                             if mu.foodCache.count == 0 {
                                 VStack {
                                     Spacer()
@@ -52,7 +56,7 @@ struct FoodJournalList: View {
                 .navigationTitle("Macro Monkey 🙈")
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        if auth.user != nil {
+                        if $auth.user != nil {
                             Button("Sign Out") {
                                 do {
                                     try auth.signOut()
@@ -71,16 +75,6 @@ struct FoodJournalList: View {
                 }
             }
         }
-    
-    var foodSearchLink: some View{
-        Group {
-            NavigationLink {
-                FoodSearchView()
-            } label:{
-                Label("Add", systemImage: "plus")
-            }
-        }
-    }
 }
 
 

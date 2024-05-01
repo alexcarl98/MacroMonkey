@@ -39,16 +39,15 @@ struct FoodSearchView: View {
         .searchable(text: $searchText, prompt: "Search for a food")
         .onChange(of: searchText) {
             // Cancel the current work item if it exists
-            searchWorkItem?.cancel()
+//            searchWorkItem?.cancel()
             
             // Create a new work item to perform the search
-            let workItem = DispatchWorkItem {
+//            let workItem = DispatchWorkItem {
                 performSearch(for: searchText)
-            }
-            
-            // Save the new work item and schedule it to run after a delay
-            searchWorkItem = workItem
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
+//            }
+//            // Save the new work item and schedule it to run after a delay
+//            searchWorkItem = workItem
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
         }
     }
     

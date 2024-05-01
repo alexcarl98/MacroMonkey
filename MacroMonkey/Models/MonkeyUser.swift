@@ -9,8 +9,8 @@ import SwiftUI
 
 
 class MonkeyUser: ObservableObject {
-    @Published var profile: AppUser = AppUser.empty
-    @Published var journals: [Journal] = [Journal.empty]
+    @Published var profile: AppUser
+    @Published var journals: [Journal]
     @Published var foodCache: [Int: Food]
     @Published var journal: Journal = Journal.default
     
@@ -27,22 +27,22 @@ class MonkeyUser: ObservableObject {
     }
     
     func addFood(_ food: Food){
-        objectWillChange.send()
+//        objectWillChange.send()
         foodCache[food.id] = food
         journal.addFoodEntry(food)
     }
     
     func rmvFood(_ idx: Int){
-        objectWillChange.send()
+//        objectWillChange.send()
         journal.removeFoodByIndex(idx)
     }
     
-    func updateUI(){
-        objectWillChange.send()
-    }
+//    func updateUI(){
+//        objectWillChange.send()
+//    }
     
     func userLoginInfo(userName: String, userID: String, email: String) {
-        objectWillChange.send()
+//        objectWillChange.send()
         profile.name = userName
         profile.uid = userID
         profile.email = email
