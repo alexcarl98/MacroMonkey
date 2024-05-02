@@ -33,7 +33,7 @@ struct ContentView: View {
         
 //        if let authUI = auth.authUI {
         TabView{
-            if fetching
+//            if fetching
             Home()
                 .tabItem{
                     Label("Home", systemImage: "house.fill")
@@ -48,11 +48,14 @@ struct ContentView: View {
                     Label("Profile", systemImage: "person.fill")
                 }
         }
-        .onApper{
+        .onAppear{
             fetching = true
-            try {
-                
-                let journal = try await fetchJournal(auth)
+            Task {
+                do {
+                    let journal = try await firebaseServices.fetchJournal(by: auth.userID)
+                } catch {
+                    print("error occured")
+                }
             }
             // ❷ Check if today's journal exists:
             // i.e. try to get the journalID for the journal corresponding to this user's uid and the current date

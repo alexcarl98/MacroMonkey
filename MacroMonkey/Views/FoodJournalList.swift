@@ -78,8 +78,7 @@ struct FoodJournalList: View {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "MM-dd-yy"
                     
-                    
-                    mu.journal = try await (by: mu.profile.uid, journalDate: Date.now, jid: formatter.string(from:dateForToday)) ?? Journal.empty
+//                    mu.journal.id = try await (by: mu.profile.uid, journalDate: Date.now, jid: formatter.string(from:dateForToday)) ?? Journal.empty
                     fetching = false
                 } catch {
                     self.error = error

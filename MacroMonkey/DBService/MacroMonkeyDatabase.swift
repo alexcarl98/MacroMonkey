@@ -216,8 +216,9 @@ class MacroMonkeyDatabase: ObservableObject {
         }
     }
     
-    func fetchJournal(by uid: String, journalDate: Date, jid: String) async throws -> Journal {
-        let journalDateString = formatDate(date: journalDate)
+    func fetchJournal(by uid: String) async throws -> Journal {
+        // TODO: Know this
+        let journalDateString = formatDate(date: Date.now)
 //        let journalTimestamp = journalDate.timeIntervalSince1970
         
         // Check cache first
@@ -237,9 +238,9 @@ class MacroMonkeyDatabase: ObservableObject {
 
         let journalID = document.documentID
         let fetchedJournalDate = (document.get("journalDate") as? Timestamp)?.dateValue() ?? Date()
-        let entries = try await fetchJournalEntries(journalID: jid)
-
-        var journal = Journal(id: journalID, journalDate: fetchedJournalDate, uid: uid, entryLog: entries)
+//        let entries = try await fetchJournalEntries(journalID: jid)
+        
+        var journal = Journal(id: journalID, journalDate: fetchedJournalDate, uid: uid, entryLog: [])
         journal.entryLog = try await fetchJournalEntries(journalID: journalID)
         journalCache[journalDateString] = journal  // Cache the fetched journal
 
@@ -278,7 +279,7 @@ class MacroMonkeyDatabase: ObservableObject {
                     "ratio": entry.ratio,
                     "time": Timestamp(date: entry.time)
                 ]
-                let _ = db.collection("entryLog").addDocument(data: newData)
+                let _ = try await db.collection("entryLog").addDocument(data: newData)
             }
             // Remove the processed entry from the dictionary to track entries that are no longer present
             currentEntries.removeValue(forKey: key)
@@ -323,8 +324,14 @@ class MacroMonkeyDatabase: ObservableObject {
         var ref: DocumentReference? = nil
         
         if journalCache[journalDateString] == nil {
-            ref = db.collection("journals").addDocument(data: ["uid": uid, "journalDate": journalDateString])
-            journalCache[journalDateString] = Journal(id: ref!.documentID, journalDate: journal.journalDate, uid: uid)
+            do {
+                ref = try await db.collection("journals").addDocument(data: ["uid": uid, "journalDate": journalDateString])
+                if ref != nil {
+                    journalCache[journalDateString] = Journal(id: ref!.documentID, journalDate: journal.journalDate, uid: uid)
+                }
+            }catch {
+                throw error
+            }
         }
         return ref?.documentID ?? ""
     }
