@@ -18,6 +18,7 @@ struct FoodJournalList: View {
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
+    @State var currentJournalSize: Int = 0
     
     var body: some View {
             NavigationStack {
@@ -32,6 +33,24 @@ struct FoodJournalList: View {
                         VStack {
                             NavigationLink {
                                 FoodSearchView()
+                                    .onAppear(){
+                                        currentJournalSize = mu.journal.entryLog.count
+                                    }
+                                    .onDisappear(){
+                                        if mu.journal.entryLog.count > currentJournalSize {
+                                            Task{
+                                                do {
+                                                    Text("I'm boutta write to the database")
+                                                    if let journalID = mu.journal.id, let entry = mu.journal.entryLog.last {
+                                                        try await databaseService.addJournalEntries(documentId: journalID, entry: entry)
+                                                    }
+                                                } catch{
+//                                                    print("ERROR: \(err)")
+                                                    print("error occured")
+                                                }
+                                            }
+                                        }
+                                    }
                             } label:{
                                 Label("Add", systemImage: "plus")
                             }
@@ -45,7 +64,8 @@ struct FoodJournalList: View {
                                 List(Array(zip(mu.journal.entryLog.indices, mu.journal.entryLog)), id: \.0) { index, entry in
                                     if let fd = mu.foodCache[entry.food] {
                                         // One gets fixed another thing gets broken. porque
-                                        MacroFoodRow(food: fd, ratio: $mu.journal.entryLog[index].ratio)
+//                                        MacroFoodRow(food: fd, ratio: $mu.journal.entryLog[index].ratio)
+                                        Text(fd.name)
                                     }
                                 }
                             }

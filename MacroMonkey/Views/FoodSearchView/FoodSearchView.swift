@@ -13,6 +13,7 @@ struct ApiResponse: Codable {
 
 struct FoodSearchView: View {
     @EnvironmentObject var Spoonacular: SpoonacularService
+    @EnvironmentObject var mu: MonkeyUser
     @Environment(\.presentationMode) var presentationMode
     @State private var searchText = ""
     @State private var errorMessage: String?

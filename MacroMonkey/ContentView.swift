@@ -86,7 +86,7 @@ struct ContentView: View {
         isLoading = true
         Task {
             do {
-                if !auth.userID.isEmpty {
+                if auth.userID != "" {
                     loggedIn = true
                     let userExists = try await firebaseServices.userExists(userID: auth.userID)
                     if userExists {

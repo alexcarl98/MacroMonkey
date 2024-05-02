@@ -28,7 +28,6 @@ class SpoonacularService: ObservableObject {
     init() {
         do {
             self.apiKey = try Config.apiKey()
-
         } catch {
             self.apiKey = "35a34040989f487980190fd6f63453a3"  // Use a default or dummy API key
             print("Failed to retrieve API key, using default: \(self.apiKey)")
@@ -70,8 +69,6 @@ class SpoonacularService: ObservableObject {
         let ids = foodID.map(String.init).joined(separator: ",")
         return "https://api.spoonacular.com/recipes/informationBulk?apiKey=\(apiKey)&ids=\(ids)&includeNutrition=true"
     }
-
-    
     
     func performSearch(for query: Int) async -> Food? {
         // TODO: modify this function to accept an array of ints and call the queryByFoodIDInBulk

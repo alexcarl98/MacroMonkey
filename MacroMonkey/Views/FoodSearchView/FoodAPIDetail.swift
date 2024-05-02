@@ -29,7 +29,14 @@ struct FoodAPIDetail: View {
                     )
                     Spacer()
                     Button {
-                        addToList()
+                        Task{
+                            do {
+                                try await addToList()
+                                
+                            }catch{
+                                print("Error occured when trying to add to the list")
+                            }
+                        }
                     } label: {
                         Text("Add +")
                             .font(.title)
@@ -51,13 +58,24 @@ struct FoodAPIDetail: View {
         }
     }
     
-    func addToList(){
+    func addToList() async throws{
         if let fd = foodToDisplay{
             mu.addFood(fd.convertToFood())
+            Task{
+                do {
+                    if let journalID = mu.journal.id {
+                        var newEntry = Entry(food: fd.id, ratio: 1.0)
+                        let entryString = firebaseService.writeEntToFB(docID: journalID, entry: newEntry)
+                        if let st = entryString {
+                            newEntry.id = st
+                            mu.journal.entr.append(st)
+                        }
+                    }
+                }
+            }
             presentationMode.wrappedValue.dismiss()
         }
     }
-    
     func performSearch(for query: Int) {
         let urlString = spoonacularService.queryByFoodIDString(query)
         guard let url = URL(string: urlString) else {

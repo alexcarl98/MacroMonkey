@@ -13,12 +13,12 @@ struct MacroFoodRow: View {
     @Binding var ratio: Double
     @State private var quantity: Double
 
-//    // Initialize the state variables with default values using the custom initializer
-//    init(food: Food, ratio: Binding<Double>) {
-//        self._food = State(initialValue: food)
-//        self._ratio = ratio
-//        self._quantity = State(initialValue: food.servSize * ratio.wrappedValue)  // Set initial quantity to food's servSize
-//    }
+    // Initialize the state variables with default values using the custom initializer
+    init(food: Food, ratio: Binding<Double>) {
+        self._food = State(initialValue: food)
+        self._ratio = ratio
+        self._quantity = State(initialValue: food.servSize * ratio.wrappedValue)  // Set initial quantity to food's servSize
+    }
 
     private var macros: [Double] {
         // Calculate the ratio based on quantity and servSize

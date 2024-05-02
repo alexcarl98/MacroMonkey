@@ -9,15 +9,19 @@ import Foundation
 import FirebaseFirestore
 
 struct Entry: Hashable, Codable {
+    @DocumentID var id: String?
     var food: Int
     var ratio: Double
     var time: Date = Date.now
     
     enum CodingKeys: String,CodingKey{
+        case id
         case food = "foodID"
         case ratio
         case time
     }
+    
+    static let `default` = Entry(food: 716429, ratio: 1.0)
 }
 
 struct Journal: Hashable, Codable, Identifiable {
@@ -25,6 +29,7 @@ struct Journal: Hashable, Codable, Identifiable {
     var uid: String
     var journalDate: Date = Date.now
     var entryLog = [Entry]()
+    var entr = [String]()
     
     mutating func removeFoodByIndex(_ index: Int) {
         guard index >= 0 && index < entryLog.count else {
@@ -49,17 +54,16 @@ struct Journal: Hashable, Codable, Identifiable {
     static let `default` = Journal(
         uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
         journalDate: Date.now,
-        entryLog: [Entry(food: 716429, ratio: 1.2)]
+        entryLog: [Entry.default]
     )
 
-    static let `empty` = Journal(
-        uid: ""
-    )
+    static let `empty` = Journal( uid: "" )
     
     enum CodingKeys: String,CodingKey {
         case id
         case uid
         case journalDate = "date"
         case entryLog = "entries"
+        case entr
     }
 }
