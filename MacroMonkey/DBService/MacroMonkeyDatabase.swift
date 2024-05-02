@@ -61,8 +61,6 @@ class MacroMonkeyDatabase: ObservableObject {
         return ref?.documentID ?? ""
     }
     
-    
-    
     func fetchUserProfile(userID: String) async throws -> AppUser {
         let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: userID).getDocuments()
         
