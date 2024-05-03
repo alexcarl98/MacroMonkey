@@ -15,6 +15,7 @@ struct FoodJournalList: View {
     @EnvironmentObject var mu: MonkeyUser
 
     @Binding var requestLogin: Bool
+    @Binding var loggedIn: Bool
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
@@ -44,8 +45,7 @@ struct FoodJournalList: View {
                                                     if let journalID = mu.journal.id, let entry = mu.journal.entryLog.last {
                                                         try await databaseService.addJournalEntries(documentId: journalID, entry: entry)
                                                     }
-                                                } catch{
-//                                                    print("ERROR: \(err)")
+                                                } catch {
                                                     print("error occured")
                                                 }
                                             }
@@ -84,6 +84,7 @@ struct FoodJournalList: View {
                                     mu.journals = [Journal.empty]
                                     mu.journal = Journal.empty
                                     mu.foodCache = [:]
+                                    loggedIn = false
                                 } catch {
                                     // No error handling in the sample, but of course there should be
                                     // in a production app.
@@ -104,9 +105,10 @@ struct FoodJournalList: View {
 
 struct FoodJournalList_Previews: PreviewProvider {
     @State static var requestLogin = false
+    @State static var loggedIn = true
 
     static var previews: some View {
-        FoodJournalList(requestLogin: $requestLogin)
+        FoodJournalList(requestLogin: $requestLogin, loggedIn: $loggedIn)
         .environmentObject(MacroMonkeyAuth())
         .environmentObject(MacroMonkeyDatabase())
         .environmentObject(MonkeyUser(profile: AppUser.default, journals: [Journal.default], foodCache: [716429: Food.pasta]))

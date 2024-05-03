@@ -41,7 +41,7 @@ struct ContentView: View {
     
     var mainTabView: some View {
         TabView {
-            FoodJournalList(requestLogin: $requestLogin)
+            FoodJournalList(requestLogin: $requestLogin, loggedIn: $loggedIn)
                 .environmentObject(mu)
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
@@ -126,8 +126,14 @@ struct ContentView: View {
             // Fetch user profile
             let user = try await firebaseServices.fetchUserProfile(userID: uid)
             
+            var journals = [Journal]()
             // Fetch journals
-            let journals = try await firebaseServices.fetchManyJournals(uid: uid)
+            for journalID in user.journalIDs {
+                var je = try await firebaseServices.fetchJournal(documentId: journalID)
+                journals.append(je)
+            }
+            
+//            let journals = try await firebaseServices.fetchManyJournals(uid: uid)
             
             var foods:[Food] = [Food]()
             var foodCache: [Int: Food] = [:] // Initialize an empty food cache
@@ -137,10 +143,12 @@ struct ContentView: View {
             
             if let todayJournal = journals.first(where: { $0.journalDate == journalDat }){
                 // if there's already a journal, get it
-                foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
-                // Populate the foodCache map
-                for food in foods {
-                    foodCache[food.id] = food
+                if todayJournal.entryLog.count != 0 {
+                    foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
+                    // Populate the foodCache map
+                    for food in foods {
+                        foodCache[food.id] = food
+                    }
                 }
             } else {
                 // otherwise, make a new one

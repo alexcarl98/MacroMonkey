@@ -11,7 +11,7 @@ import FirebaseFirestore
 struct Entry: Hashable, Codable {
     @DocumentID var id: String?
     var food: Int
-    var ratio: Double
+    var ratio: Double = 1.0
     var time: Date = Date.now
     
     enum CodingKeys: String,CodingKey{
@@ -21,7 +21,7 @@ struct Entry: Hashable, Codable {
         case time
     }
     
-    static let `default` = Entry(food: 716429, ratio: 1.0)
+    static let `default` = Entry(food: 716429)
 }
 
 struct Journal: Hashable, Codable, Identifiable {

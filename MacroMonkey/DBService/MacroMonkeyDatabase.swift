@@ -85,12 +85,7 @@ class MacroMonkeyDatabase: ObservableObject {
         let weight = documentSnapshot.get("weight") as? Float ?? 0.0
         let sex = documentSnapshot.get("sex") as? String ?? ""
         let imgID = documentSnapshot.get("imgID") as? String ?? ""
-        var journalIDs = documentSnapshot.get("journals") as? [String] ?? [String]()
-        
-//        if journalIDs.count == 0 {
-//            let jn = createNewJournalForUser(userID: uid, aid:documentId)
-//            journalIDs.append(jn.id!)
-//        }
+        let journalIDs = documentSnapshot.get("journals") as? [String] ?? [String]()
         
         print("Successfully retrieved user:")
         return AppUser(
@@ -148,6 +143,7 @@ class MacroMonkeyDatabase: ObservableObject {
         do {
             let querySnapshot = try await journalRef.whereField("uid", isEqualTo: uid).getDocuments()
             for document in querySnapshot.documents {
+                print(document)
                 // Journal object is encodable and decodable. how do I get this as a list and then return
                 if let journalData = try? document.data(as: Journal.self) {
                     journals.append(journalData)
