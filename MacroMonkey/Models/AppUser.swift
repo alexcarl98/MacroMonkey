@@ -84,23 +84,11 @@ struct AppUser: Hashable, Codable, Identifiable {
         return (BemR + dailyDif)
     }
     
-    func goalMacros() -> [Float] {
-        // Calculate goal caloric intake first
-        let goalCal = goalCaloricIntake()
-
-        // Assuming more typical macro ratios: 20% protein, 50% carbs, 30% fats
-        let proteinPercentage: Float = 0.20
-        let carbsPercentage: Float = 0.50
-        let fatsPercentage: Float = 0.30
-        
-        // Calculate macros based on goal calories
-        let proteinCalories = goalCal * proteinPercentage
-        let carbsCalories = goalCal * carbsPercentage
-        let fatsCalories = goalCal * fatsPercentage
-        
-        // Return the array of goal macros
-        return [goalCal, proteinCalories, carbsCalories, fatsCalories]
-    }
+    func goalMacros() -> [Float]{
+            // An estimate for the amount of daily calories, proteins, carbs, and fats someone needs
+            let goalCal = goalCaloricIntake()
+            return [goalCal, goalCal*0.0404, goalCal*0.1374, goalCal*0.027667]
+        }
 
     
     static let `default` = AppUser (

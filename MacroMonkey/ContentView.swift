@@ -101,6 +101,7 @@ struct ContentView: View {
                         mu.profile = updatedUser.profile
                         mu.journals = updatedUser.journals
                         mu.foodCache = updatedUser.foodCache
+                        mu.journal = updatedUser.journals.last ?? Journal.empty
                     } else {
                         mu.profile = AppUser.empty
                         mu.profile.uid = auth.userID
@@ -126,20 +127,18 @@ struct ContentView: View {
             // Fetch user profile
             let user = try await firebaseServices.fetchUserProfile(userID: uid)
             
-            var journals = [Journal]()
-            // Fetch journals
-            for journalID in user.journalIDs {
-                var je = try await firebaseServices.fetchJournal(documentId: journalID)
-                journals.append(je)
-            }
+            var journals = try await firebaseServices.getJournalsBelongingto(withUserID: uid)
             
-//            let journals = try await firebaseServices.fetchManyJournals(uid: uid)
+            for j in journals {
+                j.printNicely()
+            }
             
             var foods:[Food] = [Food]()
             var foodCache: [Int: Food] = [:] // Initialize an empty food cache
             let formatter = DateFormatter()
             formatter.dateFormat = "MM-dd-yy"
             let journalDat = formatter.string(from: Date.now)
+            
             
             if let todayJournal = journals.first(where: { $0.journalDate == journalDat }){
                 // if there's already a journal, get it
@@ -155,8 +154,6 @@ struct ContentView: View {
                 let todayJournal = firebaseServices.createNewJournalForUser(userID: uid, aid: user.id)
                 // call firebase to add journal to users.journal array
             }
-            
-            
             // Combine everything into a MonkeyUser object
             return MonkeyUser(profile: user, journals: journals, foodCache: foodCache)
         } catch {
@@ -167,7 +164,6 @@ struct ContentView: View {
         }
     }
 
-    
     
 }
 

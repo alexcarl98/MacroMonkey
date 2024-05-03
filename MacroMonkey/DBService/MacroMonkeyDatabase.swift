@@ -188,18 +188,18 @@ class MacroMonkeyDatabase: ObservableObject {
         }
     }
     
-    func addJournalEntries(documentId: String, entry: Entry) async throws {
-        let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
-        do {
-            // want to create a new map:
-            try await docRef.updateData(["entries": [entry]] )
-            print("Updated entries for Journal \(documentId) successfully")
-        } catch {
-            print("ERROR: \(error.localizedDescription)")
-            throw error
-        }
-    
-    }
+//    func addJournalEntries(documentId: String, entry: Entry) async throws {
+//        let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
+//        do {
+//            // want to create a new map:
+//            try await docRef.updateData(["entries": [entry]] )
+//            print("Updated entries for Journal \(documentId) successfully")
+//        } catch {
+//            print("ERROR: \(error.localizedDescription)")
+//            throw error
+//        }
+//    
+//    }
     
     func writeEntToFB(docID:String, entry: Entry) -> String? {
         let collectionRef = db.collection("entries")
@@ -303,4 +303,33 @@ class MacroMonkeyDatabase: ObservableObject {
         return journal ?? Journal.empty
     }
     
+    func getJournalsBelongingto(withUserID userID: String) async throws -> [Journal] {
+      var journals = [Journal]()
+      let querySnapshot = try await db.collection("journals").whereField("uid", isEqualTo: userID).getDocuments()
+      for document in querySnapshot.documents {
+        let journal: Journal
+        do {
+          let jid = document.documentID
+          let uid = document.get("uid") as? String ?? ""
+          let journalDate = document.get("journalDate") as? String ?? ""
+          let entryLog = document.get("entryLog") as? [[String: Any]] ?? [["food": -1, "ratio": 0.0]]
+          
+          var entries = [Entry]()
+          for entry in entryLog {
+            let food = entry["food"] as? Int ?? -1
+            let ratio = entry["ratio"] as? Double ?? 0.0
+            let tm = (entry["time"] as? Timestamp)?.dateValue() ?? Date()
+            if food != -1 {
+              entries.append(Entry(food: food, ratio: ratio, time: tm))
+            }
+          }
+          journal = Journal(id: jid, uid: uid, journalDate: journalDate, entryLog: entries)
+        } catch {
+          print("Error creating journal: \(error.localizedDescription)")
+          continue
+        }
+        journals.append(journal)
+      }
+      return journals
+    }
 }

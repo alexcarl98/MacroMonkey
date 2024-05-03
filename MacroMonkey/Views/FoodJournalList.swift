@@ -37,20 +37,20 @@ struct FoodJournalList: View {
                                     .onAppear(){
                                         currentJournalSize = mu.journal.entryLog.count
                                     }
-                                    .onDisappear(){
-                                        if mu.journal.entryLog.count > currentJournalSize {
-                                            Task{
-                                                do {
-                                                    Text("I'm boutta write to the database")
-                                                    if let journalID = mu.journal.id, let entry = mu.journal.entryLog.last {
-                                                        try await databaseService.addJournalEntries(documentId: journalID, entry: entry)
-                                                    }
-                                                } catch {
-                                                    print("error occured")
-                                                }
-                                            }
-                                        }
-                                    }
+//                                    .onDisappear(){
+//                                        if mu.journal.entryLog.count > currentJournalSize {
+//                                            Task{
+//                                                do {
+//                                                    Text("I'm boutta write to the database")
+////                                                    if let journalID = mu.journal.id, let entry = mu.journal.entryLog.last {
+////                                                        try await databaseService.addJournalEntries(documentId: journalID, entry: entry)
+////                                                    }
+//                                                } catch {
+//                                                    print("error occured")
+//                                                }
+//                                            }
+//                                        }
+//                                    }
                             } label:{
                                 Label("Add", systemImage: "plus")
                             }
@@ -62,10 +62,12 @@ struct FoodJournalList: View {
                                 }
                             } else {
                                 List(Array(zip(mu.journal.entryLog.indices, mu.journal.entryLog)), id: \.0) { index, entry in
-                                    if let fd = mu.foodCache[entry.food] {
+                                    let idd = entry.food
+                                    
+                                    if let food = mu.foodCache[idd] {
+                                        Text("food: \(food.name)")
                                         // One gets fixed another thing gets broken. porque
-//                                        MacroFoodRow(food: fd, ratio: $mu.journal.entryLog[index].ratio)
-                                        Text(fd.name)
+                                        
                                     }
                                 }
                             }

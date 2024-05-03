@@ -63,14 +63,15 @@ struct FoodAPIDetail: View {
             mu.addFood(fd.convertToFood())
             Task{
                 do {
+                    mu.journal.printNicely()
                     if let journalID = mu.journal.id {
+                        print("\(journalID)")
                         var newEntry = Entry(food: fd.id, ratio: 1.0)
-                        let entryString = firebaseService.writeEntToFB(docID: journalID, entry: newEntry)
-//                        if let st = entryString {
-//                            newEntry.id = st
-//                            mu.journal.entr.append(st)
-//                        }
+                        try await firebaseService.addEntryToJournal(journalID: journalID, ent: newEntry)
+                        mu.journal.entryLog.append(newEntry)
                     }
+                } catch{
+                    print("OOOOOOOPS didn't record it")
                 }
             }
             presentationMode.wrappedValue.dismiss()

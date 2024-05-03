@@ -19,7 +19,7 @@ struct Entry: Hashable, Codable {
     // Convert Entry to dictionary
     func toDictionary() -> [String: Any] {
         let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
+        encoder.dateEncodingStrategy = .secondsSince1970
         if let data = try? encoder.encode(self),
            let dictionary = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
             return dictionary
@@ -35,6 +35,13 @@ struct Entry: Hashable, Codable {
         }
         return nil
     }
+    func printNicely() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss dd-MM-yyyy" // Customize date format as needed
+        let timeString = formatter.string(from: time)
+        print("Food ID: \(food), Ratio: \(ratio), Time: \(timeString)")
+      }
+    
 }
 
 struct Journal: Hashable, Codable, Identifiable {
@@ -64,13 +71,13 @@ struct Journal: Hashable, Codable, Identifiable {
     func getEntriesInBulk() -> [Int] {
         return entryLog.map { $0.food }
     }
-        
+    
     static let `default` = Journal(
         uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
         journalDate: "Date.now",
         entryLog: [Entry.default]
     )
-
+    
     static let `empty` = Journal( uid: "" , journalDate: "")
     
     enum CodingKeys: String,CodingKey {
@@ -79,4 +86,13 @@ struct Journal: Hashable, Codable, Identifiable {
         case journalDate
         case entryLog
     }
+    func printNicely() {
+        print("Journal ID: \(id ?? "N/A")")
+        print("User ID: \(uid)")
+        print("Date: \(journalDate)")
+        print("Entry Log:")
+        for entry in entryLog {
+          entry.printNicely()
+        }
+      }
 }
