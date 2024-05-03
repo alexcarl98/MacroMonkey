@@ -44,7 +44,6 @@
 		5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72172BD345C100883CDC /* MacroValueCell.swift */; };
 		5C5A343E2BCF1C1E005DE7E8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5A343D2BCF1C1E005DE7E8 /* FirebaseAuth */; };
 		5C65AD5D2BE44E6D00B84F18 /* MacroDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */; };
-		5C65AD5F2BE4587200B84F18 /* JOURNEY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C65AD5E2BE4587200B84F18 /* JOURNEY.swift */; };
 		5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */; };
 		5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */; };
 		5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */; };
@@ -120,7 +119,6 @@
 		5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodRow.swift; sourceTree = "<group>"; };
 		5C1E72172BD345C100883CDC /* MacroValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroValueCell.swift; sourceTree = "<group>"; };
 		5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroDB.swift; sourceTree = "<group>"; };
-		5C65AD5E2BE4587200B84F18 /* JOURNEY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JOURNEY.swift; sourceTree = "<group>"; };
 		5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
 		5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBlocks.swift; sourceTree = "<group>"; };
 		5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeCellRow.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
 				5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */,
 				5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */,
-				5C65AD5E2BE4587200B84F18 /* JOURNEY.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -569,7 +566,6 @@
 				5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */,
 				5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
-				5C65AD5F2BE4587200B84F18 /* JOURNEY.swift in Sources */,
 				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,
 				5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */,
 				5C94AF012BDEFCFD008B00D8 /* BadgesCollected.swift in Sources */,

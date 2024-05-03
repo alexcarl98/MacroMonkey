@@ -27,7 +27,8 @@ struct Entry: Hashable, Codable {
 struct Journal: Hashable, Codable, Identifiable {
     @DocumentID var id: String?
     var uid: String
-    var journalDate: Date = Date.now
+    // want to change this so that it initializes journalDate as a string formatted "MM-dd-yyyy"
+    var journalDate: String
     var entryLog = [Entry]()
     var entr = [String]()
     
@@ -53,11 +54,11 @@ struct Journal: Hashable, Codable, Identifiable {
     
     static let `default` = Journal(
         uid: "rxKNDDdD8HPi9pLUHtbOu3F178J3",
-        journalDate: Date.now,
+        journalDate: "Date.now",
         entryLog: [Entry.default]
     )
 
-    static let `empty` = Journal( uid: "" )
+    static let `empty` = Journal( uid: "" , journalDate: "")
     
     enum CodingKeys: String,CodingKey {
         case id

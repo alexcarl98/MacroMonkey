@@ -24,7 +24,11 @@ struct ContentView: View {
     var body: some View {
             if loggedIn && !isLoading {
                 if isNewUser {
-                    ProfileSetup(newUser: $mu.profile, editing: $isNewUser)
+                    ProfileSetup(newUser: $mu.profile, newJournal: $mu.journal, editing: $isNewUser)
+                    //                        .onDisappear{
+                    //                            handleUserAuthentication()
+                    //                        }
+                    
                 } else {
                     mainTabView
                 }
@@ -88,7 +92,9 @@ struct ContentView: View {
             do {
                 if auth.userID != "" {
                     loggedIn = true
+
                     let userExists = try await firebaseServices.userExists(userID: auth.userID)
+                    
                     if userExists {
                         let updatedUser = await fetchUserInformation(uid: auth.userID)
 //                         Update existing mu properties
@@ -97,6 +103,9 @@ struct ContentView: View {
                         mu.foodCache = updatedUser.foodCache
                     } else {
                         mu.profile = AppUser.empty
+                        mu.profile.uid = auth.userID
+                        mu.profile.email = auth.userEmail
+                        mu.profile.name = auth.userName
                         isNewUser = true
                     }
                     print("User: \(mu.profile.name)")
@@ -109,6 +118,9 @@ struct ContentView: View {
         }
     }
     
+   
+    
+    
     func fetchUserInformation(uid: String) async -> MonkeyUser {
         do {
             // Fetch user profile
@@ -119,19 +131,23 @@ struct ContentView: View {
             
             var foods:[Food] = [Food]()
             var foodCache: [Int: Food] = [:] // Initialize an empty food cache
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM-dd-yy"
+            let journalDat = formatter.string(from: Date.now)
             
-            if let todayJournal = journals.first(where: { Calendar.current.isDateInToday($0.journalDate) }){
+            if let todayJournal = journals.first(where: { $0.journalDate == journalDat }){
+                // if there's already a journal, get it
                 foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
+                // Populate the foodCache map
+                for food in foods {
+                    foodCache[food.id] = food
+                }
             } else {
-                let journalStr = firebaseServices.createNewJournalForUser(userID: uid)
-                let todayJournal = Journal(id: journalStr, uid: uid)
-                foods = await spoonacularService.performBulkSearch(for: todayJournal.getEntriesInBulk()) ?? [Food]()
+                // otherwise, make a new one
+                let todayJournal = firebaseServices.createNewJournalForUser(userID: uid, aid: user.id)
+                // call firebase to add journal to users.journal array
             }
             
-            // Populate the foodCache map
-            for food in foods {
-                foodCache[food.id] = food
-            }
             
             // Combine everything into a MonkeyUser object
             return MonkeyUser(profile: user, journals: journals, foodCache: foodCache)
@@ -142,6 +158,9 @@ struct ContentView: View {
             return MonkeyUser(profile: AppUser.empty, journals: [Journal.empty], foodCache: [:]) // Return an empty/default user on failure
         }
     }
+
+    
+    
 }
 
 // Preview Provider

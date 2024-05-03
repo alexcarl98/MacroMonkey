@@ -67,5 +67,7 @@ class MonkeyUser: ObservableObject {
         let foodID = journal.entryLog[index].food
         return foodCache[foodID]
     }
+    
+    
 }
 

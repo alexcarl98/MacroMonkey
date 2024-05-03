@@ -87,10 +87,10 @@ class MacroMonkeyDatabase: ObservableObject {
         let imgID = documentSnapshot.get("imgID") as? String ?? ""
         var journalIDs = documentSnapshot.get("journals") as? [String] ?? [String]()
         
-        if journalIDs.count == 0 {
-            let str = createNewJournalForUser(userID: uid)
-            journalIDs.append(str)
-        }
+//        if journalIDs.count == 0 {
+//            let jn = createNewJournalForUser(userID: uid, aid:documentId)
+//            journalIDs.append(jn.id!)
+//        }
         
         print("Successfully retrieved user:")
         return AppUser(
@@ -117,17 +117,30 @@ class MacroMonkeyDatabase: ObservableObject {
         return querySnapshot.documents.first != nil
     }
     
-    func createNewJournalForUser(userID: String) -> String {
+    func createNewJournalForUser(userID: String, aid: String) -> Journal {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yy"
+        let jd = formatter.string(from: Date.now)
+        let newJournal = Journal(uid: userID, journalDate: jd)
         var ref: DocumentReference? = nil
-        
-        ref = db.collection(JOURNAL_COLLECTION_NAME).addDocument(data:[
-            "date": Timestamp(date: Date.now),
-            "uid": userID,
-            "entries": [String]()
-        ])
-        let journalStr = ref?.documentID ?? ""
-        return journalStr
+        ref = db.collection("journals").addDocument(data: [
+            "uid": newJournal.uid,
+            "journalDate": newJournal.journalDate,
+            "entryLog": newJournal.entryLog.map { ["food": $0.food, "ratio": $0.ratio] }
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+                // Append the new document ID to an array in a separate collection
+                self.db.collection("users").document(aid).updateData([
+                    "journals": FieldValue.arrayUnion([ref!.documentID])
+                ])
+            }
+        }
+        return newJournal
     }
+    
     
     func fetchManyJournals(uid: String) async throws -> [Journal] {
         var journals = [Journal]()
@@ -165,6 +178,20 @@ class MacroMonkeyDatabase: ObservableObject {
         }
     }
     
+    func addJournalInstanceToUser(uid: String, journalId: String) async throws {
+        let querySnapshot = try await db.collection("users").whereField("uid", isEqualTo: uid).getDocuments()
+        let docRef = querySnapshot.documents.first!.reference
+
+        do {
+            // Update the 'journals' field by appending 'journalId' to the existing array
+            try await docRef.updateData(["journals": FieldValue.arrayUnion([journalId])])
+            print("Updated entries for Journal \(journalId) successfully")
+        } catch {
+            print("ERROR: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
     func addJournalEntries(documentId: String, entry: Entry) async throws {
         let docRef = db.collection(JOURNAL_COLLECTION_NAME).document(documentId)
         do {
@@ -175,6 +202,7 @@ class MacroMonkeyDatabase: ObservableObject {
             print("ERROR: \(error.localizedDescription)")
             throw error
         }
+    
     }
     
     func writeEntToFB(docID:String, entry: Entry) -> String? {
@@ -187,53 +215,4 @@ class MacroMonkeyDatabase: ObservableObject {
         }
         return nil
     }
-    
-    
-//    
-//    func writeJournalEntries(journalRef: DocumentReference, entries: [Entry]) async throws {
-//        // TODO: Get to also read and write from the cache
-//        // Fetch all current entries in the journal's 'entryLog' subcollection
-//        let currentEntriesSnapshot = try await journalRef.collection("entryLog").getDocuments()
-//        var currentEntries = [String: DocumentSnapshot]()  // Dictionary to map time and foodId to document snapshot
-//
-//        // Populate the dictionary with existing entries
-//        for document in currentEntriesSnapshot.documents {
-//            let time = (document.get("time") as? Timestamp)?.dateValue() ?? Date()
-//            let foodId = document.get("foodId") as? Int ?? 0
-//            let key = "\(foodId)_\(time.timeIntervalSince1970)"
-//            currentEntries[key] = document
-//        }
-//
-//        // Iterate over new entries to add or update
-//        for entry in entries {
-//            let key = "\(entry.food.id)_\(entry.time.timeIntervalSince1970)"
-//            if let existingDocument = currentEntries[key] {
-//                // Check if ratio has changed; if so, update
-//                if existingDocument.get("ratio") as? Float != entry.ratio {
-//                    let updateData: [String: Any] = [
-//                        "ratio": entry.ratio,
-//                        "foodId": entry.food.id,
-//                        "time": Timestamp(date: entry.time)
-//                    ]
-//                    try await existingDocument.reference.updateData(updateData)
-//                }
-//            } else {
-//                // If the entry doesn't exist, add it
-//                let newData: [String: Any] = [
-//                    "foodId": entry.food.id,
-//                    "ratio": entry.ratio,
-//                    "time": Timestamp(date: entry.time)
-//                ]
-//                let _ = journalRef.collection("entryLog").addDocument(data: newData)
-//            }
-//            // Remove the processed entry from the dictionary to track entries that are no longer present
-//            currentEntries.removeValue(forKey: key)
-//        }
-//        // Any remaining entries in the dictionary are not in the new entries list and should be deleted
-//        for (_, document) in currentEntries {
-//            try await document.reference.delete()
-//        }
-//    }
-
-
 }

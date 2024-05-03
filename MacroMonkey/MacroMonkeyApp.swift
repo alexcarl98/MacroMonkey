@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct MacroMonkeyApp: App {
+D Dstruct MacroMonkeyApp: App {
     @UIApplicationDelegateAdaptor(MacroMonkeyAppDelegate.self) var appDelegate
     
     var body: some Scene {

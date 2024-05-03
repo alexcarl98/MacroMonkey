@@ -80,6 +80,10 @@ struct FoodJournalList: View {
                             Button("Sign Out") {
                                 do {
                                     try auth.signOut()
+                                    mu.profile = AppUser.empty
+                                    mu.journals = [Journal.empty]
+                                    mu.journal = Journal.empty
+                                    mu.foodCache = [:]
                                 } catch {
                                     // No error handling in the sample, but of course there should be
                                     // in a production app.
