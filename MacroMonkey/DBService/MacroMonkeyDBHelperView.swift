@@ -5,6 +5,18 @@
 //  Created by Alex Alvarez on 4/27/24.
 //
 
+/*
+ Besides user authentication (which I have working) this is pretty much the life cycle of my app
+ - Firebase: Authenticates user
+ - Add to Firebase[`user`] If first time logging in, firebase call to record initial user info into the `user` collection
+ - Add to Firebase[`journal`]: Initialize an instance of a `journal` document in a `journals` collection
+ - Update Firebase[`user`]: to include the journal [now I'm realizing there's a more efficient way of doing this by adding the journal first, then the user...]
+ - Query SpoonacularAPI: Search for food in a search bar
+ - Query Spoonacular: choose from one of the foods, opens a detail view, requiring another SpoonacularAPI call. cache this information.
+ - Update Firebase[`journal`]: update the user's journal document, record the foodID, the ratio [serving size] (always initially 1.0) and time of input
+ - Update Firebase[`journal`]: whenever a user deletes one of the journal entries or changes the serving amount [`ratio`] of the food.
+ */
+
 import SwiftUI
 
 struct MacroMonkeyDBHelperView: View {
@@ -12,10 +24,13 @@ struct MacroMonkeyDBHelperView: View {
     @EnvironmentObject var mdb: MacroMonkeyDatabase
     @EnvironmentObject var mu: MonkeyUser
     @State private var searchText = ""
-    @State private var searchResults = [Fd]()
+    @State var searchResults = [Fd]()
+    @State private var foodToDisplay: FoodAPI?  // Now optional
     @State private var searchWorkItem: DispatchWorkItem?
+    @State private var foodID:Int = 0
 
     var body: some View {
+        //
         VStack {
             if mu.journal != Journal.empty {
                 Text("Journal ID: \(mu.journal.id ?? "N/A")")
@@ -79,7 +94,8 @@ struct MacroMonkeyDBHelperView: View {
 
             Button("Add Entry") {
                 Task{
-                    await addEntry()
+//                    await addEntry()
+                    try await pretendSearchAndAdd(searchString: "Pizza")
                 }
             }
 
@@ -142,13 +158,13 @@ struct MacroMonkeyDBHelperView: View {
         }
     }
 
-    func addEntry() async {
-        let someFoods = [680975, 635350,658651, 642341]
-        let foodIDtoQuery = someFoods.randomElement()!
-        
-        let foodFromAPI = await spn.performSearch(for: String(foodIDtoQuery))
-        
-    }
+//    func addEntry() async {
+//        let someFoods = [680975, 635350,658651, 642341]
+//        let foodIDtoQuery = someFoods.randomElement()!
+//        
+//        let foodFromAPI = await spn.performSearch(for: String(foodIDtoQuery))
+//        
+//    }
 
     
     func addToList(foodToDisplay: FoodAPI?) async throws{
@@ -160,7 +176,7 @@ struct MacroMonkeyDBHelperView: View {
                     mu.journal.printNicely()
                     if let journalID = mu.journal.id {
                         print("\(journalID)")
-                        var newEntry = Entry(food: fd.id, ratio: 1.0)
+                        let newEntry = Entry(food: fd.id, ratio: 1.0)
                         try await mdb.addEntryToJournal(journalID: journalID, ent: newEntry)
                         mu.journal.entryLog.append(newEntry)
                     }
@@ -174,11 +190,23 @@ struct MacroMonkeyDBHelperView: View {
     
     func pretendSearchAndAdd(searchString: String) async throws{
         // From FoodAPIDetail
-        let searchBarResults = await spn.performSearchBar(for: searchString)
-        
-        if let validQueryItems = searchBarResults{
+        do {
+            searchResults = await spn.performSearchBar(for: searchString) ?? [Fd]()
             
+            let someRandomPick = searchResults.randomElement()
+            
+            if let searchID = someRandomPick?.id {
+                foodID = searchID
+                performDetailFoodGetting(for: foodID)
+            }
+        } catch {
+            print("some error happened")
         }
+    
+    }
+    
+    func performDetailFoodGetting(for foodID: Int) {
+        let _ = print(foodID)
     }
     
     func deleteLastElement() {

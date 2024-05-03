@@ -14,6 +14,7 @@ struct FoodAPIDetail: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var foodToDisplay: FoodAPI?  // Now optional
     @State private var isLoading: Bool = true
+    /**changed below!**/
     var foodID: Int
     
     var body: some View {
