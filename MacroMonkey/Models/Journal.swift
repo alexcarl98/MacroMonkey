@@ -19,7 +19,7 @@ struct Entry: Hashable, Codable {
     // Convert Entry to dictionary
     func toDictionary() -> [String: Any] {
         let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .secondsSince1970
+        encoder.dateEncodingStrategy = .iso8601
         if let data = try? encoder.encode(self),
            let dictionary = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
             return dictionary

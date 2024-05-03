@@ -124,7 +124,9 @@ class SpoonacularService: ObservableObject {
             decodedResponse.forEach { food in
                 print("Found food : \(food.title)")
             }
-            return getListOfFoodsFromBulk(bulk: decodedResponse)
+            let entri = getListOfFoodsFromBulk(bulk: decodedResponse)
+            print(entri)
+            return entri
         } catch {
             print("Error: \(error.localizedDescription)")
             return nil

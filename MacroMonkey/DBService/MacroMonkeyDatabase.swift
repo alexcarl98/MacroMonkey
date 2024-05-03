@@ -240,19 +240,30 @@ class MacroMonkeyDatabase: ObservableObject {
     }
     
     
-    func addEntryToJournal(journalID: String, ent: Entry) async throws {
-        var ref: DocumentReference? = nil
-        ref = db.collection("journals").document(journalID)
-        
-        do {
-            if let journalRef = ref {
-                try await journalRef.updateData(["entryLog": FieldValue.arrayUnion([ent.toDictionary()])])
+    func addEntryToJournal(journalID: String, ent: Entry) async throws -> Entry {
+    //    func addEntryToJournal() async throws -> Entry? {
+            var ref: DocumentReference? = nil
+    //        let journalID = "3BExlSZiBOdQ6xbLMgbl"
+//            let journalDate = "05-02-24"
+    //        let userID = "GEb6bKEuz3cBsSNPuz2Giv2QCvh2"
+    //        let ent = Entry(food: 123, ratio:1.1)
+            ref = db.collection("journals").document(journalID)
+            
+            do {
+                let entry: [String: Any] = ["food": ent.food, "ratio": ent.ratio, "time": ent.time]
+                if let journalRef = ref{
+                    try await journalRef.updateData(["entryLog": FieldValue.arrayUnion([entry])])
+                }
+                
+                print("check out firestore")
+                
+
+            } catch{
+                print("Error: \(error.localizedDescription)")
             }
-            print("Check out firestore")
-        } catch {
-            print("Error: \(error.localizedDescription)")
+            
+            return Entry.default
         }
-    }
     
     
     func getJournal(withId userID: String, on journalDate: String) async throws -> Journal {
@@ -274,8 +285,8 @@ class MacroMonkeyDatabase: ObservableObject {
             let uid = journ.get("uid") as? String ?? ""
             let journalDat = journ.get("journalDate") as? String ?? ""
             print(jid)
-//            print(uid)
-//            print(journalDat)
+            print(uid)
+            print(journalDat)
             journal = Journal(id: jid, uid: uid, journalDate: journalDat, entryLog:[])
         } catch{
             print("Error: \(error.localizedDescription)")
@@ -294,8 +305,13 @@ class MacroMonkeyDatabase: ObservableObject {
                         time: tm)
                     )
                 }
+                if let entry = entries.last{
+                    entry.printNicely()
+                }
             }
             journal?.entryLog = entries
+            
+            
         } catch {
             print("Error: \(error.localizedDescription)")
         }
