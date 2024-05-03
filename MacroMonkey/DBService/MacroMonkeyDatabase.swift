@@ -211,4 +211,97 @@ class MacroMonkeyDatabase: ObservableObject {
         }
         return nil
     }
+    
+    
+//    func removeEntry(byIndex index: Int, from journalID:String){
+    func removeEntry(){
+        let index = 0
+        let journalID = "3BExlSZiBOdQ6xbLMgbl"
+        var ref: DocumentReference? = nil
+        
+        ref = db.collection("journals").document(journalID)
+        
+//        docRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                var updatedArray = document.data()?["your_array_field"] as? [Any] ?? []
+//                updatedArray.remove(at: yourIndexToRemove)
+//                
+//                docRef.updateData(["your_array_field": updatedArray]) { error in
+//                    if let error = error {
+//                        print("Error updating document: \(error)")
+//                    } else {
+//                        print("Document successfully updated")
+//                    }
+//                }
+//            } else {
+//                print("Document does not exist")
+//            }
+//        }
+    }
+    
+    
+    func addEntryToJournal() async throws -> Entry? {
+        var ref: DocumentReference? = nil
+        let journalID = "3BExlSZiBOdQ6xbLMgbl"
+        let journalDate = "05-02-24"
+//        let userID = "GEb6bKEuz3cBsSNPuz2Giv2QCvh2"
+        let ent = Entry(food: 123, ratio:1.1)
+        ref = db.collection("journals").document(journalID)
+        
+        
+        
+        do {
+            let entry: [String: Any] = ["food": ent.food, "ratio": ent.ratio, "time": ent.time]
+            if let journalRef = ref{
+                try await journalRef.updateData(["entryLog": FieldValue.arrayUnion([entry])])
+            }
+            
+            print("check out firestore")
+            
+
+        } catch{
+            print("Error: \(error.localizedDescription)")
+        }
+        
+        return Entry.default
+    }
+    
+    
+    func getJournal(withId id: String) async throws -> Journal? {
+        let userID = "GEb6bKEuz3cBsSNPuz2Giv2QCvh2"
+        let querySnapshot = try await db.collection("journals").whereField("uid", isEqualTo: userID).getDocuments()
+        
+        guard let journ = querySnapshot.documents.first else {
+            // If no document is found, you could decide to throw an error.
+            // For the purpose of this fix, returning an AppUser with empty strings.
+            print("No document found with the specified UID")
+            return Journal.empty
+        }
+        
+        do {
+            // DISPLAYING NON-OPTIONAL JOURNAL INFO
+//            print(querySnapshot)
+            let jid = journ.documentID
+            let uid = journ.get("uid") as? String ?? ""
+            let journalDat = journ.get("journalDate") as? String ?? ""
+            print(jid)
+            print(uid)
+            print(journalDat)
+            
+        } catch{
+            print("Error: \(error.localizedDescription)")
+        }
+        
+        do {
+            // DISPLAYING OPTIONAL JOURNAL INFO
+            let entryLog = journ.get("entryLog") as? [[String: Any]] ?? [["food": -1, "ratio": 0.0]]
+            print("Entry log is:")
+            print(entryLog)
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        
+        return Journal.empty
+    }
+    
 }

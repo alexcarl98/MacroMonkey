@@ -9,17 +9,10 @@ import Foundation
 import FirebaseFirestore
 
 struct Entry: Hashable, Codable {
-    @DocumentID var id: String?
+//    @DocumentID var id: String?
     var food: Int
     var ratio: Double = 1.0
     var time: Date = Date.now
-    
-    enum CodingKeys: String,CodingKey{
-        case id
-        case food = "foodID"
-        case ratio
-        case time
-    }
     
     static let `default` = Entry(food: 716429)
 }
@@ -30,7 +23,7 @@ struct Journal: Hashable, Codable, Identifiable {
     // want to change this so that it initializes journalDate as a string formatted "MM-dd-yyyy"
     var journalDate: String
     var entryLog = [Entry]()
-    var entr = [String]()
+//    var entries = [String]()
     
     mutating func removeFoodByIndex(_ index: Int) {
         guard index >= 0 && index < entryLog.count else {
@@ -63,8 +56,7 @@ struct Journal: Hashable, Codable, Identifiable {
     enum CodingKeys: String,CodingKey {
         case id
         case uid
-        case journalDate = "date"
-        case entryLog = "entries"
-        case entr
+        case journalDate
+        case entryLog
     }
 }

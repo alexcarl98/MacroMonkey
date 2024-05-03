@@ -66,10 +66,10 @@ struct FoodAPIDetail: View {
                     if let journalID = mu.journal.id {
                         var newEntry = Entry(food: fd.id, ratio: 1.0)
                         let entryString = firebaseService.writeEntToFB(docID: journalID, entry: newEntry)
-                        if let st = entryString {
-                            newEntry.id = st
-                            mu.journal.entr.append(st)
-                        }
+//                        if let st = entryString {
+//                            newEntry.id = st
+//                            mu.journal.entr.append(st)
+//                        }
                     }
                 }
             }

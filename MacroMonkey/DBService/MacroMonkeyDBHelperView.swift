@@ -1,60 +1,51 @@
-////
-////  MacroMonkeyDBHelperView.swift
-////  MacroMonkey
-////
-////  Created by Alex Alvarez on 4/27/24.
-////
 //
-//import SwiftUI
+//  MacroMonkeyDBHelperView.swift
+//  MacroMonkey
 //
-//struct MacroMonkeyDBHelperView: View {
-//    @EnvironmentObject var mu: MonkeyUser
-//    @EnvironmentObject var database: MacroMonkeyDatabase
-//    @State private var userID = "rxKNDDdD8HPi9pLUHtbOu3F178J3"
-//    @State private var foodID = "716429"
-//    @State private var resultMessage = ""
+//  Created by Alex Alvarez on 4/27/24.
 //
-//    var body: some View {
-//        NavigationView {
-//            Form {
-//                Section(header: Text("User Functions")) {
-//                    TextField("Enter User ID", text: $userID)
-//                    Button("Fetch User Profile") {
-//                        Task {
-//                            do {
-//                                let user = try await database.fetchUserProfile(userID: userID)
-//                                resultMessage = "User: \(user.name), Email: \(user.email)"
-//                            } catch {
-//                                resultMessage = "Error: \(error.localizedDescription)"
-//                            }
-//                        }
-//                    }
-//                    Button("Check User Exists") {
-//                        Task {
-//                            do {
-//                                let exists = try await database.userExists(userID: userID)
-//                                resultMessage = exists ? "User exists." : "User does not exist."
-//                            } catch {
-//                                resultMessage = "Error: \(error.localizedDescription)"
-//                            }
-//                        }
-//                    }
-//                }
-//                Section(header: Text("Results")) {
-//                    Text(resultMessage)
-//                        .foregroundColor(.blue)
-//                        .fontWeight(.bold)
-//                        .multilineTextAlignment(.leading)
-//                }
-//            }
-//            .navigationTitle("MacroMonkey Database Helper")
-//        }
-//    }
-//}
-////
-////
-////#Preview {
-////    MacroMonkeyDBHelperView()
-////        .environmentObject(MacroMonkeyDatabase())
-//////        .environmentObject(MonkeyUser())
-////}
+
+import SwiftUI
+
+struct MacroMonkeyDBHelperView: View {
+    @EnvironmentObject var spn: SpoonacularService
+    @EnvironmentObject var mdb: MacroMonkeyDatabase
+    @State private var journal: Journal?
+
+    var body: some View {
+        VStack {
+            if let journal = journal {
+                Text("Journal ID: \(journal.id ?? "N/A")")
+                Text("User ID: \(journal.uid)")
+                Text("Date: \(journal.journalDate)")
+
+                // Display entry log
+                ForEach(journal.entryLog, id: \.self) { entry in
+                    Text("Food ID: \(entry.food)")
+                    Text("Ratio: \(entry.ratio)")
+                    Text("Time: \(entry.time)")
+                }
+            } else {
+                Text("Loading journal...")
+            }
+        }
+        .onAppear {
+            // Fetch journal on app launch
+            let journalId = "Lf4xJ5vASOPIp3jaBvFwurUfOUb2"
+            Task{
+                do {
+                    self.journal = try await mdb.getJournal(withId: journalId)
+//                    let en = try await mdb.addEntryToJournal()
+                } catch {
+                    print("error occured")
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    MacroMonkeyDBHelperView()
+        .environmentObject(MacroMonkeyDatabase())
+        .environmentObject(SpoonacularService())
+}
