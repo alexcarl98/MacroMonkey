@@ -34,34 +34,34 @@ class SpoonacularService: ObservableObject {
         }
     }
     
-    func fetchRecipes(completion: @escaping (Result<[Fd], Error>) -> Void) {
-        let urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=pasta"
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
-            return
-        }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(.failure(error ?? NSError(domain: "", code: -1, userInfo: nil)))
-                return
-            }
-            do {
-                let recipes = try JSONDecoder().decode([Fd].self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(recipes))
-                }
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
-    }
+//    func fetchRecipes(completion: @escaping (Result<[Fd], Error>) -> Void) {
+//        let urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=pasta"
+//        guard let url = URL(string: urlString) else {
+//            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+//            return
+//        }
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data = data, error == nil else {
+//                completion(.failure(error ?? NSError(domain: "", code: -1, userInfo: nil)))
+//                return
+//            }
+//            do {
+//                let recipes = try JSONDecoder().decode([Fd].self, from: data)
+//                DispatchQueue.main.async {
+//                    completion(.success(recipes))
+//                }
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }.resume()
+//    }
     
     func queryByFoodNameString(_ foodsName: String) -> String {
         let query = foodsName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodsName
         return "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=\(query)&number=\(FOOD_PAGE_LIMIT)"
     }
     
-    func queryByFoodIDString(_ foodID: Int) -> String {
+    func queryByFoodIDString(_ foodID: String) -> String {
         return "https://api.spoonacular.com/recipes/\(foodID)/information?apiKey=\(apiKey)&includeNutrition=true"
     }
     
@@ -70,9 +70,10 @@ class SpoonacularService: ObservableObject {
         return "https://api.spoonacular.com/recipes/informationBulk?apiKey=\(apiKey)&ids=\(ids)&includeNutrition=true"
     }
     
-    func performSearch(for query: Int) async -> Food? {
+    func performSearch(for query: String) async -> Food? {
         // TODO: modify this function to accept an array of ints and call the queryByFoodIDInBulk
         let urlString = queryByFoodIDString(query)
+        
         guard let url = URL(string: urlString) else {
             return nil
         }
@@ -88,6 +89,35 @@ class SpoonacularService: ObservableObject {
             print("Error: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    func performSearchBar(for query: String) async -> [Fd]? {
+        // TODO: modify this function to accept an array of ints and call the queryByFoodIDInBulk
+        var searchResults = [Fd]()
+        guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return searchResults
+        }
+        let urlString = queryByFoodNameString(query)
+        
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        // isLoading = true
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            var decodedResponse = try JSONDecoder().decode(ApiResponse.self, from: data)
+            let validProducts = decodedResponse.results
+            DispatchQueue.main.async {
+                // Update to use validProducts and limit to first 5 results
+                searchResults = Array(validProducts.prefix(10))
+//                isLoading = false  // Stop loading
+            }
+            
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            return nil
+        }
+        return searchResults
     }
     
     func getListOfFoodsFromBulk(bulk: [FoodAPI]) -> [Food]{

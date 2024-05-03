@@ -79,7 +79,7 @@ struct FoodAPIDetail: View {
     }
     
     func performSearch(for query: Int) {
-        let urlString = spoonacularService.queryByFoodIDString(query)
+        let urlString = spoonacularService.queryByFoodIDString(String(query))
         guard let url = URL(string: urlString) else {
             isLoading = false
             return

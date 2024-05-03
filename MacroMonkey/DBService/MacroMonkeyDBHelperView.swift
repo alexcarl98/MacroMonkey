@@ -11,6 +11,8 @@ struct MacroMonkeyDBHelperView: View {
     @EnvironmentObject var spn: SpoonacularService
     @EnvironmentObject var mdb: MacroMonkeyDatabase
     @EnvironmentObject var mu: MonkeyUser
+    @State private var searchText = ""
+    @State private var searchResults = [Fd]()
     @State private var searchWorkItem: DispatchWorkItem?
 
     var body: some View {
@@ -76,12 +78,14 @@ struct MacroMonkeyDBHelperView: View {
             }
 
             Button("Add Entry") {
-                addEntry()
+                Task{
+                    await addEntry()
+                }
             }
 
-            Button("Update First Ratio to 1.3") {
-                updateFirstRatio()
-            }
+//            Button("Update First Ratio to 1.3") {
+//                updateFirstRatio()
+//            }
 
             Button("Delete First Element") {
                 deleteLastElement()
@@ -118,7 +122,6 @@ struct MacroMonkeyDBHelperView: View {
         let journalDate = formatter.string(from: Date.now)
         let usid = "hp8IBAp5RzgvtzSPa0klLtz3eB93"
         var foods:[Food] = [Food]()
-//        let journalDate = "05-03-24"
         Task {
             do {
                 mu.journal = try await mdb.getJournal(withId: usid, on: journalDate)
@@ -139,24 +142,45 @@ struct MacroMonkeyDBHelperView: View {
         }
     }
 
-    func addEntry() {
-        let entry = Entry(food: 680975, ratio: 1.0)
-        Task {
-            do {
-                try await mdb.addEntryToJournal(journalID: mu.journal.id ?? "", ent: entry)
-                mu.journal.entryLog.append(entry)
-            } catch {
-                print("Error adding entry: \(error.localizedDescription)")
+    func addEntry() async {
+        let someFoods = [680975, 635350,658651, 642341]
+        let foodIDtoQuery = someFoods.randomElement()!
+        
+        let foodFromAPI = await spn.performSearch(for: String(foodIDtoQuery))
+        
+    }
+
+    
+    func addToList(foodToDisplay: FoodAPI?) async throws{
+        // From FoodAPIDetail
+        if let fd = foodToDisplay{
+            mu.addFood(fd.convertToFood())
+            Task{
+                do {
+                    mu.journal.printNicely()
+                    if let journalID = mu.journal.id {
+                        print("\(journalID)")
+                        var newEntry = Entry(food: fd.id, ratio: 1.0)
+                        try await mdb.addEntryToJournal(journalID: journalID, ent: newEntry)
+                        mu.journal.entryLog.append(newEntry)
+                    }
+                } catch{
+                    print("OOOOOOOPS didn't record it")
+                }
             }
+//            presentationMode.wrappedValue.dismiss()
         }
     }
-
-    func updateFirstRatio() {
-//        mu.journal.entryLog
-        mu.journal.entryLog[0].ratio = 1.3
-        updateEntries(entries: mu.journal.entryLog)
+    
+    func pretendSearchAndAdd(searchString: String) async throws{
+        // From FoodAPIDetail
+        let searchBarResults = await spn.performSearchBar(for: searchString)
+        
+        if let validQueryItems = searchBarResults{
+            
+        }
     }
-
+    
     func deleteLastElement() {
         mu.journal.entryLog.removeFirst()
         updateEntries(entries: mu.journal.entryLog)
