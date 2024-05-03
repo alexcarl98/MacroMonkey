@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct NutritionGraph: View {
-    var current: [Float]
+    var current: [Double]
     var goals: [Float]
     
     var body: some View {
         VStack {
-            NutritionBar(macroNutrient: "Calories", amtConsumedSoFar: current[0], goalConsumption: goals[0], color: CALORIES_COLOR)
-            NutritionBar(macroNutrient: "Protein", amtConsumedSoFar: current[1], goalConsumption: goals[1], color: PROTEIN_COLOR)
-            NutritionBar(macroNutrient: "Carbs", amtConsumedSoFar: current[2], goalConsumption: goals[2], color: CARBS_COLOR)
-            NutritionBar(macroNutrient: "Fats", amtConsumedSoFar: current[3], goalConsumption: goals[3], color: FATS_COLOR)
+            NutritionBar(macroNutrient: "Calories", amtConsumedSoFar: current[0], goalConsumption: Double(goals[0]), color: CALORIES_COLOR)
+            NutritionBar(macroNutrient: "Protein", amtConsumedSoFar: current[1], goalConsumption: Double(goals[1]), color: PROTEIN_COLOR)
+            NutritionBar(macroNutrient: "Carbs", amtConsumedSoFar: current[2], goalConsumption: Double(goals[2]), color: CARBS_COLOR)
+            NutritionBar(macroNutrient: "Fats", amtConsumedSoFar: current[3], goalConsumption: Double(goals[3]), color: FATS_COLOR)
         }
     }
 }

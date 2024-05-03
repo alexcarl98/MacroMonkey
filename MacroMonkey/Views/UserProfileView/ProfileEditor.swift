@@ -56,17 +56,11 @@ struct ProfileEditor: View {
                     Text("\(activityLevelDesc[level])").tag(level)
                 }
             }
-            
             Picker("Sex", selection: $newUser.sex) {
                 // TODO: Need to fix this
                 ForEach(sexes, id: \.self) { sex in
                     Text(sex).tag(sex)
                 }
-            }
-            HStack {
-                Text("Calculated Calorie Goal")
-                Spacer()
-                Text(String(format: "%.0f", (newUser.goalCaloricIntake())))
             }
         }
         .navigationTitle("Settings")

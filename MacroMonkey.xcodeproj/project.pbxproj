@@ -43,13 +43,11 @@
 		5C1E72162BD3416A00883CDC /* MacroFoodRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */; };
 		5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72172BD345C100883CDC /* MacroValueCell.swift */; };
 		5C5A343E2BCF1C1E005DE7E8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5A343D2BCF1C1E005DE7E8 /* FirebaseAuth */; };
-		5C60D2382BD3556C0025AAF8 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C60D2372BD3556C0025AAF8 /* Entry.swift */; };
+		5C65AD5D2BE44E6D00B84F18 /* MacroDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */; };
 		5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */; };
-		5C8ABEB92BDF0D8A00674307 /* LittleJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */; };
-		5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */; };
-		5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */; };
 		5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */; };
 		5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */; };
+		5C8ABEC42BE0143300674307 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC32BE0143300674307 /* SignInView.swift */; };
 		5C91F55B2BC5DE4600AEDC89 /* MacroMonkeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */; };
 		5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */; };
 		5C91F55F2BC5DE4800AEDC89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C91F55E2BC5DE4800AEDC89 /* Assets.xcassets */; };
@@ -120,13 +118,11 @@
 		5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyViewHelper.swift; sourceTree = "<group>"; };
 		5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodRow.swift; sourceTree = "<group>"; };
 		5C1E72172BD345C100883CDC /* MacroValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroValueCell.swift; sourceTree = "<group>"; };
-		5C60D2372BD3556C0025AAF8 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroDB.swift; sourceTree = "<group>"; };
 		5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
-		5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleJournalView.swift; sourceTree = "<group>"; };
-		5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodList.swift; sourceTree = "<group>"; };
-		5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTesterView.swift; sourceTree = "<group>"; };
 		5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBlocks.swift; sourceTree = "<group>"; };
 		5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeCellRow.swift; sourceTree = "<group>"; };
+		5C8ABEC32BE0143300674307 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		5C91F5572BC5DE4600AEDC89 /* MacroMonkey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroMonkey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C91F55A2BC5DE4600AEDC89 /* MacroMonkeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroMonkeyApp.swift; sourceTree = "<group>"; };
 		5C91F55C2BC5DE4600AEDC89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -228,13 +224,12 @@
 		5C1E61FB2BCB29D200E4A070 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5C8ABEB72BDF0D1900674307 /* AltJournalView */,
+				5C91F6102BCB219400AEDC89 /* Helper */,
+				5C1E61F42BCB246300E4A070 /* NutritionView */,
 				5C94AEF52BDEFBDD008B00D8 /* Badges */,
 				5C15B5B82BD0595200C2C39B /* CalendarView */,
 				5C15B5B22BCFAEBE00C2C39B /* FoodSearchView */,
 				5C1E622B2BCDB04100E4A070 /* UserProfileView */,
-				5C91F6102BCB219400AEDC89 /* Helper */,
-				5C1E61F42BCB246300E4A070 /* NutritionView */,
 				5C1E621B2BCC44EC00E4A070 /* AuthenticationViewController.swift */,
 				5C1E62242BCCA49300E4A070 /* Home.swift */,
 				5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */,
@@ -249,7 +244,7 @@
 				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
 				5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */,
-				5C8ABEBC2BDF58BC00674307 /* JournalTesterView.swift */,
+				5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -261,7 +256,6 @@
 				5C1E621F2BCC472600E4A070 /* Food.swift */,
 				5C1E622E2BCE4D4500E4A070 /* Journal.swift */,
 				5C1E72112BD31A1E00883CDC /* FoodAPI.swift */,
-				5C60D2372BD3556C0025AAF8 /* Entry.swift */,
 				5C160D1A2BDDC7EE00BDA912 /* MonkeyUser.swift */,
 			);
 			path = Models;
@@ -287,13 +281,12 @@
 			path = UserProfileView;
 			sourceTree = "<group>";
 		};
-		5C8ABEB72BDF0D1900674307 /* AltJournalView */ = {
+		5C8ABEC22BE0142700674307 /* SignInView */ = {
 			isa = PBXGroup;
 			children = (
-				5C8ABEB82BDF0D8A00674307 /* LittleJournalView.swift */,
-				5C8ABEBA2BDF0DDF00674307 /* MacroFoodList.swift */,
+				5C8ABEC32BE0143300674307 /* SignInView.swift */,
 			);
-			path = AltJournalView;
+			path = SignInView;
 			sourceTree = "<group>";
 		};
 		5C91F54E2BC5DE4600AEDC89 = {
@@ -321,6 +314,7 @@
 		5C91F5592BC5DE4600AEDC89 /* MacroMonkey */ = {
 			isa = PBXGroup;
 			children = (
+				5C8ABEC22BE0142700674307 /* SignInView */,
 				5C1CFCE02BD0967800163838 /* APICallService */,
 				5C1E62182BCC3EF200E4A070 /* Models */,
 				5C1E61FC2BCB2BFE00E4A070 /* GoogleService-Info.plist */,
@@ -533,7 +527,6 @@
 			files = (
 				5C94AEF42BDEF8E6008B00D8 /* PlanProgressView.swift in Sources */,
 				5C94AF052BDEFDE4008B00D8 /* Stats.swift in Sources */,
-				5C60D2382BD3556C0025AAF8 /* Entry.swift in Sources */,
 				5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */,
 				5C94AEFD2BDEFC6D008B00D8 /* BadgeBackground.swift in Sources */,
 				5C1710D92BDE21DC005123E6 /* FoodDetail.swift in Sources */,
@@ -541,9 +534,8 @@
 				5C94AEFB2BDEFC2C008B00D8 /* BadgeSymbol.swift in Sources */,
 				5C1CFCEA2BD0E12B00163838 /* APIConfigAccess.swift in Sources */,
 				5C15B5BA2BD0597500C2C39B /* TenDayBlock.swift in Sources */,
-				5C8ABEB92BDF0D8A00674307 /* LittleJournalView.swift in Sources */,
-				5C8ABEBD2BDF58BC00674307 /* JournalTesterView.swift in Sources */,
 				5C91F6122BCB21A500AEDC89 /* AsyncCircleImage.swift in Sources */,
+				5C8ABEC42BE0143300674307 /* SignInView.swift in Sources */,
 				5C94AEFF2BDEFC88008B00D8 /* HexagonParameters.swift in Sources */,
 				5C15B5B12BCF93ED00C2C39B /* ProfileEditor.swift in Sources */,
 				5C91F55D2BC5DE4600AEDC89 /* ContentView.swift in Sources */,
@@ -553,6 +545,7 @@
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
 				5C1E622A2BCCBDC700E4A070 /* FoodAPIDetail.swift in Sources */,
 				5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */,
+				5C65AD5D2BE44E6D00B84F18 /* MacroDB.swift in Sources */,
 				5C1E62252BCCA49300E4A070 /* Home.swift in Sources */,
 				5C94AEF92BDEFC14008B00D8 /* RotatedBadgeSymbol.swift in Sources */,
 				5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */,
@@ -573,7 +566,6 @@
 				5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */,
 				5C160D1B2BDDC7EE00BDA912 /* MonkeyUser.swift in Sources */,
 				5C1E62152BCB4F2300E4A070 /* MacroMonkeyAuth.swift in Sources */,
-				5C8ABEBB2BDF0DDF00674307 /* MacroFoodList.swift in Sources */,
 				5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */,
 				5C1E62312BCF159000E4A070 /* ProfileSetup.swift in Sources */,
 				5C94AF012BDEFCFD008B00D8 /* BadgesCollected.swift in Sources */,
@@ -748,6 +740,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -777,6 +770,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ProfileSetup: View {
     @EnvironmentObject var firebaseServices: MacroMonkeyDatabase
+    
     @Binding var newUser: AppUser
+    @Binding var newJournal: Journal
     @Binding var editing: Bool
     @State private var userCollectionID = ""
     
@@ -19,20 +21,20 @@ struct ProfileSetup: View {
             Button {
                 userCollectionID = firebaseServices.createUser(user: newUser)
                 newUser.id = userCollectionID
+                newJournal = firebaseServices.createNewJournalForUser(userID: newUser.uid, aid: newUser.id)
+                if let str = newJournal.id {
+                    newUser.journalIDs.append(str)
+                }
                 editing = false
             } label:{
-                Text("Submit")
-//                    .padding()
-//                    .background(Color.gray, in: RoundedRectangle(cornerRadius: 8))
-            }
+                Text("Submit")            }
         }
     }
 }
 
-
 struct ProfileSetup_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileSetup(newUser: .constant(AppUser.default), editing: .constant(true))
+        ProfileSetup(newUser: .constant(AppUser.default), newJournal:.constant(Journal.default), editing: .constant(true))
             .environmentObject(MacroMonkeyDatabase())
     }
 }

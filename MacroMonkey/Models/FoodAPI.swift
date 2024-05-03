@@ -12,7 +12,7 @@ struct NutrientAPI: Hashable, Codable{
     var amount: Float
     var unit: String
     
-    func formatted() -> String{
+    func formatted() -> String {
         return "\(name): \(String(format: "%.0f", amount)) \(unit)"
     }
 }
@@ -32,6 +32,9 @@ struct NutritionAPI: Hashable, Codable {
     
     func formatted() -> [Float] {
         return [nutrients[0].amount, nutrients[1].amount, nutrients[2].amount, nutrients[3].amount]
+    }
+    func formattedDbl() -> [Double] {
+        return [Double(nutrients[0].amount), Double(nutrients[1].amount), Double(nutrients[2].amount), Double(nutrients[3].amount)]
     }
 }
 
@@ -54,6 +57,7 @@ struct FoodAPI: Hashable, Codable, Identifiable {
             weightPerServing: WeightAPI(amount:259, unit: "g")
         )
     )
+    
     mutating func filterFood() {
         let macrosToDisplay = ["Calories", "Fat", "Protein", "Carbohydrates"]
         var filtered = [NutrientAPI]()
@@ -70,12 +74,12 @@ struct FoodAPI: Hashable, Codable, Identifiable {
         return Food(
             id: self.id,
             name: self.title,
-            servSize: self.nutrition.weightPerServing.amount,
+            servSize: Double(self.nutrition.weightPerServing.amount),
             servUnit: self.nutrition.weightPerServing.unit,
-            cals: cals,
-            protein: protein,
-            carbs: carbs,
-            fats: fats,
+            cals: Double(cals),
+            protein: Double(protein),
+            carbs: Double(carbs),
+            fats: Double(fats),
             img: self.image
         )
     }

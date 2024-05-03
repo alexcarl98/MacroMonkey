@@ -13,11 +13,14 @@ struct ApiResponse: Codable {
 
 struct FoodSearchView: View {
     @EnvironmentObject var Spoonacular: SpoonacularService
+    @EnvironmentObject var mu: MonkeyUser
     @Environment(\.presentationMode) var presentationMode
     @State private var searchText = ""
     @State private var errorMessage: String?
     @State private var searchResults = [Fd]()
     @State private var isLoading: Bool = false
+    @State private var searchWorkItem: DispatchWorkItem?
+
     
     var body: some View {
         VStack {
@@ -33,15 +36,21 @@ struct FoodSearchView: View {
                     }
                 }
             }
-//            .padding()
         }
         .searchable(text: $searchText, prompt: "Search for a food")
         .onChange(of: searchText) {
-            searchResults = []
-            performSearch(for: searchText)
+            // Cancel the current work item if it exists
+            searchWorkItem?.cancel()
+            
+            // Create a new work item to perform the search
+            let workItem = DispatchWorkItem {
+                performSearch(for: searchText)
+            }
+            // Save the new work item and schedule it to run after a delay
+            searchWorkItem = workItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
         }
     }
-
     
     func performSearch(for query: String) {
         // Invokes API Call depending on user search
@@ -75,9 +84,3 @@ struct FoodSearchView: View {
         }
     }
 }
-//
-//#Preview {
-//    FoodSearchView()
-//        .environmentObject(SpoonacularService())
-//        .environmentObject(MonkeyUser())
-//}

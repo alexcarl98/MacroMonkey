@@ -12,22 +12,19 @@ import CoreLocation
 struct Food: Hashable, Codable, Identifiable {
     var id: Int
     var name: String
-    var servSize: Float
+    var servSize: Double
     var servUnit: String
-    var cals: Float
-    var protein: Float
-    var carbs: Float
-    var fats: Float
+    var cals: Double
+    var protein: Double
+    var carbs: Double
+    var fats: Double
     var img: String
-    var isFavorite = false
     
-    func formatted_macros() -> [Float] {
-        return [cals, fats, carbs, protein]
-    }
+    
+    func formatted_macros() -> [Double] { return [cals, fats, carbs, protein] }
     
     static let `pasta` = Food (
         id: 716429,
-//        name: "Pasta",
         name: "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
         servSize: 259.0,
         servUnit: "g",

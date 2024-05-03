@@ -50,8 +50,3 @@ struct Profile: View {
         return color
     }
 }
-
-#Preview {
-    Profile()
-        .environmentObject(MonkeyUser())
-}

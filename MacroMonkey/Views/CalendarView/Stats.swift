@@ -25,5 +25,4 @@ struct Stats: View {
 
 #Preview {
     Stats()
-        .environmentObject(MonkeyUser())
 }

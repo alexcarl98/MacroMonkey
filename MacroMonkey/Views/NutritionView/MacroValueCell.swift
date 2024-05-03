@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MacroValueCell: View {
-    var value: Float
+    var value: Double
     var col: Color
     
     var body: some View {

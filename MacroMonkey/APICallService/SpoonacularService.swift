@@ -7,6 +7,9 @@
 
 import Foundation
 import Combine
+import SwiftUI
+
+
 /*
  * This is a lot of stuff from the Other API that was using the OpenFoodAPI calls.
  * TODO: Modify this code to match
@@ -25,40 +28,139 @@ class SpoonacularService: ObservableObject {
     init() {
         do {
             self.apiKey = try Config.apiKey()
-
         } catch {
-            self.apiKey = "default_api_key"  // Use a default or dummy API key
+            self.apiKey = "35a34040989f487980190fd6f63453a3"  // Use a default or dummy API key
             print("Failed to retrieve API key, using default: \(self.apiKey)")
         }
     }
-    func fetchRecipes(completion: @escaping (Result<[Fd], Error>) -> Void) {
-        let urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=pasta"
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
-            return
-        }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(.failure(error ?? NSError(domain: "", code: -1, userInfo: nil)))
-                return
-            }
-            do {
-                let recipes = try JSONDecoder().decode([Fd].self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(recipes))
-                }
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
-    }
+    
+//    func fetchRecipes(completion: @escaping (Result<[Fd], Error>) -> Void) {
+//        let urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=pasta"
+//        guard let url = URL(string: urlString) else {
+//            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+//            return
+//        }
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data = data, error == nil else {
+//                completion(.failure(error ?? NSError(domain: "", code: -1, userInfo: nil)))
+//                return
+//            }
+//            do {
+//                let recipes = try JSONDecoder().decode([Fd].self, from: data)
+//                DispatchQueue.main.async {
+//                    completion(.success(recipes))
+//                }
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }.resume()
+//    }
+    
     func queryByFoodNameString(_ foodsName: String) -> String {
         let query = foodsName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodsName
         return "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=\(query)&number=\(FOOD_PAGE_LIMIT)"
     }
     
-    func queryByFoodIDString(_ foodID: Int) -> String {
+    func queryByFoodIDString(_ foodID: String) -> String {
         return "https://api.spoonacular.com/recipes/\(foodID)/information?apiKey=\(apiKey)&includeNutrition=true"
+    }
+    
+    func queryByFoodIDInBulk(_ foodID: [Int]) -> String {
+        let ids = foodID.map(String.init).joined(separator: ",")
+        return "https://api.spoonacular.com/recipes/informationBulk?apiKey=\(apiKey)&ids=\(ids)&includeNutrition=true"
+    }
+    
+    func performSearch(for query: String) async -> Food? {
+        // TODO: modify this function to accept an array of ints and call the queryByFoodIDInBulk
+        let urlString = queryByFoodIDString(query)
+        
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            var decodedResponse = try JSONDecoder().decode(FoodAPI.self, from: data)
+            decodedResponse.filterFood()
+            let food = decodedResponse.convertToFood()
+            print("Found food : \(food.name)")
+            return food
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func performSearchBar(for query: String) async -> [Fd]? {
+        // TODO: modify this function to accept an array of ints and call the queryByFoodIDInBulk
+        var searchResults = [Fd]()
+        guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return searchResults
+        }
+        let urlString = queryByFoodNameString(query)
+        
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        // isLoading = true
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            var decodedResponse = try JSONDecoder().decode(ApiResponse.self, from: data)
+            let validProducts = decodedResponse.results
+            DispatchQueue.main.async {
+                // Update to use validProducts and limit to first 5 results
+                searchResults = Array(validProducts.prefix(10))
+//                isLoading = false  // Stop loading
+            }
+            
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            return nil
+        }
+        return searchResults
+    }
+    
+    func getListOfFoodsFromBulk(bulk: [FoodAPI]) -> [Food]{
+        var fds = [Food]()
+        for food in bulk {
+            let cals = food.nutrition.nutrients.first {$0.name == "Calories" }?.amount ?? 0.0
+            let protein = food.nutrition.nutrients.first { $0.name == "Protein" }?.amount ?? 0.0
+            let carbs = food.nutrition.nutrients.first { $0.name == "Carbohydrates" }?.amount ?? 0.0
+            let fats = food.nutrition.nutrients.first { $0.name == "Fat" }?.amount ?? 0.0
+            fds.append(Food(
+                id: food.id,
+                name: food.title,
+                servSize: Double(food.nutrition.weightPerServing.amount),
+                servUnit: food.nutrition.weightPerServing.unit,
+                cals: Double(cals),
+                protein: Double(protein),
+                carbs: Double(carbs),
+                fats: Double(fats),
+                img: food.image
+            ))
+        }
+        return fds
+    }
+    
+    func performBulkSearch(for queries: [Int]) async -> [Food]? {
+        // Construct the query URL for bulk search
+        let urlString = queryByFoodIDInBulk(queries)
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decodedResponse = try JSONDecoder().decode([FoodAPI].self, from: data)
+            decodedResponse.forEach { food in
+                print("Found food : \(food.title)")
+            }
+            let entri = getListOfFoodsFromBulk(bulk: decodedResponse)
+            print(entri)
+            return entri
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            return nil
+        }
     }
 }
 
@@ -68,72 +170,3 @@ struct Fd: Codable, Identifiable {
     // Add other properties as per the API response
 }
 
-//class SpoonacularService: ObservableObject{
-//    private var foodsToAdd = [String]()
-//    private var API_KEY: String
-//    
-//    init() {
-//        API_KEY = Config.apiKey()
-//    }
-//        
-////    func toggleFoodToAdd(prod: Prod) {
-////        let code = prod.code
-////        if let index = foodsToAdd.firstIndex(of: code) {
-////            foodsToAdd.remove(at: index)
-////        } else { foodsToAdd.append(code) }
-////    }
-//    
-//    func performSearch(for query: String) {
-////        // Invokes API Call depending on user search
-////        guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
-////            searchResults = [Prod]()
-////            return
-////        }
-////        
-////        let urlString = searchString(query)
-////        guard let url = URL(string: urlString) else { return }
-////        
-////        Task {
-////            do {
-////                let (data, _) = try await URLSession.shared.data(from: url)
-////                let decodedResponse = try JSONDecoder().decode(ApiResponse.self, from: data)
-////                // This filter function is not working, re-write it :
-////                // Filter products depending on whether they have the keys 'serving_quantity' and 'nutriments'
-////                let validProducts = decodedResponse.products.filter {
-////                    $0.serving_quantity != nil && $0.nutriments != nil
-////                }
-////                DispatchQueue.main.async {
-////                    // Update to use validProducts and limit to first 5 results
-////                    searchResults = Array(validProducts.prefix(10))
-////                }
-////            } catch {
-////                print("Failed to fetch data: \(error)")
-////            }
-////        }
-//    }
-//    
-//    func submitFoods() {
-////        for foodCode in foodsToAdd {
-////            if let prod = searchResults.first(where: { $0.code == foodCode }){
-////            
-////                existingValidFoods.append(prod.toValidFood())  // Directly appending non-optional ValidFood
-////            }
-////        }
-////        foodsToAdd.removeAll()
-//    }
-//    
-//    func searchByIngredientString(_ foodsName: String) -> String {
-//        // Function that returns the correct api link
-//        let query = foodsName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodsName
-//        return "https://world.openfoodfacts.net/api/v2/search?nutrition_grades_tags=c&countries_tags_en=united-states&fields=code,nutriments,generic_name,product_name,serving_quantity,serving_quantity_unit,selected_images,brands,categories_tags_en&categories_tags_en=\(query)&sort_by=nothing"
-////        return "https://world.openfoodfacts.net/api/v2/search?nutrition_grades_tags=c&countries_tags_en=united-states&fields=code,nutriments,generic_name,product_name,serving_quantity,serving_quantity_unit,selected_images,brands,categories_tags_en&categories_tags_en=orange&sort_by=nothing"
-//    }
-//    
-//    func searchByRecipeString(_ foodsName: String) -> String {
-//        // Function that returns the correct api link
-//        let query = foodsName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodsName
-//        return "https://world.openfoodfacts.net/api/v2/search?nutrition_grades_tags=c&countries_tags_en=united-states&fields=code,nutriments,generic_name,product_name,serving_quantity,serving_quantity_unit,selected_images,brands,categories_tags_en&categories_tags_en=\(query)&sort_by=nothing"
-////        return "https://world.openfoodfacts.net/api/v2/search?nutrition_grades_tags=c&countries_tags_en=united-states&fields=code,nutriments,generic_name,product_name,serving_quantity,serving_quantity_unit,selected_images,brands,categories_tags_en&categories_tags_en=orange&sort_by=nothing"
-//    }
-//    
-//}

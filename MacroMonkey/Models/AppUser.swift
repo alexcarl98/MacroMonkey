@@ -21,6 +21,7 @@ struct AppUser: Hashable, Codable, Identifiable {
     var goalWeightChange: Int
     var sex: String
     var imgID: String
+    var journalIDs = [String]()
     
     var initials: String {
         let formatter = PersonNameComponentsFormatter()
@@ -38,7 +39,8 @@ struct AppUser: Hashable, Codable, Identifiable {
     }
     
     var daysToDiet: Int {
-        Calendar.current.dateComponents([.day], from: dietStartDate, to: Date()).day ?? 0
+        let v = Calendar.current.dateComponents([.day], from: dietStartDate, to: Date()).day ?? 0
+        return 66 - v
     }
     
     var heightString: String{
@@ -68,23 +70,26 @@ struct AppUser: Hashable, Codable, Identifiable {
     
     func goalDate() -> Date{
         //
+        
         return Calendar.current.date(byAdding: .day, value: daysToDiet, to: Date())!
     }
     
-    func goalCaloricIntake() -> Float{
+    func goalCaloricIntake() -> Float {
         // Goal Caloric intake, dependent on: Current weight relative to ideal weight, Base metabolic rate, and the goal amount to lose or gain after diet period
         var dif: Float = Float(goalWeightChange)
         let calPerLb:Float = 3500.0
         if (weight > idw()){ dif = dif * (-1.0) }
         let dailyDif = Float(dif*calPerLb) / Float(daysToDiet)
-        return (bmr() + Float(dailyDif))
+        let BemR = bmr()
+        return (BemR + dailyDif)
     }
     
     func goalMacros() -> [Float]{
-        // An estimate for the amount of daily calories, proteins, carbs, and fats someone needs
-        let goalCal = goalCaloricIntake()
-        return [goalCal, goalCal*0.0404, goalCal*0.1374, goalCal*0.027667]
-    }
+            // An estimate for the amount of daily calories, proteins, carbs, and fats someone needs
+            let goalCal = goalCaloricIntake()
+            return [goalCal, goalCal*0.0404, goalCal*0.1374, goalCal*0.027667]
+        }
+
     
     static let `default` = AppUser (
         id: "12345",
