@@ -62,14 +62,14 @@ struct FoodJournalList: View {
                                     Spacer()
                                 }
                             } else {
-                                VStack{
+                                List{
+                                    
                                     ForEach(mu.journal.entryLog.indices, id: \.self) { index in
                                         let food = mu.foodCache[mu.journal.entryLog[index].food] ?? Food.empty
                                         VStack {
                                             HStack{
                                                 Spacer()
                                                 Text("\(food.name)")
-
                                                     .foregroundColor(.white)
                                                 Spacer()
                                             }
@@ -82,7 +82,7 @@ struct FoodJournalList: View {
                                         HStack {
                                             let maccies = mu.calculateMacros(for: mu.foodCache[mu.journal.entryLog[index].food] ?? Food.empty, with: mu.journal.entryLog[index].ratio)
                                             Spacer()
-                                            Picker("Ratio", selection: $mu.journal.entryLog[index].ratio) {
+                                            Picker("", selection: $mu.journal.entryLog[index].ratio) {
                                                 ForEach([0.5, 0.75, 1.0, 1.25, 1.5, 2.0], id: \.self) { value in
                                                     Text("\(String(format: "%.2f",value))")
                                                 }
@@ -95,8 +95,13 @@ struct FoodJournalList: View {
                                             MacroValueCell(value: maccies[3], col: FATS_COLOR)
                                             Spacer()
                                         }
+                                    }
+                                    .onDelete{ indices in
+                                        mu.journal.entryLog.remove(atOffsets: indices)
+                                        updateInFB()
                                         
                                     }
+                                    .listRowInsets(EdgeInsets())
                                 }
                                 .onChange(of: mu.journal.entryLog) {
                                     // Cancel the current work item if it exists

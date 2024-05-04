@@ -46,7 +46,6 @@ struct MacroMonkeyDBHelperView: View {
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())
-
                             MacroValueCell(value: maccies[0], col: CALORIES_COLOR)
                             MacroValueCell(value: maccies[1], col: PROTEIN_COLOR)
                             MacroValueCell(value: maccies[2], col: CARBS_COLOR)
