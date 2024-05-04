@@ -32,7 +32,6 @@
 		5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621B2BCC44EC00E4A070 /* AuthenticationViewController.swift */; };
 		5C1E621E2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621D2BCC452A00E4A070 /* MacroMonkeyAppDelegate.swift */; };
 		5C1E62202BCC472600E4A070 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E621F2BCC472600E4A070 /* Food.swift */; };
-		5C1E62252BCCA49300E4A070 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62242BCCA49300E4A070 /* Home.swift */; };
 		5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */; };
 		5C1E622A2BCCBDC700E4A070 /* FoodAPIDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E62292BCCBDC700E4A070 /* FoodAPIDetail.swift */; };
 		5C1E622D2BCDB05400E4A070 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E622C2BCDB05300E4A070 /* Profile.swift */; };
@@ -43,7 +42,6 @@
 		5C1E72162BD3416A00883CDC /* MacroFoodRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */; };
 		5C1E72182BD345C100883CDC /* MacroValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1E72172BD345C100883CDC /* MacroValueCell.swift */; };
 		5C5A343E2BCF1C1E005DE7E8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5A343D2BCF1C1E005DE7E8 /* FirebaseAuth */; };
-		5C65AD5D2BE44E6D00B84F18 /* MacroDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */; };
 		5C7B735A2BD1B0BC00BBF190 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */; };
 		5C8ABEBF2BDF6FD100674307 /* CalendarBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */; };
 		5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */; };
@@ -108,7 +106,6 @@
 		5C1E621F2BCC472600E4A070 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		5C1E62222BCC49BA00E4A070 /* ideation.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ideation.md; sourceTree = "<group>"; };
 		5C1E62232BCC4BF400E4A070 /* pitch.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = pitch.md; sourceTree = "<group>"; };
-		5C1E62242BCCA49300E4A070 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodJournalList.swift; sourceTree = "<group>"; };
 		5C1E62292BCCBDC700E4A070 /* FoodAPIDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAPIDetail.swift; sourceTree = "<group>"; };
 		5C1E622C2BCDB05300E4A070 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -118,7 +115,6 @@
 		5C1E72132BD31E0300883CDC /* APIKeyViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyViewHelper.swift; sourceTree = "<group>"; };
 		5C1E72152BD3416A00883CDC /* MacroFoodRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroFoodRow.swift; sourceTree = "<group>"; };
 		5C1E72172BD345C100883CDC /* MacroValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroValueCell.swift; sourceTree = "<group>"; };
-		5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroDB.swift; sourceTree = "<group>"; };
 		5C7B73592BD1B0BC00BBF190 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
 		5C8ABEBE2BDF6FD100674307 /* CalendarBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBlocks.swift; sourceTree = "<group>"; };
 		5C8ABEC02BDF76F800674307 /* ThreeCellRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeCellRow.swift; sourceTree = "<group>"; };
@@ -231,7 +227,6 @@
 				5C15B5B22BCFAEBE00C2C39B /* FoodSearchView */,
 				5C1E622B2BCDB04100E4A070 /* UserProfileView */,
 				5C1E621B2BCC44EC00E4A070 /* AuthenticationViewController.swift */,
-				5C1E62242BCCA49300E4A070 /* Home.swift */,
 				5C1E62262BCCA51100E4A070 /* FoodJournalList.swift */,
 				5C1710D82BDE21DC005123E6 /* FoodDetail.swift */,
 			);
@@ -244,7 +239,6 @@
 				5C1E62142BCB4F2300E4A070 /* MacroMonkeyAuth.swift */,
 				5C1E62162BCB4F7700E4A070 /* MacroMonkeyDatabase.swift */,
 				5C1710D62BDDED8D005123E6 /* MacroMonkeyDBHelperView.swift */,
-				5C65AD5C2BE44E6D00B84F18 /* MacroDB.swift */,
 			);
 			path = DBService;
 			sourceTree = "<group>";
@@ -545,8 +539,6 @@
 				5C1E61FA2BCB258A00E4A070 /* NutritionBar.swift in Sources */,
 				5C1E622A2BCCBDC700E4A070 /* FoodAPIDetail.swift in Sources */,
 				5C8ABEC12BDF76F800674307 /* ThreeCellRow.swift in Sources */,
-				5C65AD5D2BE44E6D00B84F18 /* MacroDB.swift in Sources */,
-				5C1E62252BCCA49300E4A070 /* Home.swift in Sources */,
 				5C94AEF92BDEFC14008B00D8 /* RotatedBadgeSymbol.swift in Sources */,
 				5C1E621C2BCC44EC00E4A070 /* AuthenticationViewController.swift in Sources */,
 				5C1E62272BCCA51100E4A070 /* FoodJournalList.swift in Sources */,

@@ -14,8 +14,6 @@ class MonkeyUser: ObservableObject {
     @Published var foodCache: [Int: Food]
     @Published var journal: Journal = Journal.default
     
-    
-
     init(profile: AppUser, journals: [Journal], foodCache: [Int: Food]) {
         self.profile = profile
         self.journals = journals

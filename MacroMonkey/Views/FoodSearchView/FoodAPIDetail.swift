@@ -60,15 +60,21 @@ struct FoodAPIDetail: View {
     
     func addToList() async throws{
         if let fd = foodToDisplay{
+            //here's the bug: it's adding here
             mu.addFood(fd.convertToFood())
             Task{
                 do {
                     mu.journal.printNicely()
                     if let journalID = mu.journal.id {
                         print("\(journalID)")
-                        var newEntry = Entry(food: fd.id, ratio: 1.0)
-                        try await firebaseService.addEntryToJournal(journalID: journalID, ent: newEntry)
-                        mu.journal.entryLog.append(newEntry)
+//                        var newEntry = Entry(food: fd.id, ratio: 1.0)
+                        if let newEntry = mu.journal.entryLog.last{
+                            try await firebaseService.addEntryToJournal(journalID: journalID, ent: newEntry)
+                            
+                        }
+//                        try await firebaseService.addEntryToJournal(journalID: journalID, ent: newEntry)
+                        // also addding here.
+//                        mu.journal.entryLog.append(newEntry)
                     }
                 } catch{
                     print("OOOOOOOPS didn't record it")

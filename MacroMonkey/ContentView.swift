@@ -25,9 +25,7 @@ struct ContentView: View {
             if loggedIn && !isLoading {
                 if isNewUser {
                     ProfileSetup(newUser: $mu.profile, newJournal: $mu.journal, editing: $isNewUser)
-                    //                        .onDisappear{
-                    //                            handleUserAuthentication()
-                    //                        }
+
                     
                 } else {
                     mainTabView

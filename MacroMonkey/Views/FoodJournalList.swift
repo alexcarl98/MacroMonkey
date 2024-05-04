@@ -35,23 +35,6 @@ struct FoodJournalList: View {
                         VStack {
                             NavigationLink {
                                 FoodSearchView()
-                                    .onAppear(){
-                                        currentJournalSize = mu.journal.entryLog.count
-                                    }
-//                                    .onDisappear(){
-//                                        if mu.journal.entryLog.count > currentJournalSize {
-//                                            Task{
-//                                                do {
-//                                                    Text("I'm boutta write to the database")
-////                                                    if let journalID = mu.journal.id, let entry = mu.journal.entryLog.last {
-////                                                        try await databaseService.addJournalEntries(documentId: journalID, entry: entry)
-////                                                    }
-//                                                } catch {
-//                                                    print("error occured")
-//                                                }
-//                                            }
-//                                        }
-//                                    }
                             } label:{
                                 Label("Add", systemImage: "plus")
                             }
@@ -63,7 +46,6 @@ struct FoodJournalList: View {
                                 }
                             } else {
                                 List{
-                                    
                                     ForEach(mu.journal.entryLog.indices, id: \.self) { index in
                                         let food = mu.foodCache[mu.journal.entryLog[index].food] ?? Food.empty
                                         VStack {
