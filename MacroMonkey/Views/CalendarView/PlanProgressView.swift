@@ -12,10 +12,11 @@ struct PlanProgressView: View {
     
     var body: some View {
         VStack{
-            BadgesCollected()
+            Profile()
+//            BadgesCollected()
             Divider()
             Section(header: Text("Cycle Days Left: \(mu.profile.daysToDiet)").font(.headline)){
-                CalendarBlocks(days: 66 - mu.profile.daysToDiet)
+                CalendarBlocks(days: 65 - mu.profile.daysToDiet)
             }
             Divider()
             HStack{

@@ -12,17 +12,20 @@ struct SignInView: View {
     
     var body: some View {
         ZStack{
-            Color.orange.opacity(0.08).edgesIgnoringSafeArea([.top])
+            Color.white.opacity(0.08).edgesIgnoringSafeArea([.all])
             VStack{
+                Spacer()
                 Image("MacroMonkey")
                     .resizable()
                     .frame(width:90*2, height:80*2)
-                Text("Log In Or create an account")
+                Spacer()
+                Text("Log In or create an account")
                 Button(action: {
                     rqst = true
                 }, label:{
                     loginBtn
                 })
+                Spacer()
             }
         }
     }
@@ -32,11 +35,11 @@ struct SignInView: View {
             Text("Login")
                 .font(.largeTitle)
                 .padding(6)
-                .background(.red.opacity(0.15), in: RoundedRectangle(cornerRadius: 8))
+                .background(.gray.opacity(0.15), in: RoundedRectangle(cornerRadius: 8))
         }
     }
 }
-//
-//#Preview {
-//    SignInView(rqst: .constant(true))
-//}
+
+#Preview {
+    SignInView(rqst: .constant(true))
+}

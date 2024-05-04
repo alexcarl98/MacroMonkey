@@ -11,7 +11,7 @@ struct Profile: View {
     @EnvironmentObject var mu: MonkeyUser
     
     var body: some View {
-        List {
+//        List {
             // User Profile Section
             Section {
                 VStack{
@@ -36,11 +36,11 @@ struct Profile: View {
                         }
                     }
                 }
-            }
-            Text("Age: \(mu.profile.age)")
-            Text("Weight (lbs): \(String(format: "%.1f", mu.profile.weight))")
-            Text("Height (in): \(String(format: "%.1f", mu.profile.height))")
-            Text("Calorie Goal:\n\(String(format: "%.0f", mu.profile.goalCaloricIntake())) until ") + Text(mu.profile.goalDate(), style: .date)
+//            }
+//            Text("Age: \(mu.profile.age)")
+//            Text("Weight (lbs): \(String(format: "%.1f", mu.profile.weight))")
+//            Text("Height (in): \(String(format: "%.1f", mu.profile.height))")
+//            Text("Calorie Goal:\n\(String(format: "%.0f", mu.profile.goalCaloricIntake())) until ") + Text(mu.profile.goalDate(), style: .date)
         }
     }
     

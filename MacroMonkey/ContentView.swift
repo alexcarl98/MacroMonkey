@@ -49,10 +49,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Progress", systemImage: "chart.bar")
                 }
-            Profile()
-                .tabItem {
-                    Label("Profile", systemImage: "person.fill")
-                }
+//            Profile()
+//                .tabItem {
+//                    Label("Profile", systemImage: "person.fill")
+//                }
         }
     }
 

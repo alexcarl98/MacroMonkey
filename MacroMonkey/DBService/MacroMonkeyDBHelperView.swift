@@ -4,7 +4,6 @@
 //
 //  Created by Alex Alvarez on 4/27/24.
 //
-
 import SwiftUI
 
 struct MacroMonkeyDBHelperView: View {
