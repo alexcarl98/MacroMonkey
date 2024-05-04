@@ -53,7 +53,10 @@ struct MacroMonkeyDBHelperView: View {
                             MacroValueCell(value: maccies[3], col: FATS_COLOR)
                             Spacer()
                         }
-                    }
+                    }.onDelete(perform: { indices in
+                        mu.journal.entryLog.remove(atOffsets: indices)
+                        updateInFB()
+                    })
                 }
                 .onChange(of: mu.journal.entryLog) {
                     // Cancel the current work item if it exists

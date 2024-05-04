@@ -69,6 +69,16 @@ class MonkeyUser: ObservableObject {
         return foodCache[foodID]
     }
     
+    func calculateMacros(for food: Food, with quantity: Double) -> [Double] {
+//            let ratio = quantity / food.servSize
+        return [
+            food.cals * quantity,
+            food.protein * quantity,
+            food.carbs * quantity,
+            food.fats * quantity
+        ]
+    }
+    
     
 }
 

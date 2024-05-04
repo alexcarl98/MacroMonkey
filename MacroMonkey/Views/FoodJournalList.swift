@@ -13,7 +13,8 @@ struct FoodJournalList: View {
     @EnvironmentObject var auth: MacroMonkeyAuth
     @EnvironmentObject var databaseService: MacroMonkeyDatabase
     @EnvironmentObject var mu: MonkeyUser
-
+    @State private var searchWorkItem: DispatchWorkItem?
+    
     @Binding var requestLogin: Bool
     @Binding var loggedIn: Bool
     @State var error: Error?
@@ -61,14 +62,53 @@ struct FoodJournalList: View {
                                     Spacer()
                                 }
                             } else {
-                                List(Array(zip(mu.journal.entryLog.indices, mu.journal.entryLog)), id: \.0) { index, entry in
-                                    let idd = entry.food
-                                    
-                                    if let food = mu.foodCache[idd] {
-                                        Text("food: \(food.name)")
-                                        // One gets fixed another thing gets broken. porque
+                                VStack{
+                                    ForEach(mu.journal.entryLog.indices, id: \.self) { index in
+                                        let food = mu.foodCache[mu.journal.entryLog[index].food] ?? Food.empty
+                                        VStack {
+                                            HStack{
+                                                Spacer()
+                                                Text("\(food.name)")
+
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            Text("\(String(format: "%.2f",food.servSize)) \(food.servUnit) / per serving")
+                                                .font(.footnote)
+                                                .foregroundColor(.white)
+                                        }
+                                        .background(LinearGradient(gradient: Gradient(colors: [Color(hex:"#0090FF"), Color(hex:"#6A5ACD")]), startPoint: .top, endPoint: .bottom), in: Rectangle())
+                                        
+                                        HStack {
+                                            let maccies = mu.calculateMacros(for: mu.foodCache[mu.journal.entryLog[index].food] ?? Food.empty, with: mu.journal.entryLog[index].ratio)
+                                            Spacer()
+                                            Picker("Ratio", selection: $mu.journal.entryLog[index].ratio) {
+                                                ForEach([0.5, 0.75, 1.0, 1.25, 1.5, 2.0], id: \.self) { value in
+                                                    Text("\(String(format: "%.2f",value))")
+                                                }
+                                            }
+                                            .pickerStyle(MenuPickerStyle())
+
+                                            MacroValueCell(value: maccies[0], col: CALORIES_COLOR)
+                                            MacroValueCell(value: maccies[1], col: PROTEIN_COLOR)
+                                            MacroValueCell(value: maccies[2], col: CARBS_COLOR)
+                                            MacroValueCell(value: maccies[3], col: FATS_COLOR)
+                                            Spacer()
+                                        }
                                         
                                     }
+                                }
+                                .onChange(of: mu.journal.entryLog) {
+                                    // Cancel the current work item if it exists
+                                    searchWorkItem?.cancel()
+                                    
+                                    // Create a new work item to perform the search
+                                    let workItem = DispatchWorkItem {
+                                        updateInFB()
+                                    }
+                                    // Save the new work item and schedule it to run after a delay
+                                    searchWorkItem = workItem
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
                                 }
                             }
                             
@@ -102,6 +142,19 @@ struct FoodJournalList: View {
                 }
             }
         }
+    func updateInFB() {
+        updateEntries(entries: mu.journal.entryLog)
+    }
+    
+    func updateEntries(entries: [Entry]) {
+        Task {
+            do {
+                try await databaseService.updateEntries(journalID: mu.journal.id ?? "", entries: entries)
+            } catch {
+                print("Error updating entries: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 

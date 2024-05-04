@@ -66,7 +66,6 @@ struct ContentView: View {
                     ZStack {
                         AuthenticationViewController(authUI: authUI)
                             .onDisappear {
-//                                mu.objectWillChange.send()
                                 handleUserAuthentication()
                             }
                     }
@@ -126,8 +125,13 @@ struct ContentView: View {
         do {
             // Fetch user profile
             let user = try await firebaseServices.fetchUserProfile(userID: uid)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM-dd-yy"
+            let journalDat = formatter.string(from: Date.now)
             
-            var journals = try await firebaseServices.getJournalsBelongingto(withUserID: uid)
+            var journal = try await firebaseServices.getJournal(withId: uid, on: journalDat)
+            // a hack...i know i know
+            var journals: [Journal] = [journal]
             
             for j in journals {
                 j.printNicely()
@@ -135,9 +139,7 @@ struct ContentView: View {
             
             var foods:[Food] = [Food]()
             var foodCache: [Int: Food] = [:] // Initialize an empty food cache
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM-dd-yy"
-            let journalDat = formatter.string(from: Date.now)
+            
             
             
             if let todayJournal = journals.first(where: { $0.journalDate == journalDat }){

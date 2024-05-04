@@ -251,7 +251,7 @@ class MacroMonkeyDatabase: ObservableObject {
             
             do {
                 let entry: [String: Any] = ["food": ent.food, "ratio": ent.ratio, "time": ent.time]
-                if let journalRef = ref{
+                if let journalRef = ref {
                     try await journalRef.updateData(["entryLog": FieldValue.arrayUnion([entry])])
                 }
                 
